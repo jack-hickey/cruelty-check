@@ -14,7 +14,7 @@
 	<body>
 		<chip-frame layout="container">
 			<chip-framecontent>
-				<div class="box--main">
+				<div class="box--main mt-form--lg">
 					<img loading="lazy" src="favicon-96x96.png" alt="Cruelty check logo" />
 
 					<chip-header
@@ -23,10 +23,19 @@
 						class="text-theme">
 						Cruelty Check
 					</chip-header>
+
+					<chip-input
+						id="txtSearch"
+						focus
+						placeholder="Make your search..."
+						class="mt-lg"
+						type="search">
+					</chip-input>
 				</div>
 			</chip-framecontent>
 		</chip-frame>
 
 		<script type="text/javascript" src="js/auxilium.min.js"></script>
+		<script type="text/javascript" src="js/site.min.js"></script>
 	</body>
 </html>
