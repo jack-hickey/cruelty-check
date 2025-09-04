@@ -30,6 +30,8 @@ export async function onRequest(context) {
 
   if (!response.ok) {
     const errText = await response.text();
+		console.log(context.env.GITHUB_TOKEN);
+		console.log(context.env.GITHUB_REPO);
     return new Response(`GitHub API error: ${errText}`, { status: response.status });
   }
 
