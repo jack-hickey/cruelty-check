@@ -19,7 +19,8 @@ export async function onRequest(context) {
     method: 'POST',
     headers: {
       'Authorization': `token ${context.env.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github+json'
+      'Accept': 'application/vnd.github+json',
+			"User-Agent": "cloudflare-pages-form"
     },
     body: JSON.stringify({
       title,
