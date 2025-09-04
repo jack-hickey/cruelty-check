@@ -9,8 +9,12 @@ function search() {
 	Ajax.Get("products.json", {
 		success: {
 			ok: response => {
-				const results = SearchArray(response.body, query, "name");
+				displayResults(SearchArray(response.body, query, "name"));
 			}
 		}
 	});
+}
+
+function displayResults(results) {
+	console.log(results);
 }
