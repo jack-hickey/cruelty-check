@@ -32,17 +32,21 @@
 						type="search">
 					</chip-input>
 
-					<form name="bug-report" method="POST">
-  <label>
-    Your Email:
-    <input type="email" name="email" required>
-  </label>
-  <label>
-    Message:
-    <textarea name="message" required></textarea>
-  </label>
-  <button type="submit">Send</button>
-</form>
+					<form name="bug-report" method="POST" action="functions/report.js">
+ 					 <label>
+					    Type
+							<input type="text" name="type" required>
+					  </label>
+					  <label>
+					    Title:
+							<input type="text" name="title" />
+					  </label>
+						<label>
+							Description:
+							<input type="text" name="description" />
+						</label>
+					  <button type="submit">Send</button>
+					</form>
 				</div>
 			</chip-framecontent>
 		</chip-frame>
