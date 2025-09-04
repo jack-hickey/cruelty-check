@@ -6,5 +6,11 @@ if (query) {
 }
 
 function search() {
-	// do something
+	Ajax.Get("products.json", {
+		success: {
+			ok: response => {
+				const results = SearchArray(response.body, query, "name");
+			}
+		}
+	});
 }
