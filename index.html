@@ -14,12 +14,39 @@
 	<body>
 		<chip-frame layout="container">
 			<chip-framecontent>
-				<div class="box--main">
-					Coming soon
-				</div>
+<div class="box--main mt-form--lg">
+					<img loading="lazy" src="favicon-96x96.png" alt="Cruelty check logo" />
+
+					<chip-header
+						size="2"
+						element="h1"
+						class="text-theme">
+						Cruelty Check
+					</chip-header>
+
+					<chip-input
+						id="txtSearch"
+						focus
+						placeholder="Make your search..."
+						class="mt-lg"
+						type="search">
+					</chip-input>
+
+					<form name="bug-report" method="POST">
+  <label>
+    Your Email:
+    <input type="email" name="email" required>
+  </label>
+  <label>
+    Message:
+    <textarea name="message" required></textarea>
+  </label>
+  <button type="submit">Send</button>
+</form>
 			</chip-framecontent>
 		</chip-frame>
 
 		<script type="text/javascript" src="js/auxilium.min.js"></script>
+		<script type="text/javascript" src="js/site.min.js"></script>
 	</body>
 </html>
