@@ -3,3 +3,10 @@
 	--theme-colour-g: 153;
 	--theme-colour-b: 96;
 }
+
+.box--main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
