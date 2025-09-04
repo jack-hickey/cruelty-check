@@ -14,7 +14,7 @@
 	<body>
 		<chip-frame layout="container">
 			<chip-framecontent>
-				<div class="box--main mt-form--lg">
+<div class="box--main mt-form--lg">
 					<img loading="lazy" src="favicon-96x96.png" alt="Cruelty check logo" />
 
 					<chip-header
@@ -32,6 +32,7 @@
 						type="search">
 					</chip-input>
 
+<<<<<<< HEAD
 					<form name="bug-report" method="POST" action="functions/report.js">
  					 <label>
 					    Type
@@ -48,6 +49,19 @@
 					  <button type="submit">Send</button>
 					</form>
 				</div>
+=======
+					<form name="bug-report" method="POST">
+  <label>
+    Your Email:
+    <input type="email" name="email" required>
+  </label>
+  <label>
+    Message:
+    <textarea name="message" required></textarea>
+  </label>
+  <button type="submit">Send</button>
+</form>
+>>>>>>> 6c0c9f50f0506f5ea1e60a2230457795bd9fa0b6
 			</chip-framecontent>
 		</chip-frame>
 
