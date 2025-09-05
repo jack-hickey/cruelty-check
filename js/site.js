@@ -63,6 +63,9 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 		success: {
 			ok: response => {
 				Dialog.ShowSuccess(Localizer.SUCCESS, "Thank you for your feedback! We really appreciate you helping us to improve.");
+			},
+			any: response => {
+				console.log(response);
 			}
 		}
 	}));
