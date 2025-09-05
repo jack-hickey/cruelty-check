@@ -22,7 +22,7 @@ export async function onRequest(context) {
       title: data.title,
       body: issueBody,
 			labels: [data.type.toLowerCase()],
-			assignees: ["jack-hickey"]
+			assignee: "jack-hickey"
     })
   });
 
