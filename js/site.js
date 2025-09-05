@@ -33,7 +33,17 @@ function displayResults(products) {
 		}));
 
 		lblSearchTerm.textContent = txtSearch.value;
+
+		btnReportMissing.onclick = () => Dialog.ShowConfirmation(Localizer.CONFIRMATION_TITLE, `Are you sure you'd like to report a missing product? Your search of '${txtSearch.value}' will be used in the report.`)
+			.then(proceed => {
+				if (!proceed) { return; }
+				autoReportMissing();
+			});
 	}
+}
+
+function autoReportMissing() {
+	report("MISSING-PRODUCT", "Missing Product Report", `The following search term was made by a user and couldn't be matched with any products: ${txtSearch.value}`);
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, let us know if you've run into any issues, or if there's something you'd like to see on the site!",
@@ -71,10 +81,19 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 			return dialog.querySelector("chip-form").reportValidity();
 		},
 		AffirmativeText: "Submit"
-	}).then(() => Ajax.Post("report", {
+	}).then(() => report(drpType.value, "User Submitted Feedback", txtDetails.value));
+
+txtSearch.onkeyup = ev => {
+	if (ev.key === "Enter") {
+		search();
+	}
+}
+
+function report(type, title, description) { 
+	Ajax.Post("report", {
 		body: {
 			type: drpType.value,
-			title: "User Submitted Feedback",
+			title,
 			description: txtDetails.value
 		},
 		success: {
@@ -82,10 +101,5 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 				Dialog.ShowSuccess("Feedback sent", "Thank you for your feedback! We really appreciate you helping us to improve.");
 			}
 		}
-	}));
-
-txtSearch.onkeyup = ev => {
-	if (ev.key === "Enter") {
-		search();
-	}
+	});
 }
