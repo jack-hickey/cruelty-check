@@ -3,16 +3,13 @@ export async function onRequest(context) {
     return new Response("Method Not Allowed", { status: 405 });
   }
 
-  const formData = await context.request.formData();
-  const type = formData.get('type'); // Bug or Feature
-  const title = formData.get('title');
-  const description = formData.get('description');
+	const data = await context.request.json();
 
-  if (!title || !description || !type) {
+  if (!data.title || !data.description || !data.type) {
     return new Response("All fields are required", { status: 400 });
   }
 
-  const issueBody = `**Type:** ${type}\n**Description:**\n${description}`;
+  const issueBody = `**Type:** ${data.type}\n**Description:**\n${data.description}`;
 
   // Call GitHub API
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
@@ -23,7 +20,7 @@ export async function onRequest(context) {
 			"User-Agent": "cloudflare-pages-form"
     },
     body: JSON.stringify({
-      title,
+      title:data.title,
       body: issueBody
     })
   });
