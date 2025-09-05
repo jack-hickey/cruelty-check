@@ -14,8 +14,13 @@ export async function onRequest(context) {
 	else if (userAgent.includes("edge")) { browser = "Edge"; }
 	else if (userAgent.includes("opr") || userAgent.includes("opera")) { browser = "Opera"; }
 
-	if (/Windows NT/i.test(userAgent)) { os = "Windows"; }
+	if (/Windows NT 10\.0/i.test(userAgent)) { os = "Windows 10/11"; }
+	else if (/Windows NT 6\.3/i.test(userAgent)) { os = "Windows 8.1"; }
+	else if (/Windows NT 6\.2/i.test(userAgent)) { os = "Windows 8"; }
+	else if (/Windows NT 6\.1/i.test(userAgent)) { os = "Windows 7"; }
+	else if (/Windows Phone|IEMobile/i.test(userAgent)) { os = "Windows Phone"; }
 	else if (/Macintosh|Mac OS X/i.test(userAgent)) { os = "macOS"; }
+	else if (/CrOS/i.test(userAgent)) { os = "ChromeOS"; }
 	else if (/Linux/i.test(userAgent)) { os = "Linux"; }
 	else if (/Android/i.test(userAgent)) { os = "Android"; }
 	else if (/iPhone|iPad|iPod/i.test(userAgent)) { os = "iOS"; }
