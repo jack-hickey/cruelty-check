@@ -24,7 +24,7 @@ export async function onRequest(context) {
     return new Response("Bad Request", { status: 400 });
   }
 
-	const issueBody = ### Browser\n${browser}\n###Operating System\n${os}\n### Details\n${data.description}`;
+	const issueBody = `### Browser\n${browser}\n###Operating System\n${os}\n### Details\n${data.description}`;
 
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
     method: 'POST',
