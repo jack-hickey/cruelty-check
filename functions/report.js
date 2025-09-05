@@ -5,19 +5,26 @@ export async function onRequest(context) {
 
 	let data = await context.request.json(),
 		browser = "Unknown",
-		userAgent = context.request.headers.get("user-agent");
+		os = "Unknown",
+		userAgent = context.request.headers.get("user-agent").toLowerCase();
 
-	if (userAgent.includes("Chrome") && !userAgent.includes("Edge") && !userAgent.includes("OPR")) { browser = "Chrome"; }
-	else if (userAgent.includes("Firefox")) { browser = "Firefox"; }
-	else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) { browser = "Safari"; }
-	else if (userAgent.includes("Edge")) { browser = "Edge"; }
-	else if (userAgent.includes("OPR") || userAgent.includes("Opera")) { browser = "Opera"; }
+	if (userAgent.includes("chrome") && !userAgent.includes("edge") && !userAgent.includes("opr")) { browser = "Chrome"; }
+	else if (userAgent.includes("firefox")) { browser = "firefox"; }
+	else if (userAgent.includes("safari") && !userAgent.includes("chrome")) { browser = "Safari"; }
+	else if (userAgent.includes("edge")) { browser = "Edge"; }
+	else if (userAgent.includes("opr") || userAgent.includes("opera")) { browser = "Opera"; }
+
+	if (/Windows NT/i.test(userAgent)) { os = "Windows"; }
+	else if (/Macintosh|Mac OS X/i.test(userAgent)) { os = "macOS"; }
+	else if (/Linux/i.test(userAgent)) { os = "Linux"; }
+	else if (/Android/i.test(userAgent)) { os = "Android"; }
+	else if (/iPhone|iPad|iPod/i.test(userAgent)) { os = "iOS"; }
 
   if (!data.title || !data.description || !data.type) {
     return new Response("Bad Request", { status: 400 });
   }
 
-	const issueBody = `**Browser**\n${browser}\n**Details**\n${data.description}`;
+	const issueBody = `### Browser\n${browser}\n###Operating System\n${os}\n### Details\n${data.description}`;
 
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
     method: 'POST',
