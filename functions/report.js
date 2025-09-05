@@ -17,14 +17,7 @@ export async function onRequest(context) {
     return new Response("Bad Request", { status: 400 });
   }
 
-	const issueBody = 
-	`
-		**Browser**
-		${browser}
-
-		**Details**
-		${data.description}
-	`;
+	const issueBody = `**Browser**\n${browser}\n**Details**\n${data.description}`;
 
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
     method: 'POST',
@@ -35,7 +28,7 @@ export async function onRequest(context) {
     },
     body: JSON.stringify({
       title: data.title,
-      body: issueBody.trim(),
+      body: issueBody,
 			labels: [data.type.toLowerCase()],
 			assignee: "jack-hickey"
     })
