@@ -92,9 +92,9 @@ txtSearch.onkeyup = ev => {
 function report(type, title, description) { 
 	Ajax.Post("report", {
 		body: {
-			type: drpType.value,
+			type,
 			title,
-			description: txtDetails.value
+			description
 		},
 		success: {
 			ok: response => {
