@@ -30,8 +30,8 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 				text="Choose an option">
 
 				<chip-dropdownitem group="Having a problem?" value="BUG">Something's not working</chip-dropdownitem>
-				<chip-dropdownitem group="Having a problem?" value="MISSING_PRODUCT">I couldn't find a product</chip-dropdownitem>
-				<chip-dropdownitem group="Having a problem?" value="INCORRECT_INFO">Product info is wrong</chip-dropdownitem>
+				<chip-dropdownitem group="Having a problem?" value="MISSING-PRODUCT">I couldn't find a product</chip-dropdownitem>
+				<chip-dropdownitem group="Having a problem?" value="INCORRECT-INFO">Product info is wrong</chip-dropdownitem>
 				<chip-dropdownitem group="Got an idea?" value="FEATURE">I've got an idea</chip-dropdownitem>
 				<chip-dropdownitem group="Got an idea?" value="IMPROVEMENT">Suggestion for improvement</chip-dropdownitem>
 				<chip-dropdownitem group="Just want to say something" value="THANKS">Just saying thanks!</chip-dropdownitem>
@@ -62,10 +62,7 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 		},
 		success: {
 			ok: response => {
-				Dialog.ShowSuccess(Localizer.SUCCESS, "Thank you for your feedback! We really appreciate you helping us to improve.");
-			},
-			any: response => {
-				console.log(response);
+				Dialog.ShowSuccess("Feedback sent", "Thank you for your feedback! We really appreciate you helping us to improve.");
 			}
 		}
 	}));
