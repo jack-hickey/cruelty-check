@@ -54,7 +54,7 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 			return dialog.querySelector("chip-form").reportValidity();
 		},
 		AffirmativeText: "Submit"
-	}).then(() => Ajax.Post("bug-report", {
+	}).then(() => Ajax.Post("report", {
 		body: {
 			type: drpType.value,
 			title: "User Submitted Feedback",
