@@ -5,21 +5,13 @@ export async function onRequest(context) {
 
 	let data = await context.request.json(),
 		browser = "Unknown",
-		userAgent = navigator.userAgent,
-		os = "Unknown",
-		platform = navigator.platform.toLowerCase();
+		userAgent = context.request.headers.get("user-agent");
 
 	if (userAgent.includes("Chrome") && !userAgent.includes("Edge") && !userAgent.includes("OPR")) { browser = "Chrome"; }
 	else if (userAgent.includes("Firefox")) { browser = "Firefox"; }
 	else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) { browser = "Safari"; }
 	else if (userAgent.includes("Edge")) { browser = "Edge"; }
 	else if (userAgent.includes("OPR") || userAgent.includes("Opera")) { browser = "Opera"; }
-
-	if (platform.includes("win")) { os = "Windows"; }
-	else if (platform.includes("mac")) { os = "macOS"; }
-	else if (platform.includes("linux")) { os = "Linux"; }
-	else if (/iphone|ipad|ipod/.test(userAgent.toLowerCase())) { os = "iOS"; }
-	else if (/android/.test(userAgent.toLowerCase())) { os = "Android"; }
 
   if (!data.title || !data.description || !data.type) {
     return new Response("Bad Request", { status: 400 });
@@ -29,9 +21,6 @@ export async function onRequest(context) {
 	`
 		**Browser**
 		${browser}
-
-		**Operating System**
-		${os}
 
 		**Details**
 		${data.description}
