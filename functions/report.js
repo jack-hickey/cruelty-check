@@ -3,16 +3,22 @@ export async function onRequest(context) {
     return new Response("Method Not Allowed", { status: 405 });
   }
 
-	let data = await context.request.json(),
-		browser = "Unknown",
-		os = "Unknown",
-		userAgent = context.request.headers.get("user-agent").toLowerCase();
+	const browserMap = [
+		{ name: "Edge", regex: /edg/ },
+    { name: "Opera", regex: /(opera|opr)/ },
+    { name: "Vivaldi", regex: /vivaldi/ },
+    { name: "Brave", regex: /brave/ },
+    { name: "Chrome", regex: /chrome/, exclude: /(edg|opr|vivaldi|brave)/ },
+    { name: "Firefox", regex: /firefox/ },
+    { name: "Safari", regex: /safari/, exclude: /chrome|chromium|crios/ },
+    { name: "Samsung Internet", regex: /samsungbrowser/ },
+    { name: "Internet Explorer", regex: /msie|trident/ }
+	];
 
-	if (userAgent.includes("chrome") && !userAgent.includes("edge") && !userAgent.includes("opr")) { browser = "Chrome"; }
-	else if (userAgent.includes("firefox")) { browser = "Firefox"; }
-	else if (userAgent.includes("safari") && !userAgent.includes("chrome")) { browser = "Safari"; }
-	else if (userAgent.includes("edge")) { browser = "Edge"; }
-	else if (userAgent.includes("opr") || userAgent.includes("opera")) { browser = "Opera"; }
+	let data = await context.request.json(),
+		os = "Unknown",
+		userAgent = context.request.headers.get("user-agent").toLowerCase(),
+		browser = browserMap.find(x => x.regex.test(userAgent) && (!x.exclude || !x.exclude.test(userAgent))) ?? "Unknown";
 
 	if (/Windows NT 10\.0/i.test(userAgent)) { os = "Windows 10/11"; }
 	else if (/Windows NT 6\.3/i.test(userAgent)) { os = "Windows 8.1"; }
@@ -29,7 +35,7 @@ export async function onRequest(context) {
     return new Response("Bad Request", { status: 400 });
   }
 
-	const issueBody = `### Browser\n${browser}\n### Operating System\n${os}\n### Details\n${data.description}`;
+	const issueBody = `### Details\n${data.description}\n### Source\nBrowser: ${browser}\nOperating System: ${os}`;
 
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
     method: 'POST',
