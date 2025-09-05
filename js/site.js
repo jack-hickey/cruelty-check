@@ -6,12 +6,34 @@ function search() {
 
 	Promise.resolve(productsGetter).then(products => {
 		products = products.body;
-		console.log(SearchArray(products, query, "name"));
+		displayResults(SearchArray(products, query, "name"));
 	});
 }
 
-function displayResults(results) {
-	console.log(results);
+function displayResults(products) {
+	ctResults.innerHTML = "";
+
+	if (products.length) {
+		ctResults.appendChild(document.createElementWithContents("chip-list",
+			products.map(product => document.createElementWithContents("chip-listitem",
+			`
+				<chip-card>
+					<chip-cardheader>
+						${product.name}
+					</chip-cardheader>
+				</chip-card>
+			`))
+		));
+	} else {
+		ctResults.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
+		{
+			heading: "Nothing to see here",
+			icon: "fal fa-store-slash",
+			className: "mt-form--lg"
+		}));
+
+		lblSearchTerm.textContent = txtSearch.value;
+	}
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, let us know if you've run into any issues, or if there's something you'd like to see on the site!",
