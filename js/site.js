@@ -46,7 +46,7 @@ function autoReportMissing() {
 	report("MISSING-PRODUCT", "Missing Product Report", `The following search term was made by a user and couldn't be matched with any products:\n>${txtSearch.value}`);
 }
 
-btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, let us know if you've run into any issues, or if there's something you'd like to see on the site!",
+btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site!",
 	`
 		<chip-form>
 			<chip-dropdown
