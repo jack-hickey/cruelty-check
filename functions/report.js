@@ -18,7 +18,7 @@ export async function onRequest(context) {
 	let data = await context.request.json(),
 		os = "Unknown",
 		userAgent = context.request.headers.get("user-agent").toLowerCase(),
-		browser = browserMap.find(x => x.regex.test(userAgent) && (!x.exclude || !x.exclude.test(userAgent))) ?? "Unknown";
+		browser = browserMap.find(x => x.regex.test(userAgent) && (!x.exclude || !x.exclude.test(userAgent)))?.name ?? "Unknown";
 
 	if (/Windows NT 10\.0/i.test(userAgent)) { os = "Windows 10/11"; }
 	else if (/Windows NT 6\.3/i.test(userAgent)) { os = "Windows 8.1"; }
