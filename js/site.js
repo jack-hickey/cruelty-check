@@ -18,3 +18,17 @@ function search() {
 function displayResults(results) {
 	console.log(results);
 }
+
+btnFeedback.onclick = () => Ajax.Post("report",
+{
+	body: {
+		type: "bug",
+		title: "ajax",
+		description: "ajax worked"
+	},
+	success: {
+		any: response => {
+			console.log(response);
+		}
+	}
+});
