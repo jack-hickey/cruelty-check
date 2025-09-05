@@ -35,7 +35,7 @@ export async function onRequest(context) {
     },
     body: JSON.stringify({
       title: data.title,
-      body: issueBody,
+      body: issueBody.trim(),
 			labels: [data.type.toLowerCase()],
 			assignee: "jack-hickey"
     })
