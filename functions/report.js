@@ -9,7 +9,7 @@ export async function onRequest(context) {
 		userAgent = context.request.headers.get("user-agent").toLowerCase();
 
 	if (userAgent.includes("chrome") && !userAgent.includes("edge") && !userAgent.includes("opr")) { browser = "Chrome"; }
-	else if (userAgent.includes("firefox")) { browser = "firefox"; }
+	else if (userAgent.includes("firefox")) { browser = "Firefox"; }
 	else if (userAgent.includes("safari") && !userAgent.includes("chrome")) { browser = "Safari"; }
 	else if (userAgent.includes("edge")) { browser = "Edge"; }
 	else if (userAgent.includes("opr") || userAgent.includes("opera")) { browser = "Opera"; }
@@ -24,7 +24,7 @@ export async function onRequest(context) {
     return new Response("Bad Request", { status: 400 });
   }
 
-	const issueBody = `### Browser\n${browser}\n###Operating System\n${os}\n### Details\n${data.description}`;
+	const issueBody = `### Browser \n ${browser} \n ###Operating System \n ${os} \n ### Details \n ${data.description}`;
 
   const response = await fetch(`https://api.github.com/repos/${context.env.GITHUB_REPO}/issues`, {
     method: 'POST',
