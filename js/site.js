@@ -1,17 +1,12 @@
-const query = Browser.GetURLParameter("q") ?? "";
-
-if (query) {
-	txtSearch.value = query;
-	search();
-}
+const productsGetter = Ajax.Get("products.json");
 
 function search() {
-	Ajax.Get("products.json", {
-		success: {
-			ok: response => {
-				displayResults(SearchArray(response.body, query, "name"));
-			}
-		}
+	const query = txtSearch.value.trim();
+	if (!query) { return; }
+
+	Promise.resolve(productsGetter).then(products => {
+		products = products.body;
+		console.log(SearchArray(products, query, "name"));
 	});
 }
 
@@ -66,3 +61,9 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 			}
 		}
 	}));
+
+txtSearch.onkeyup = ev => {
+	if (ev.key === "Enter") {
+		search();
+	}
+}
