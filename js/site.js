@@ -15,14 +15,7 @@ function displayResults(products) {
 
 	if (products.length) {
 		ctResults.appendChild(document.createElementWithContents("chip-list",
-			products.map(product => document.createElementWithContents("chip-listitem",
-			`
-				<chip-card>
-					<chip-cardheader>
-						${product.name}
-					</chip-cardheader>
-				</chip-card>
-			`))
+			products.map(product => document.createElementWithContents("chip-listitem", buildResult(product)))
 		));
 	} else {
 		ctResults.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
@@ -102,4 +95,16 @@ function report(type, title, description) {
 			}
 		}
 	});
+}
+
+function buildResult(product) {
+	return document.createElementWithContents("chip-listitem",
+		`
+			<chip-card
+				variation="bordered">
+				<chip-cardheader>
+					<img src="images/${product.image}" loading="lazy" alt="${product.name}" width="50" />
+				</chip-cardheader>
+			</chip-card>
+		`);
 }
