@@ -1,3 +1,5 @@
+btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
+
 const productsGetter = Ajax.Get("products.json"),
 	resultsContainer = document.getElementById("ctResults");
 
@@ -108,7 +110,7 @@ function report(type, title, description) {
 function buildResult(product) {
 	const result = document.createElementWithContents("chip-card",
 		`
-			<div class="h-align mt-card">
+			<div class="h-align mt-card mb-xs">
 				<chip-text class="me-auto" variation="secondary">${product.brand}</chip-text>
 				<chip-button
 					flush
