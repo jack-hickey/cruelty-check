@@ -31,16 +31,15 @@ function displayResults(products) {
 
 		lblSearchTerm.textContent = txtSearch.value;
 
-		btnReportMissing.onclick = () => Dialog.ShowConfirmation(Localizer.CONFIRMATION_TITLE, `Are you sure you'd like to report a missing product? Your search of '${txtSearch.value}' will be used in the report.`)
-			.then(proceed => {
-				if (!proceed) { return; }
-				autoReportMissing();
-			});
+		btnReportMissing.onclick = () => Dialog.ShowTextBox("Missing product", "Thank you for helping us to improve our database of products! Please let us know the product below that we seem to be missing.", {
+			DefaultValue: txtSearch.value
+		})
+			.then(value => autoReportMissing(value));
 	}
 }
 
-function autoReportMissing() {
-	report("MISSING-PRODUCT", "Missing Product Report", `The following search term was made by a user and couldn't be matched with any products:\n>${txtSearch.value}`);
+function autoReportMissing(product) {
+	report("MISSING-PRODUCT", "Missing Product Report", `Using the built in feedback feature, a user has reported the following product as missing:\n>${product}`);
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site!",
@@ -109,7 +108,16 @@ function buildResult(product) {
 
 	const result = document.createElementWithContents("chip-card",
 		`
-			<chip-text class="mt-card mb-xs" variation="secondary">${product.brand}</chip-text>
+			<div class="h-align mt-card">
+				<chip-text class="me-auto" variation="secondary">${product.brand}</chip-text>
+				<chip-button
+					flush
+					button-style="icon"
+					tooltip="Report incorrect info"
+					icon="fas fa-flag"
+					variation="danger-tertiary">
+				</chip-button>
+			</div>
 			<chip-text class="mb-form" weight="medium" size="h4">${product.name}</chip-text>
 
 			<chip-list gap="sm">
