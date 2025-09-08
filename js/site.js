@@ -22,7 +22,9 @@ function displayResults(products) {
 
 	if (products.length) {
 		resultsContainer.addItems(products.map(product => buildResult(product)));
-		txtResultCount.innerHTML = `<span class="fw-bold">${products.length}</span> product${products.length === 1 ? "" : "s"} found`;
+		txtResultCount.innerHTML = products.length !== 1
+			? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
+			: Localizer.SEARCH_RESULT_TITLE;
 	} else {
 		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Nothing could be found matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> to improve the chances of it being included.`,
 		{
