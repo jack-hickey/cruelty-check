@@ -18,11 +18,13 @@ function search() {
 
 function displayResults(products) {
 	resultsContainer.innerHTML = "";
+	txtResultCount.innerHTML = "";
 
 	if (products.length) {
 		resultsContainer.addItems(products.map(product => buildResult(product)));
+		txtResultCount.innerHTML = `<span class="fw-bold">${products.length}</span> product${products.length === 1 ? "" : "s"} found`;
 	} else {
-		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
+		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Nothing could be found matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> to improve the chances of it being included.`,
 		{
 			heading: "Nothing to see here",
 			icon: "fal fa-store-slash",
@@ -33,7 +35,7 @@ function displayResults(products) {
 
 		lblSearchTerm.textContent = searchUsed;
 
-		btnReportMissing.onclick = () => Dialog.ShowTextBox("Missing product", "Thank you for helping us to improve our database of products! Please let us know the product below that we seem to be missing.", {
+		btnReportMissing.onclick = () => Dialog.ShowTextBox("Missing product", "Thank you for helping in improving Cruelty Check's database of products! Just enter the name of the product that seems to be missing.", {
 			DefaultValue: searchUsed
 		})
 			.then(value => autoReportMissing(value));

@@ -2,6 +2,8 @@
 <html data-test-mode="false">
 	<head>
 		<title>Cruelty Check</title>
+		<meta name="og:title" content="Cruelty Check" />
+
 		<link rel="stylesheet" href="css/auxilium.css"></link>
 		<link rel="stylesheet" href="css/site.min.css"></link>
 
@@ -10,6 +12,13 @@
 		<link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
 		<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 		<link rel="icon" type="image/png" sizes="128x128" href="favicon-128x128.png">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="description" content="Search for a product, and Cruelty Check will do it's best to find what you're looking for and report back the vegan and cruelty-free status." />
+		<meta name="og:description" content="Search for a product, and Cruelty Check will do it's best to find what you're looking for and report back the vegan and cruelty-free status." />
+
+		<meta name="robots" content="index, follow">
 
 		<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
 	</head>
@@ -51,7 +60,14 @@
 					</chip-input>
 				</div>
 
-				<chip-grid class="pt-form--lg" columns="3" id="ctResults">
+				<chip-text
+					size="h3"
+					weight="medium"
+					class="mt-form--lg mb-form">
+					<span id="txtResultCount"><span>
+				</chip-text>
+
+				<chip-grid columns="3" id="ctResults">
 				</chip-grid>
 			</chip-framecontent>
 		</chip-frame>
