@@ -21,6 +21,15 @@ function displayResults(products) {
 
 	if (products.length) {
 		resultsContainer.addItems(products.map(product => buildResult(product)));
+
+		document.querySelectorAll(".btn--report-product").forEach(button => button.onclick = () => {
+			Dialog.ShowTextBox("Incorrect product information", "Please explain below the information you believe to be incorrect, and if possible, the correct information.", {
+				Rows: 12,
+				Multiline:true
+			}).then(value => {
+				report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported a product with incorrect information, stating:\n>${value}`);
+			});
+		})
 	} else {
 		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
 		{
@@ -112,6 +121,7 @@ function buildResult(product) {
 				<chip-text class="me-auto" variation="secondary">${product.brand}</chip-text>
 				<chip-button
 					flush
+					class="btn--report-product"
 					button-style="icon"
 					tooltip="Report incorrect info"
 					icon="fas fa-flag"
