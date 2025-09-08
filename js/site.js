@@ -109,7 +109,8 @@ function buildResult(product) {
 
 	const result = document.createElementWithContents("chip-card",
 		`
-			<chip-text class="mt-card mb-form" weight="medium" size="h4">${product.name}</chip-text>
+			<chip-text class="mt-card mb-xs" variation="secondary">${product.brand}</chip-text>
+			<chip-text class="mb-form" weight="medium" size="h4">${product.name}</chip-text>
 
 			<chip-list gap="sm">
 				<chip-listitem>
