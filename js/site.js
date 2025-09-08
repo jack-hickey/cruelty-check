@@ -1,4 +1,5 @@
-const productsGetter = Ajax.Get("products.json");
+const productsGetter = Ajax.Get("products.json"),
+	resultsContainer = document.getElementById("ctResults");
 
 function search() {
 	const query = txtSearch.value.trim();
@@ -6,26 +7,22 @@ function search() {
 
 	Promise.resolve(productsGetter).then(products => {
 		products = products.body;
-		displayResults(SearchArray(products, query, "name"));
+
+		products.forEach(product => {
+			product._search = `${product.brand} ${product.name}`;
+		});
+
+		displayResults(SearchArray(products, query, "_search"));
 	});
 }
 
 function displayResults(products) {
-	ctResults.innerHTML = "";
+	resultsContainer.innerHTML = "";
 
 	if (products.length) {
-		ctResults.appendChild(document.createElementWithContents("chip-list",
-			products.map(product => document.createElementWithContents("chip-listitem",
-			`
-				<chip-card>
-					<chip-cardheader>
-						${product.name}
-					</chip-cardheader>
-				</chip-card>
-			`))
-		));
+		resultsContainer.addItems(products.map(product => buildResult(product)));
 	} else {
-		ctResults.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
+		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
 		{
 			heading: "Nothing to see here",
 			icon: "fal fa-store-slash",
@@ -34,16 +31,15 @@ function displayResults(products) {
 
 		lblSearchTerm.textContent = txtSearch.value;
 
-		btnReportMissing.onclick = () => Dialog.ShowConfirmation(Localizer.CONFIRMATION_TITLE, `Are you sure you'd like to report a missing product? Your search of '${txtSearch.value}' will be used in the report.`)
-			.then(proceed => {
-				if (!proceed) { return; }
-				autoReportMissing();
-			});
+		btnReportMissing.onclick = () => Dialog.ShowTextBox("Missing product", "Thank you for helping us to improve our database of products! Please let us know the product below that we seem to be missing.", {
+			DefaultValue: txtSearch.value
+		})
+			.then(value => autoReportMissing(value));
 	}
 }
 
-function autoReportMissing() {
-	report("MISSING-PRODUCT", "Missing Product Report", `The following search term was made by a user and couldn't be matched with any products:\n>${txtSearch.value}`);
+function autoReportMissing(product) {
+	report("MISSING-PRODUCT", "Missing Product Report", `Using the built in feedback feature, a user has reported the following product as missing:\n>${product}`);
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site!",
@@ -68,7 +64,7 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 				rows="12"
 				required
 				id="txtDetails"
-				validation-required="Please tell us a bit more so we understand your feedback."
+				validation-required="Please tell us a bit more so we understand your feedback"
 				class="mt-form"
 				label="Tell us more">
 			</chip-textarea>
@@ -102,4 +98,56 @@ function report(type, title, description) {
 			}
 		}
 	});
+}
+
+function buildResult(product) {
+	let theme = "danger";
+
+	if (product.vegan || product.cruelty_free) { theme = "warning"; }
+	if (product.vegan && product.cruelty_free) { theme = "success"; }
+
+	const result = document.createElementWithContents("chip-card",
+		`
+			<div class="h-align mt-card">
+				<chip-text class="me-auto" variation="secondary">${product.brand}</chip-text>
+				<chip-button
+					flush
+					button-style="icon"
+					tooltip="Report incorrect info"
+					icon="fas fa-flag"
+					variation="danger-tertiary">
+				</chip-button>
+			</div>
+			<chip-text class="mb-form" weight="medium" size="h4">${product.name}</chip-text>
+
+			<chip-list gap="sm">
+				<chip-listitem>
+					${
+						product.vegan
+							? '<chip-text icon-colour="success" icon="fas fa-check-circle">Vegan</chip-text>'
+							: '<chip-text icon-colour="danger" icon="fas fa-times-circle">Not vegan</chip-text>'
+					}
+				</chip-listitem>
+				<chip-listitem>
+					${
+						product.cruelty_free
+							? '<chip-text icon-colour="success" icon="fas fa-check-circle">Cruelty-free</chip-text>'
+							: '<chip-text icon-colour="danger" icon="fas fa-times-circle">Not cruelty-free</chip-text>'
+					}
+				</chip-listitem>
+			</chip-list>
+
+			${
+				!product.info
+					? ""
+					: `<chip-accordionitem class="mt-form ai--view-info" heading="View info">${product.info}</chip-accordionitem>`
+			}
+		`, {
+			image: `images/products/${product.image}`,
+			hideBlur: true
+		});
+
+	result.dataset.theme = theme;
+
+	return result;
 }
