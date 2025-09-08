@@ -127,6 +127,12 @@ function buildResult(product) {
 					}
 				</chip-listitem>
 			</chip-list>
+
+			${
+				!product.info
+					? ""
+					: `<chip-accordionitem class="mt-form ai--view-info" heading="View info">${product.info}</chip-accordionitem>`
+			}
 		`, {
 			image: `images/products/${product.image}`,
 			hideBlur: true

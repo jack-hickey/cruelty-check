@@ -1,7 +1,26 @@
 [
 	{
-		"name": "Dove Shampoo",
+		"name": "Daily Moisture Shampoo",
+		"brand": "Dove",
+		"info": "Dove products can't be considered totally cruelty-free as they are owned by the parent company Unilever. Unilever are known to have brands that are in fact not cruelty-free, and so your money may be best spent elsewhere to avoid funding the practice.",
 		"vegan": true,
-		"cruelty_free": false
+		"cruelty_free": false,
+		"image": "130260752.avif"
+	},
+	{
+		"name": "Daily Care Shampoo",
+		"brand": "Dove",
+		"info": "Dove products can't be considered totally cruelty-free as they are owned by the parent company Unilever. Unilever are known to have brands that are in fact not cruelty-free, and so your money may be best spent elsewhere to avoid funding the practice.",
+		"vegan": true,
+		"cruelty_free": false,
+		"image": "61UQ4+j81lL.jpg"
+	},
+	{
+		"name": "Intensive Repair Shampoo",
+		"brand": "Dove",
+		"info": "Dove products can't be considered totally cruelty-free as they are owned by the parent company Unilever. Unilever are known to have brands that are in fact not cruelty-free, and so your money may be best spent elsewhere to avoid funding the practice.",
+		"vegan": true,
+		"cruelty_free": false,
+		"image": "51msWmVewaL.jpg"
 	}
 ]
