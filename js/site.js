@@ -102,14 +102,37 @@ function report(type, title, description) {
 }
 
 function buildResult(product) {
-	return document.createElementWithContents("chip-card",
+	let theme = "danger";
+
+	if (product.vegan || product.cruelty_free) { theme = "warning"; }
+	if (product.vegan && product.cruelty_free) { theme = "success"; }
+
+	const result = document.createElementWithContents("chip-card",
 		`
-			<chip-text class="mt-card" weight="medium" size="h4">${product.name}</chip-text>
-			<chip-text class="mt-form">${product.vegan ? "Vegan" : "Not vegan"}</chip-text>
-			<chip-text>${product.cruelty_free ? "Cruelty-free" : "Not cruelty-free"}</chip-text>
+			<chip-text class="mt-card mb-form" weight="medium" size="h4">${product.name}</chip-text>
+
+			<chip-list gap="sm">
+				<chip-listitem>
+					${
+						product.vegan
+							? '<chip-text icon-colour="success" icon="fas fa-check-circle">Vegan</chip-text>'
+							: '<chip-text icon-colour="danger" icon="fas fa-times-circle">Not vegan</chip-text>'
+					}
+				</chip-listitem>
+				<chip-listitem>
+					${
+						product.cruelty_free
+							? '<chip-text icon-colour="success" icon="fas fa-check-circle">Cruelty-free</chip-text>'
+							: '<chip-text icon-colour="danger" icon="fas fa-times-circle">Not cruelty-free</chip-text>'
+					}
+				</chip-listitem>
+			</chip-list>
 		`, {
-			variation: "bordered",
 			image: `images/products/${product.image}`,
 			hideBlur: true
 		});
+
+	result.dataset.theme = theme;
+
+	return result;
 }
