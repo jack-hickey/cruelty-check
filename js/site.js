@@ -26,7 +26,7 @@ function displayResults(products) {
 			? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
 			: Localizer.SEARCH_RESULT_TITLE;
 	} else {
-		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Nothing could be found matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> to improve the chances of it being included.`,
+		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", Localizer.EMPTY_SEARCH_DESC,
 		{
 			heading: Localizer.EMPTY_SEARCH_TITLE,
 			icon: "fal fa-store-slash",
