@@ -29,10 +29,12 @@ function displayResults(products) {
 			className: "mt-form--lg"
 		}));
 
-		lblSearchTerm.textContent = txtSearch.value;
+		const searchUsed = txtSearch.value;
+
+		lblSearchTerm.textContent = searchUsed;
 
 		btnReportMissing.onclick = () => Dialog.ShowTextBox("Missing product", "Thank you for helping us to improve our database of products! Please let us know the product below that we seem to be missing.", {
-			DefaultValue: txtSearch.value
+			DefaultValue: searchUsed
 		})
 			.then(value => autoReportMissing(value));
 	}
