@@ -19,6 +19,10 @@
 	width: min(var(--form-width), 90%);
 }
 
+chip-frameheader header {
+	justify-content: space-evenly;
+}
+
 #ctResults > ul > li > chip-card { 
 	min-height: 100%;
 }
@@ -38,7 +42,5 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 }
 
 .img--kofi {
-	height:36px;
-	box-shadow: var(--subtle-box-shadow);
-	border-radius: 1rem;
+	height: 36px;
 }
