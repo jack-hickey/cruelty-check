@@ -15,6 +15,10 @@
 	flex-direction: column;
 }
 
+#txtSearch {
+	width: min(var(--form-width), 90%);
+}
+
 #ctResults > ul > li > chip-card { 
 	min-height: 100%;
 }
