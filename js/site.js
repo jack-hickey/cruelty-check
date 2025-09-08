@@ -21,15 +21,6 @@ function displayResults(products) {
 
 	if (products.length) {
 		resultsContainer.addItems(products.map(product => buildResult(product)));
-
-		document.querySelectorAll(".btn--report-product").forEach(button => button.onclick = () => {
-			Dialog.ShowTextBox("Incorrect product information", "Please explain below the information you believe to be incorrect, and if possible, the correct information.", {
-				Rows: 12,
-				Multiline:true
-			}).then(value => {
-				report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported a product with incorrect information, stating:\n>${value}`);
-			});
-		})
 	} else {
 		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
 		{
@@ -156,6 +147,15 @@ function buildResult(product) {
 			image: `images/products/${product.image}`,
 			hideBlur: true
 		});
+
+	result.querySelector(".btn--report-product").onclick = () => {
+		Dialog.ShowTextBox("Incorrect product information", "Please explain below the information you believe to be incorrect, and if possible, the correct information.", {
+			Rows: 12,
+			Multiline:true
+		}).then(value => {
+			report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported that **${product.name}** by **${product.brand}** has incorrect information, stating:\n>${value}`);
+		});
+	};
 
 	result.dataset.theme = theme;
 
