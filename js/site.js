@@ -1,4 +1,5 @@
-const productsGetter = Ajax.Get("products.json");
+const productsGetter = Ajax.Get("products.json"),
+	resultsContainer = document.querySelector("chip-grid");
 
 function search() {
 	const query = txtSearch.value.trim();
@@ -11,14 +12,12 @@ function search() {
 }
 
 function displayResults(products) {
-	ctResults.innerHTML = "";
+	resultsContainer.innerHTML = "";
 
 	if (products.length) {
-		ctResults.appendChild(document.createElementWithContents("chip-list",
-			products.map(product => document.createElementWithContents("chip-listitem", buildResult(product)))
-		));
+		resultsContainer.addItems(products.map(product => buildResult(product)));
 	} else {
-		ctResults.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
+		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", `Hmmm, we couldn't find anything matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> and we'll do our best to get it in!`,
 		{
 			heading: "Nothing to see here",
 			icon: "fal fa-store-slash",
@@ -98,13 +97,12 @@ function report(type, title, description) {
 }
 
 function buildResult(product) {
-	return document.createElementWithContents("chip-listitem",
+	return document.createElementWithContents("chip-card",
 		`
-			<chip-card
-				variation="bordered">
-				<chip-cardheader>
-					<img src="images/${product.image}" loading="lazy" alt="${product.name}" width="50" />
-				</chip-cardheader>
-			</chip-card>
-		`);
+			<chip-cardheader>
+				<img src="images/${product.image}" loading="lazy" alt="${product.name}" width="50" />
+			</chip-cardheader>
+		`, {
+			variation: "bordered"
+		});
 }
