@@ -105,11 +105,6 @@ function report(type, title, description) {
 }
 
 function buildResult(product) {
-	let theme = "danger";
-
-	if (product.vegan || product.cruelty_free) { theme = "warning"; }
-	if (product.vegan && product.cruelty_free) { theme = "success"; }
-
 	const result = document.createElementWithContents("chip-card",
 		`
 			<div class="h-align mt-card">
@@ -140,6 +135,13 @@ function buildResult(product) {
 							: '<chip-text icon-colour="danger" icon="fas fa-times-circle">Not cruelty-free</chip-text>'
 					}
 				</chip-listitem>
+				<chip-listitem>
+					${
+						product.parent
+							? `<chip-text icon-colour="success" icon="fas fa-check-circle">Parent company is cruelty-free</chip-text>`
+							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">Parent company is not cruelty-free</chip-text>`
+					}
+				</chip-listitem>
 			</chip-list>
 
 			${
@@ -160,8 +162,6 @@ function buildResult(product) {
 			report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported that **${product.name}** by **${product.brand}** has incorrect information, stating:\n>${value}`);
 		});
 	};
-
-	result.dataset.theme = theme;
 
 	return result;
 }
