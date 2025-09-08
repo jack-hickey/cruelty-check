@@ -4,7 +4,7 @@
 	--theme-colour-b: 96;
 
 	--header-height: var(--block-size-xxxxl) !important;
-	--header-background-colour: rgba(0,0,0,0);
+	--header-background-colour: var(--background-colour);
 	--header-border-width: 0;
 }
 
