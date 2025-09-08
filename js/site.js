@@ -1,5 +1,5 @@
 const productsGetter = Ajax.Get("products.json"),
-	resultsContainer = document.querySelector("chip-grid");
+	resultsContainer = document.getElementById("ctResults");
 
 function search() {
 	const query = txtSearch.value.trim();
@@ -7,7 +7,12 @@ function search() {
 
 	Promise.resolve(productsGetter).then(products => {
 		products = products.body;
-		displayResults(SearchArray(products, query, "name"));
+
+		products.forEach(product => {
+			product._search = `${product.brand} ${product.name}`;
+		});
+
+		displayResults(SearchArray(products, query, "_search"));
 	});
 }
 
@@ -60,7 +65,7 @@ btnFeedback.onclick = () => Dialog.ShowCustom("Feedback", "Your feedback is valu
 				rows="12"
 				required
 				id="txtDetails"
-				validation-required="Please tell us a bit more so we understand your feedback."
+				validation-required="Please tell us a bit more so we understand your feedback"
 				class="mt-form"
 				label="Tell us more">
 			</chip-textarea>
@@ -99,10 +104,12 @@ function report(type, title, description) {
 function buildResult(product) {
 	return document.createElementWithContents("chip-card",
 		`
-			<chip-cardheader>
-				<img src="images/${product.image}" loading="lazy" alt="${product.name}" width="50" />
-			</chip-cardheader>
+			<chip-text class="mt-card" weight="medium" size="h4">${product.name}</chip-text>
+			<chip-text class="mt-form">${product.vegan ? "Vegan" : "Not vegan"}</chip-text>
+			<chip-text>${product.cruelty_free ? "Cruelty-free" : "Not cruelty-free"}</chip-text>
 		`, {
-			variation: "bordered"
+			variation: "bordered",
+			image: `images/products/${product.image}`,
+			hideBlur: true
 		});
 }
