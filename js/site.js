@@ -1,6 +1,8 @@
 btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
 
-const productsGetter = Ajax.Get("products.json"),
+const productsGetter = Ajax.Get("products.json", {
+	LoadTimeout: 0
+}),
 	resultsContainer = document.getElementById("ctResults");
 
 function search() {
@@ -85,6 +87,8 @@ btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localize
 		},
 		AffirmativeText: "Submit"
 	}).then(() => report(drpType.value, "User Submitted Feedback", txtDetails.value));
+
+txtSearch.onsuffixclick = () => search();
 
 txtSearch.onkeyup = ev => {
 	if (ev.key === "Enter") {
