@@ -7,8 +7,8 @@ const productsGetter = Ajax.Get("products.json", {
 function resetMobileView() {
 	txtSearch.blur();
 
-	document.querySelector("meta[name='viewport']")?
-		.setAttribute("content", "width=device-width, initial-scale=1");
+	document.querySelector("meta[name='viewport']")?.
+		setAttribute("content", "width=device-width, initial-scale=1");
 }
 
 function search() {
