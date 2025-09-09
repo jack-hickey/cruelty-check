@@ -4,11 +4,18 @@ const productsGetter = Ajax.Get("products.json", {
 	LoadTimeout: 0
 }), resultsContainer = document.getElementById("ctResults");
 
+function resetMobileView() {
+	txtSearch.blur();
+
+	document.querySelector("meta[name='viewport']")?.
+		setAttribute("content", "width=device-width, initial-scale=1");
+}
+
 function search() {
 	const query = txtSearch.value.trim();
 	if (!query) { return; }
-
-	txtSearch.blur();
+	
+	resetMobileView();
 
 	Promise.resolve(productsGetter).then(products => {
 		products = products.body;
