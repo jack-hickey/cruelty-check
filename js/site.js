@@ -1,6 +1,6 @@
 btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
 
-const productsGetter = Ajax.Get("products.json", {
+const productsGetter = Ajax.Get("products.min.json", {
 	LoadTimeout: 0
 }), resultsContainer = document.getElementById("ctResults");
 
