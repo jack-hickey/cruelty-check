@@ -161,6 +161,8 @@ function buildResult(product) {
 			hideBlur: true
 		});
 
+	result.classList.add("cd--product");
+
 	result.querySelector(".btn--report-product").onclick = () => {
 		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
 			Rows: 12,
