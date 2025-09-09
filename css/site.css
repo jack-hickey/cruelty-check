@@ -17,6 +17,7 @@
 
 #txtSearch {
 	width: min(var(--form-width), 90%);
+	--input-font-size: 16px;
 }
 
 chip-frameheader header {
