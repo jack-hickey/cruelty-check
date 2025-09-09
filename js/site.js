@@ -2,12 +2,13 @@ btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
 
 const productsGetter = Ajax.Get("products.json", {
 	LoadTimeout: 0
-}),
-	resultsContainer = document.getElementById("ctResults");
+}), resultsContainer = document.getElementById("ctResults");
 
 function search() {
 	const query = txtSearch.value.trim();
 	if (!query) { return; }
+
+	txtSearch.blur();
 
 	Promise.resolve(productsGetter).then(products => {
 		products = products.body;
