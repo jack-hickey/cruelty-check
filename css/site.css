@@ -8,6 +8,16 @@
 	--header-border-width: 0;
 }
 
+:root[data-theme="dark"] {
+	--theme-colour-r: 45;
+	--theme-colour-g: 151;
+	--theme-colour-b: 90;
+
+	--header-height: var(--block-size-xxxxl) !important;
+	--header-background-colour: var(--background-colour);
+	--header-border-width: 0;
+}
+
 .box--main {
 	display: flex;
 	align-items: center;
