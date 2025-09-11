@@ -6,10 +6,14 @@ export async function onRequestPost(context) {
   try {
     body = await request.json();
   } catch {
+		console.log("Invalid JSON");
     return new Response("Invalid JSON", { status: 400 });
   }
 
   const term = body.query || "";
+
+	console.log(term);
+	Object.keys(env).forEach(key => console.log(key));
 
 	const { results } = await env.DATABASE.prepare(
 		`
