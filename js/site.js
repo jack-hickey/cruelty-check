@@ -11,6 +11,15 @@ function resetMobileView() {
 function search() {
 	const query = txtSearch.value.trim();
 	if (!query) { return; }
+
+	Ajax.Post("search", {
+		body: {
+			term: query
+		},
+		success: {
+			any: response => console.log(response.body)
+		}
+	});
 	
 	resetMobileView();
 
@@ -21,7 +30,7 @@ function search() {
 			product._search = `${product.brand} ${product.name}`;
 		});
 
-		displayResults(SearchArray(products, query, "_search"));
+		// displayResults(SearchArray(products, query, "_search"));
 	});
 }
 
