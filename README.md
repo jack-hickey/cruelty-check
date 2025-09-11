@@ -4,20 +4,20 @@ A simple web app that helps users quickly determine if a product is **vegan** an
 
 ## Features
 
-- Search for products by name  
-- Check if a product is vegan  
-- Check if a product is cruelty-free  
-- Ad free, forever and always
+- Allows products to be fuzzy searched
+- Reports back the vegan status as well as any relevant cruelty-free status
+- Takes into account data about any parent companies
+- Ad free, baby!
 
 ## Boring Stuff
 
 To import data locally using the seed file:
 ```
-wrangler d1 execute DATABASE --local --file .\seed.sql
+wrangler d1 migrations apply cruelty_check && wrangler d1 execute cruelty_check --local --file .\seed.sql
 ```
 And to run the local development server:
 ```
-wrangler pages dev . --d1=DATABASE=DATABASE
+wrangler pages dev . --d1=DATABASE=cruelty_check
 ```
 
 ## Support Me ☕

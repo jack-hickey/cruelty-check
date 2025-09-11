@@ -1,6 +1,6 @@
 -- Migration number: 0001 	 2025-09-11T10:12:01.618Z
 
-CREATE TABLE "Brands"(
+CREATE TABLE Brands (
   "ID" INTEGER NOT NULL,
   "Name" TEXT NOT NULL,
   "Parent_ID" INTEGER NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE "Brands"(
   PRIMARY KEY ("ID")
 );
 
-CREATE TABLE "Products"(
+CREATE TABLE Products (
   "ID" INTEGER NOT NULL,
   "Name" TEXT NOT NULL,
   "Brand_ID" INTEGER NOT NULL,
