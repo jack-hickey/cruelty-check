@@ -1,39 +1,22 @@
 export async function onRequest(context) {
-  const { request, env, params, waitUntil } = context;
+  const { request, env } = context;
 
-  const imageName = params?.image || 'default.png';
+  const url = new URL(request.url);
+  const filename = url.pathname.replace("/images/", "");
 
-  const cacheUrl = new URL(request.url);
-  const cacheKey = new Request(cacheUrl.toString(), request);
-  const cache = caches.default;
+	console.log(filename);
 
-  let response = await cache.match(cacheKey);
+  if (!filename) return new Response("File not specified", { status: 400 });
 
-  if (response) {
-    return response;
-  }
+  const object = await env.MY_R2_BUCKET.get(filename);
 
-  try {
-    const r2Object = await env.R2_BUCKET.get(imageName);
+  if (!object) return new Response("File not found", { status: 404 });
+	console.log(object);
 
-    if (!r2Object) {
-      return new Response('Image not found', { status: 404 });
+  return new Response(object.body, {
+    headers: {
+      "Content-Type": object.httpMetadata.contentType || "application/octet-stream",
+      "Cache-Control": "public, max-age=3600"
     }
-
-    const arrayBuffer = await r2Object.arrayBuffer();
-
-    response = new Response(arrayBuffer, {
-      headers: {
-        'Content-Type': r2Object.httpMetadata.contentType || 'application/octet-stream',
-        'Cache-Control': 'public, max-age=31536000'
-      },
-    });
-
-    waitUntil(cache.put(cacheKey, response.clone()));
-
-    return response;
-  } catch (err) {
-    console.error(err);
-    return new Response('Error fetching image', { status: 500 });
-  }
+  });
 }
