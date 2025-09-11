@@ -1,8 +1,6 @@
 btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
 
-const productsGetter = Ajax.Get("products.min.json", {
-	LoadTimeout: 0
-}), resultsContainer = document.getElementById("ctResults");
+const resultsContainer = document.getElementById("ctResults");
 
 function resetMobileView() {
 	txtSearch.blur();
@@ -11,17 +9,26 @@ function resetMobileView() {
 function search() {
 	const query = txtSearch.value.trim();
 	if (!query) { return; }
-	
-	resetMobileView();
 
-	Promise.resolve(productsGetter).then(products => {
-		products = products.body;
+	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
+	txtSearch.blur();	
 
-		products.forEach(product => {
-			product._search = `${product.brand} ${product.name}`;
-		});
+	Ajax.Post("search", {
+		body: {
+			query
+		},
+		LoadTimeout: 0,
+		success: {
+			ok: response => {
+				const products = response.body;
 
-		displayResults(SearchArray(products, query, "_search"));
+				products.forEach(product => {
+					product._search = `${product.Brand} ${product.Name}`;
+				});
+
+				displayResults(SearchArray(products, query, "_search"));
+			}
+		}
 	});
 }
 
@@ -120,7 +127,7 @@ function buildResult(product) {
 	const result = document.createElementWithContents("chip-card",
 		`
 			<div class="h-align mt-card mb-xs">
-				<chip-text class="me-auto" variation="secondary">${product.brand}</chip-text>
+				<chip-text class="me-auto" variation="secondary">${product.Brand}</chip-text>
 				<chip-button
 					flush
 					class="btn--report-product"
@@ -130,28 +137,21 @@ function buildResult(product) {
 					variation="danger-tertiary">
 				</chip-button>
 			</div>
-			<chip-text class="mb-form" weight="medium" size="h4">${product.name}</chip-text>
+			<chip-text class="mb-form" weight="medium" size="h4">${product.Name}</chip-text>
 
 			<chip-list gap="sm">
 				<chip-listitem>
 					${
-						product.vegan
+						product.Is_Vegan
 							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.VEGAN_LABEL}</chip-text>`
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
 					}
 				</chip-listitem>
 				<chip-listitem>
 					${
-						product.cruelty_free
+						product.Cruelty_Free
 							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text>`
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_CRUELTYFREE_LABEL}</chip-text>`
-					}
-				</chip-listitem>
-				<chip-listitem>
-					${
-						product.parent
-							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.PARENT_CRUELTYFREE_LABEL}</chip-text>`
-							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.PARENT_NOT_CRUELTYFREE_LABEL}</chip-text>`
 					}
 				</chip-listitem>
 			</chip-list>
@@ -162,7 +162,7 @@ function buildResult(product) {
 					: `<chip-accordionitem class="mt-form ai--view-info" heading="${Localizer.VIEW_INFO_LABEL}">${product.info}</chip-accordionitem>`
 			}
 		`, {
-			image: `images/products/${product.image}`,
+			image: `images/${product.Image}`,
 			hideBlur: true
 		});
 

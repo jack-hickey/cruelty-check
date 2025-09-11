@@ -9,6 +9,17 @@ A simple web app that helps users quickly determine if a product is **vegan** an
 - Check if a product is cruelty-free  
 - Ad free, forever and always
 
+## Boring Stuff
+
+To import data locally using the seed file:
+```
+wrangler d1 execute DATABASE --local --file .\seed.sql
+```
+And to run the local development server:
+```
+wrangler pages dev . --d1=DATABASE=DATABASE
+```
+
 ## Support Me ☕
 
 If you like this project and want to support my work, you can buy me a coffee here:
