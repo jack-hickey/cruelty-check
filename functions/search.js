@@ -12,7 +12,11 @@ export async function onRequestPost(context) {
   const term = body.query || "";
 
 	const { results } = await env.DATABASE.prepare(
-    "SELECT * FROM Products WHERE Name LIKE ?"
+		`
+	 		SELECT p.*, b.Name AS Brand FROM Products p
+			LEFT JOIN Brands b ON b.ID = p.Brand_ID
+			WHERE p.Name LIKE ?
+		`
   ).bind(`%${term}%`).all();
 
   return Response.json(results);
