@@ -9,13 +9,15 @@ function resetMobileView() {
 function search() {
 	const query = txtSearch.value.trim();
 	if (!query) { return; }
-	
-	resetMobileView();
+
+	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
+	txtSearch.blur();	
 
 	Ajax.Post("search", {
 		body: {
 			query
 		},
+		LoadTimeout: 0,
 		success: {
 			ok: response => {
 				const products = response.body;
@@ -160,7 +162,7 @@ function buildResult(product) {
 					: `<chip-accordionitem class="mt-form ai--view-info" heading="${Localizer.VIEW_INFO_LABEL}">${product.info}</chip-accordionitem>`
 			}
 		`, {
-			image: `images/products/${product.image}`,
+			image: `images/${product.Image}`,
 			hideBlur: true
 		});
 
