@@ -13,7 +13,7 @@ export async function onRequestPost(context) {
 
 	const { results } = await env.DATABASE.prepare(
 		`
-	 		SELECT p.*, b.Name AS Brand FROM Products p
+	 		SELECT p.*, b.Name AS Brand, b.Cruelty_Free FROM Products p
 			LEFT JOIN Brands b ON b.ID = p.Brand_ID
 			WHERE p.Name LIKE ?
 		`
