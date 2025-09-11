@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
     return new Response("Invalid JSON", { status: 400 });
   }
 
-  const term = body.term || "";
+  const term = body.query || "";
 
 	const { results } = await env.DATABASE.prepare(
     "SELECT * FROM Products WHERE Name LIKE ?"
