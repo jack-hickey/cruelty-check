@@ -11,7 +11,7 @@ export async function onRequestPost(context) {
 
   const term = body.term || "";
 
-  const { results } = await env.DATABASE.prepare(
+	const { results } = await env.DATABASE.prepare(
     "SELECT * FROM Products WHERE Name LIKE ?"
   ).bind(`%${term}%`).all();
 
