@@ -25,7 +25,7 @@ export async function onRequest(context) {
     response = new Response(arrayBuffer, {
       headers: {
         'Content-Type': r2Object.httpMetadata.contentType || 'application/octet-stream',
-        'Cache-Control': 'public, max-age=86400', // 1 day at the edge
+        'Cache-Control': 'public, max-age=31536000'
       },
     });
 

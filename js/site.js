@@ -27,6 +27,11 @@ function search() {
 				});
 
 				displayResults(SearchArray(products, query, "_search"));
+			},
+			any: response => {
+				if (!response.ok) {
+					report("ERROR", "Application Error", `Search function yielded the following result:\n>${response.content}`);
+				}
 			}
 		}
 	});
