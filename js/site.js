@@ -30,7 +30,7 @@ function search() {
 			},
 			any: response => {
 				if (!response.ok) {
-					report("ERROR", "Application Error", `Search function yielded the following result:\n>${response.content}`);
+					report("ERROR", "Application Error", `Search function yielded the following result:\n>${response.content}`, true);
 				}
 			}
 		}
@@ -113,7 +113,7 @@ txtSearch.onkeyup = ev => {
 	}
 }
 
-function report(type, title, description) { 
+function report(type, title, description, suppressMessage) { 
 	Ajax.Post("report", {
 		body: {
 			type,
@@ -122,7 +122,9 @@ function report(type, title, description) {
 		},
 		success: {
 			ok: response => {
-				Dialog.ShowSuccess(Localizer.FEEDBACK_SUCCESS_TITLE, Localizer.FEEDBACK_SUCCESS_DESC);
+				if (!suppressMessage) {
+					Dialog.ShowSuccess(Localizer.FEEDBACK_SUCCESS_TITLE, Localizer.FEEDBACK_SUCCESS_DESC);
+				}
 			}
 		}
 	});
