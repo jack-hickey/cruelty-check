@@ -38,6 +38,10 @@ chip-frameheader header {
 	min-height: 100%;
 }
 
+#ctResults > ul > li > chip-card > * > .card-header {
+	min-height: 100px;
+}
+
 chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-header:not(:has(img + img)) img {
 	position: initial;
 	translate: none;
