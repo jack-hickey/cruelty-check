@@ -152,13 +152,6 @@ function buildResult(product) {
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_CRUELTYFREE_LABEL}</chip-text>`
 					}
 				</chip-listitem>
-				<chip-listitem>
-					${
-						product.Parent
-							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.PARENT_CRUELTYFREE_LABEL}</chip-text>`
-							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.PARENT_NOT_CRUELTYFREE_LABEL}</chip-text>`
-					}
-				</chip-listitem>
 			</chip-list>
 
 			${
