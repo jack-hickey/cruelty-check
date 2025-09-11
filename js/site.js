@@ -169,7 +169,7 @@ function buildResult(product) {
 					: `<chip-accordionitem class="mt-form ai--view-info" heading="${Localizer.VIEW_INFO_LABEL}">${product.info}</chip-accordionitem>`
 			}
 		`, {
-			image: `/images/${product.Image}`,
+			image: `/products/${product.Image}`,
 			hideBlur: true
 		});
 
