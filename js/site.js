@@ -33,14 +33,7 @@ function displayResults(products) {
 			className: "mt-form--lg"
 		}));
 
-		const searchUsed = txtSearch.value;
-
-		lblSearchTerm.textContent = searchUsed;
-
-		btnReportMissing.onclick = () => Dialog.ShowTextBox(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC, {
-			DefaultValue: searchUsed
-		})
-			.then(value => autoReportMissing(value));
+		btnReportMissing.onclick = () => Product.reportMissing();
 	}
 }
 

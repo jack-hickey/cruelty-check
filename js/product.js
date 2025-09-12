@@ -16,6 +16,12 @@ class Product {
 		}));
 	}
 
+	static reportMissing() {
+		Dialog.ShowTextBox(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC, {
+			DefaultValue: txtSearch.value
+		}).then(value => autoReportMissing(value));
+	}
+
 	reportIncorrect() {
 		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
 			Rows: 12,
