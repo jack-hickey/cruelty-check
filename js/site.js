@@ -67,7 +67,6 @@ btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localize
 		</chip-form>
 	`, {
 		NegativeText: "",
-		Theme: "FORM",
 		Size: "md",
 		OnCheckValid: dialog => {
 			return dialog.querySelector("chip-form").reportValidity();

@@ -2,7 +2,7 @@ Localizer.EMPTY_SEARCH_TITLE = "Nothing to see here";
 Localizer.EMPTY_SEARCH_DESC = `Nothing could be found matching '<span id="lblSearchTerm" class="fw-bold"></span>'. If you'd like, you can <chip-button variation="info-tertiary" id="btnReportMissing" button-style="inline">report the product missing</chip-button> to improve the chances of it being included.`;
 
 Localizer.MISSING_PRODUCT_TITLE = "Missing product";
-Localizer.MISSING_PRODUCT_DESC = "Thank you for helping in improving Cruelty Check's database of products! Just enter the name of the product that seems to be missing.";
+Localizer.MISSING_PRODUCT_DESC = "Thank you for keeping Cruelty Check's product listings up to date! Please provide some product information below.";
 
 Localizer.FEEDBACK_TITLE = "Feedback";
 Localizer.FEEDBACK_DESC = "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site!";

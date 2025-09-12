@@ -17,9 +17,32 @@ class Product {
 	}
 
 	static reportMissing() {
-		Dialog.ShowTextBox(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC, {
-			DefaultValue: txtSearch.value
-		}).then(value => autoReportMissing(value));
+		Dialog.ShowCustom(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC,
+			`
+				<chip-form>
+					<chip-input
+						id="txtProductName"
+						required
+						max-length="100"
+						label="Product">
+					</chip-input>
+
+					<chip-input
+						id="txtProductBrand"
+						required
+						class="mt-form"
+						max-length="100"
+						label="Brand/Company">
+					</chip-input>
+				</chip-form>
+			`, {
+				NegativeText: "",
+				Size: "md",
+				OnCheckValid: dialog => {
+					return dialog.querySelector("chip-form").reportValidity();
+				},
+				AffirmativeText: "Submit"
+		}).then(() => report(drpType.value, "User Submitted Feedback", `A user has reporting a product as missing:\n**Name**: ${txtProductName.value.trim()}\n**Brand**: ${txtProductBrand.value.trim()}`));
 	}
 
 	reportIncorrect() {
