@@ -42,6 +42,7 @@ async function onRequestPost(context) {
    		p.ID,
     	p.Name,
 			p.Image,
+			p.Is_Vegan,
     	b.Name AS Brand,
     	b.Cruelty_Free,
 			b.Animal_Testing,
