@@ -102,7 +102,7 @@ function buildResult(product) {
 	let avoidanceReasons = [],
 		avoidanceTooltip = "";
 
-	if ((product.Brand.CrueltyFree || product.Vegan) && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
+	if (product.Brand.CrueltyFree && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
 	if (product.Brand.ParentCompany.AnimalTesting) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
 
 	if (avoidanceReasons.length) {
