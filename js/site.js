@@ -13,28 +13,33 @@ function search() {
 	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
 	txtSearch.blur();	
 
+	Product.search(query).then(products => {
+		resultsContainer.innerHTML = "";
+		txtResultCount.innerHTML = "";
+
+		if (products.length) {
+			displayResults(products);
+		} else {
+			resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", Localizer.EMPTY_SEARCH_DESC,
+			{
+				heading: Localizer.EMPTY_SEARCH_TITLE,
+				icon: "fal fa-store-slash",
+				className: "mt-form--lg"
+			}));
+
+			lblSearchTerm.textContent = query;
+			btnReportMissing.onclick = () => Product.reportMissing();
+		}
+	});
 	Product.search(query).then(products => displayResults(products));
 }
 
 function displayResults(products) {
-	resultsContainer.innerHTML = "";
-	txtResultCount.innerHTML = "";
+	resultsContainer.addItems(products.map(product => buildResult(product)));
 
-	if (products.length) {
-		resultsContainer.addItems(products.map(product => buildResult(product)));
-		txtResultCount.innerHTML = products.length !== 1
-			? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
-			: Localizer.SEARCH_RESULT_TITLE;
-	} else {
-		resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", Localizer.EMPTY_SEARCH_DESC,
-		{
-			heading: Localizer.EMPTY_SEARCH_TITLE,
-			icon: "fal fa-store-slash",
-			className: "mt-form--lg"
-		}));
-
-		btnReportMissing.onclick = () => Product.reportMissing();
-	}
+	txtResultCount.innerHTML = products.length !== 1
+		? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
+		: Localizer.SEARCH_RESULT_TITLE;}
 }
 
 function autoReportMissing(product) {
