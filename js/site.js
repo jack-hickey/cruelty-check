@@ -21,7 +21,6 @@ function search() {
 		success: {
 			ok: response => {
 				const products = response.body;
-				console.log(response.content);
 
 				products.forEach(product => {
 					product._search = `${product.Brand} ${product.Name}`;

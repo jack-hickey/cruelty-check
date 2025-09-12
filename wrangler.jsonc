@@ -6,6 +6,13 @@
 		"not_found_handling": "single-page-application",
 		"directory": "."
 	},
+	"observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": true,
+      "head_sampling_rate": 1
+    }
+  },
  	"d1_databases": [
     {
       "binding": "DATABASE",
