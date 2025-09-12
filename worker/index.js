@@ -42,10 +42,13 @@ async function onRequestPost(context) {
    		p.ID,
     	p.Name,
 			p.Image,
+			p.Is_Vegan,
     	b.Name AS Brand,
     	b.Cruelty_Free,
+			b.Animal_Testing,
 			pb.Name As Parent_Brand,
     	pb.Cruelty_Free AS Parent_Cruelty_Free,
+			pb.Animal_Testing AS Parent_Animal_Testing,
     	(${scoreClauses.join(" + ")}) AS score
 		FROM Products p
 		LEFT JOIN Brands b ON b.ID = p.Brand_ID

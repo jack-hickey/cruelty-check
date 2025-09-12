@@ -13,23 +13,7 @@ function search() {
 	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
 	txtSearch.blur();	
 
-	Ajax.Post("search", {
-		body: {
-			query
-		},
-		LoadTimeout: 0,
-		success: {
-			ok: response => {
-				const products = response.body;
-
-				products.forEach(product => {
-					product._search = `${product.Brand} ${product.Name}`;
-				});
-
-				displayResults(SearchArray(products, query, "_search"));
-			}
-		}
-	});
+	Product.search(query).then(products => displayResults(products));
 }
 
 function displayResults(products) {
@@ -49,14 +33,7 @@ function displayResults(products) {
 			className: "mt-form--lg"
 		}));
 
-		const searchUsed = txtSearch.value;
-
-		lblSearchTerm.textContent = searchUsed;
-
-		btnReportMissing.onclick = () => Dialog.ShowTextBox(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC, {
-			DefaultValue: searchUsed
-		})
-			.then(value => autoReportMissing(value));
+		btnReportMissing.onclick = () => Product.reportMissing();
 	}
 }
 
@@ -74,8 +51,6 @@ btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localize
 				text="${Localizer.FEEDBACK_TYPE_PLACEHOLDER}">
 
 				<chip-dropdownitem group="${Localizer.FEEDBACK_BUG_GROUP}" value="BUG">${Localizer.FEEDBACK_BUG_LABEL}</chip-dropdownitem>
-				<chip-dropdownitem group="${Localizer.FEEDBACK_BUG_GROUP}" value="MISSING-PRODUCT">${Localizer.FEEDBACK_MISSING_PRODUCT_LABEL}</chip-dropdownitem>
-				<chip-dropdownitem group="${Localizer.FEEDBACK_BUG_GROUP}" value="INCORRECT-INFO">${Localizer.FEEDBACK_INCORRECT_INFORMATION_LABEL}</chip-dropdownitem>
 				<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="FEATURE">${Localizer.FEEDBACK_FEATURE_LABEL}</chip-dropdownitem>
 				<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="IMPROVEMENT">${Localizer.FEEDBACK_IMPROVEMENT_LABEL}</chip-dropdownitem>
 				<chip-dropdownitem group="${Localizer.FEEDBACK_CHAT_GROUP}" value="THANKS">${Localizer.FEEDBACK_THANKS_LABEL}</chip-dropdownitem>
@@ -91,8 +66,6 @@ btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localize
 			</chip-textarea>
 		</chip-form>
 	`, {
-		NegativeText: "",
-		Theme: "FORM",
 		Size: "md",
 		OnCheckValid: dialog => {
 			return dialog.querySelector("chip-form").reportValidity();
@@ -129,16 +102,17 @@ function buildResult(product) {
 	let avoidanceReasons = [],
 		avoidanceTooltip = "";
 
-	if ((product.Cruelty_Free || product.Is_Vegan) && !product.Parent_Cruelty_Free) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
+	if ((product.Brand.CrueltyFree || product.Vegan) && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
+	if (product.Brand.ParentCompany.AnimalTesting) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
 
 	if (avoidanceReasons.length) {
-		avoidanceTooltip = `${product.Parent_Brand} ${avoidanceReasons.join(" and ")}.`;
+		avoidanceTooltip = `${product.Brand.ParentCompany.Name} ${avoidanceReasons.join(" and ")}.`;
 	}
 
 	const result = document.createElementWithContents("chip-card",
 		`
 			<div class="h-align mt-card mb-xs">
-				<chip-text class="me-auto" variation="secondary">${product.Brand}</chip-text>
+				<chip-text class="me-auto" variation="secondary">${product.Brand.Name}</chip-text>
 				<chip-button
 					flush
 					class="btn--report-product"
@@ -153,15 +127,21 @@ function buildResult(product) {
 			<chip-list gap="sm">
 				<chip-listitem>
 					${
-						product.Is_Vegan
+						product.Vegan
 							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.VEGAN_LABEL}</chip-text>`
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
 					}
 				</chip-listitem>
 
 				${
-					product.Cruelty_Free
+					product.Brand.CrueltyFree
 						? `<chip-listitem><chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						: ""
+				}
+
+				${
+					product.Brand.AnimalTesting
+						? `<chip-listitem><chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand.Name)}</chip-text></chip-listitem>`
 						: ""
 				}
 
@@ -172,7 +152,7 @@ function buildResult(product) {
 								<chip-listitem>
 									<div class="h-align gap-sm">
 										<chip-text icon-colour="warning" icon="fas fa-exclamation-triangle">
-											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Parent_Brand)}
+											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Brand.ParentCompany.Name)}
 										</chip-text>
 
 										<chip-icon
@@ -185,27 +165,13 @@ function buildResult(product) {
 						: ""
 				}
 			</chip-list>
-
-			${
-				!product.info
-					? ""
-					: `<chip-accordionitem class="mt-form ai--view-info" heading="${Localizer.VIEW_INFO_LABEL}">${product.info}</chip-accordionitem>`
-			}
 		`, {
 			image: `/products/${product.Image}`,
 			hideBlur: true
 		});
 
 	result.classList.add("cd--product");
-
-	result.querySelector(".btn--report-product").onclick = () => {
-		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
-			Rows: 12,
-			Multiline:true
-		}).then(value => {
-			report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported that **${product.name}** by **${product.brand}** has incorrect information, stating:\n>${value}`);
-		});
-	};
+	result.querySelector(".btn--report-product").onclick = () => product.reportIncorrect();
 
 	return result;
 }
