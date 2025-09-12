@@ -1,0 +1,24 @@
+PRAGMA defer_foreign_keys=TRUE;
+CREATE TABLE IF NOT EXISTS "Products"(
+  "ID" INTEGER NOT NULL,
+  "Name" TEXT NOT NULL,
+  "Brand_ID" INTEGER NOT NULL,
+  "Is_Vegan" INTEGER NOT NULL,
+  "Image" TEXT,
+  PRIMARY KEY ("ID")
+);
+INSERT INTO Products VALUES(1,'Intensive Repair Shampoo',2,1,'38757213.png.avif');
+INSERT INTO Products VALUES(2,'Filtered Fresh Semi Skimmed Milk',4,0,'ee6600e1-ee2e-4ffb-9ad7-9b1dc2bd6974_476587947.avif');
+CREATE TABLE IF NOT EXISTS "Brands"(
+  "ID" INTEGER NOT NULL,
+  "Name" TEXT NOT NULL,
+  "Parent_ID" INTEGER NOT NULL,
+  "Cruelty_Free" INTEGER NOT NULL,
+  "B_Corp" INTEGER NOT NULL,
+  "Fair_Trade" INTEGER NOT NULL,
+  PRIMARY KEY ("ID")
+);
+INSERT INTO Brands VALUES(1,'Unilever',0,0,0,0);
+INSERT INTO Brands VALUES(2,'Dove',1,1,0,0);
+INSERT INTO Brands VALUES(3,'Arla Foods',0,0,0,0);
+INSERT INTO Brands VALUES(4,'Cravendale',3,0,0,0);

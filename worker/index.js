@@ -38,12 +38,19 @@ async function onRequestPost(context) {
     params.push(word, word);
   });
   const sql = `
-    SELECT p.*, b.Name AS Brand, b.Cruelty_Free,
-      (${scoreClauses.join(" + ")}) AS score
-    FROM Products p
-    LEFT JOIN Brands b ON b.ID = p.Brand_ID
-    WHERE ${whereClauses.join(" OR ")}
-    ORDER BY score DESC
+		SELECT 
+   		p.ID,
+    	p.Name,
+    	b.Name AS Brand,
+    	b.Cruelty_Free,
+			pb.Name As Parent_Brand,
+    	pb.Cruelty_Free AS Parent_Cruelty_Free,
+    	(${scoreClauses.join(" + ")}) AS score
+		FROM Products p
+		LEFT JOIN Brands b ON b.ID = p.Brand_ID
+		LEFT JOIN Brands pb ON pb.ID = b.Parent_ID
+		WHERE ${whereClauses.join(" OR ")}
+		ORDER BY score DESC;
   `;
   const { results } = await env.DATABASE.prepare(sql).bind(...params).all();
   return Response.json(results);

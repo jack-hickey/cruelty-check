@@ -37,10 +37,13 @@ Localizer.PARENT_NOT_CRUELTYFREE_LABEL = "Parent company is not cruelty-free";
 Localizer.VIEW_INFO_LABEL = "View info";
 
 Localizer.INCORRECT_INFORMATION_TITLE = "Incorrect product information";
-Localizer.INCORRECT_INFORMATION_DESC = "Please explain below the information you believe to be incorrect, and if possible, the correct information";
+Localizer.INCORRECT_INFORMATION_DESC = "Please explain below the information you believe to be incorrect, and if possible, the correct information.";
 
 Localizer.SEARCH_RESULT_TITLE = '<span class="fw-bold">1</span> product found';
 Localizer.SEARCH_RESULTS_TITLE = "{count} products found";
 
 Localizer.FEEDBACK_BUTTON_LABEL = "Give feedback";
 Localizer.SUPPORT_BUTTON_LABEL = "Support me on Ko-Fi!!!";
+
+Localizer.OWNED_BY_LABEL = "Owned by {brand}";
+Localizer.SUPPORTS_NON_CRUELTYFREE = "supports non-cruelty-free brands and/or products";
