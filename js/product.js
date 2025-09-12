@@ -15,4 +15,13 @@ class Product {
 			}
 		}));
 	}
+
+	reportIncorrect() {
+		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
+			Rows: 12,
+			Multiline:true
+		}).then(value => {
+			report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported that **${this.Name}** by **${this.Brand.Name}** has incorrect information, stating:\n>${value}`);
+		});
+	}
 }

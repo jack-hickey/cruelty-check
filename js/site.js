@@ -180,15 +180,7 @@ function buildResult(product) {
 		});
 
 	result.classList.add("cd--product");
-
-	result.querySelector(".btn--report-product").onclick = () => {
-		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
-			Rows: 12,
-			Multiline:true
-		}).then(value => {
-			report("INCORRECT-INFO", "Incorrect Product Information", `Using the built in feedback feature, a user has reported that **${product.Name}** by **${product.Brand.Name}** has incorrect information, stating:\n>${value}`);
-		});
-	};
+	result.querySelector(".btn--report-product").onclick = () => product.reportIncorrect();
 
 	return result;
 }
