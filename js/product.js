@@ -36,7 +36,6 @@ class Product {
 					</chip-input>
 				</chip-form>
 			`, {
-				NegativeText: "",
 				Size: "md",
 				OnCheckValid: dialog => {
 					return dialog.querySelector("chip-form").reportValidity();
