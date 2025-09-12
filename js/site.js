@@ -150,13 +150,11 @@ function buildResult(product) {
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
 					}
 				</chip-listitem>
-				<chip-listitem>
-					${
-						product.Cruelty_Free
-							? `<chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text>`
-							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_CRUELTYFREE_LABEL}</chip-text>`
-					}
-				</chip-listitem>
+				${
+					product.Cruelty_Free
+						? `<chip-listitem><chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						: ""
+				}
 			</chip-list>
 
 			${
