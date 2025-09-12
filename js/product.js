@@ -41,7 +41,7 @@ class Product {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
 				AffirmativeText: "Submit"
-		}).then(() => report(drpType.value, "User Submitted Feedback", `A user has reporting a product as missing:\n**Name**: ${txtProductName.value.trim()}\n**Brand**: ${txtProductBrand.value.trim()}`));
+		}).then(() => report("MISSING-PRODUCT", "User Submitted Feedback", `A user has reporting a product as missing:\n**Name**: ${txtProductName.value.trim()}\n**Brand**: ${txtProductBrand.value.trim()}`));
 	}
 
 	reportIncorrect() {
