@@ -47,3 +47,5 @@ Localizer.SUPPORT_BUTTON_LABEL = "Support me on Ko-Fi!!!";
 
 Localizer.OWNED_BY_LABEL = "Owned by {brand}";
 Localizer.SUPPORTS_NON_CRUELTYFREE = "supports non-cruelty-free brands and/or products";
+Localizer.ANIMAL_TESTING_LABEL = "{brand} tests on animals";
+Localizer.PARENT_ANIMAL_TESTING = "tests on animals";

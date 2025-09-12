@@ -130,6 +130,7 @@ function buildResult(product) {
 		avoidanceTooltip = "";
 
 	if ((product.Cruelty_Free || product.Is_Vegan) && !product.Parent_Cruelty_Free) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
+	if (product.Parent_Animal_Testing) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
 
 	if (avoidanceReasons.length) {
 		avoidanceTooltip = `${product.Parent_Brand} ${avoidanceReasons.join(" and ")}.`;
@@ -162,6 +163,12 @@ function buildResult(product) {
 				${
 					product.Cruelty_Free
 						? `<chip-listitem><chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						: ""
+				}
+
+				${
+					product.Animal_Testing
+						? `<chip-listitem><chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand)}</chip-text></chip-listitem>`
 						: ""
 				}
 

@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS "Brands"(
   "Parent_ID" INTEGER NOT NULL,
   "Cruelty_Free" INTEGER NOT NULL,
   "B_Corp" INTEGER NOT NULL,
-  "Fair_Trade" INTEGER NOT NULL,
+  "Fair_Trade" INTEGER NOT NULL, "Animal_Testing" INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY ("ID")
 );
-INSERT INTO Brands VALUES(1,'Unilever',0,0,0,0);
-INSERT INTO Brands VALUES(2,'Dove',1,1,0,0);
-INSERT INTO Brands VALUES(3,'Arla Foods',0,0,0,0);
-INSERT INTO Brands VALUES(4,'Cravendale',3,0,0,0);
+INSERT INTO Brands VALUES(1,'Unilever',0,0,0,0,0);
+INSERT INTO Brands VALUES(2,'Dove',1,1,0,0,0);
+INSERT INTO Brands VALUES(3,'Arla Foods',0,0,0,0,0);
+INSERT INTO Brands VALUES(4,'Cravendale',3,0,0,0,0);
