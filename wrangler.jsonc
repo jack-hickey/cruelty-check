@@ -16,7 +16,8 @@
  	"d1_databases": [
     {
       "binding": "DATABASE",
-      "database_name": "cruelty_check"
+      "database_name": "cruelty_check",
+      "database_id": "4019788c-c882-45bf-b6e4-8ab9d60243fa"
     }
   ],
   "r2_buckets": [
