@@ -41,6 +41,7 @@ async function onRequestPost(context) {
 		SELECT 
    		p.ID,
     	p.Name,
+			p.Image,
     	b.Name AS Brand,
     	b.Cruelty_Free,
 			pb.Name As Parent_Brand,
