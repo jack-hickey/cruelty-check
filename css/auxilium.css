@@ -3853,7 +3853,7 @@ a.card-frame {
 
 .dialog>.modal-dialog {
 	height: calc(100% - var(--dialog-margin) * 2);
-	max-width: var(--dialog-width);
+	max-width: min(90%, var(--dialog-width));
 	margin: var(--dialog-margin) auto;
 }
 
@@ -11154,7 +11154,7 @@ chip-grid {
 	}
 
 	.dialog>.modal-dialog {
-		max-width: var(--dialog-width);
+		max-width: min(90%, var(--dialog-width));
 		margin-right: auto;
 		margin-left: auto
 	}
