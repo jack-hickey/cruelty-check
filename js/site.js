@@ -127,6 +127,15 @@ function report(type, title, description, suppressMessage) {
 }
 
 function buildResult(product) {
+	let avoidanceReasons = [],
+		avoidanceTooltip = "";
+
+	if ((product.Cruelty_Free || product.Is_Vegan) && !product.Parent_Cruelty_Free) { avoidanceReasons.push(`supports non-cruelty-free brands and/or products`); }
+
+	if (avoidanceReasons.length) {
+		avoidanceTooltip = `${product.Parent_Brand} ${avoidanceReasons.join(" and ")}.`;
+	}
+
 	const result = document.createElementWithContents("chip-card",
 		`
 			<div class="h-align mt-card mb-xs">
@@ -150,9 +159,30 @@ function buildResult(product) {
 							: `<chip-text icon-colour="danger" icon="fas fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
 					}
 				</chip-listitem>
+
 				${
 					product.Cruelty_Free
 						? `<chip-listitem><chip-text icon-colour="success" icon="fas fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						: ""
+				}
+
+				${
+					avoidanceTooltip
+						?
+							`
+								<chip-listitem>
+									<div class="h-align gap-sm">
+										<chip-text icon-colour="warning" icon="fas fa-exclamation-triangle">
+											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Parent_Brand)}
+										</chip-text>
+
+										<chip-icon
+											tooltip="${avoidanceTooltip}"
+											icon="far fa-question-circle">
+										</chip-icon>
+									</div>
+								</chip-listitem>
+							`
 						: ""
 				}
 			</chip-list>

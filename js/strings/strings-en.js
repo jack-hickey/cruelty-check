@@ -44,3 +44,5 @@ Localizer.SEARCH_RESULTS_TITLE = "{count} products found";
 
 Localizer.FEEDBACK_BUTTON_LABEL = "Give feedback";
 Localizer.SUPPORT_BUTTON_LABEL = "Support me on Ko-Fi!!!";
+
+Localizer.OWNED_BY_LABEL = "Owned by {brand}";

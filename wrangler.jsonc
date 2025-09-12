@@ -1,7 +1,7 @@
 {
 	"name": "cruelty-check",
 	"compatibility_date": "2025-09-11",
-	"main": "worker/index.js",
+	"main": "worker/index.min.js",
 	"assets": {
 		"not_found_handling": "single-page-application",
 		"directory": "."
