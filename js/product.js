@@ -19,30 +19,34 @@ class Product {
 	static add() {
 		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
-				<chip-form>
-					<chip-input
-						id="txtProductName"
-						required
-						max-length="100"
-						label="Product name">
-					</chip-input>
+				<chip-tabgroup>
+					<chip-tab>
+						<chip-form>
+							<chip-input
+								id="txtProductName"
+								required
+								max-length="100"
+								label="Product name">
+							</chip-input>
 
-					<chip-dropdown
-						id="drpBrands"
-						class="mt-form"
-						default="Choose a brand"
-						required
-						searchable
-						label="Brand">
-					</chip-dropdown>
+							<chip-dropdown
+								id="drpBrands"
+								class="mt-form"
+								default="Choose a brand"
+								required
+								searchable
+								label="Brand">
+							</chip-dropdown>
 
-					<chip-checkbox
-						id="cbVegan"
-						class="mt-form"
-						helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
-						label="This product is vegan"
-					</chip-checkbox>
-				</chip-form>
+							<chip-checkbox
+								id="cbVegan"
+								class="mt-form"
+								helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
+								label="This product is vegan"
+							</chip-checkbox>
+						</chip-form>
+					</chip-tab>
+				</chip-tabgroup>
 			`, {
 				Size: "md",
 				OnRefreshEvents: dialog => {
@@ -55,7 +59,7 @@ class Product {
 					};
 				},
 				OnCheckValid: dialog => {
-					return dialog.querySelector("chip-form").reportValidity();
+					return ![...document.querySelectorAll("chip-form")].filter(x => !x.reportValidity()).length;
 				},
 				AffirmativeText: "Submit"
 		}).then(() => Ajax.Post("addproduct", {

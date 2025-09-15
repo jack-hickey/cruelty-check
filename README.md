@@ -13,7 +13,7 @@ A simple web app that helps users quickly determine if a product is **vegan** an
 
 To import data locally using the seed file:
 ```
-wrangler d1 execute cruelty_check --local --file .\seed.sqlite
+wrangler d1 execute cruelty_check --local --file seed.sqlite
 ```
 And to run the local development server:
 ```
