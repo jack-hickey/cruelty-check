@@ -95,6 +95,7 @@ async function onRequestPost(context) {
 		LEFT JOIN Brands b ON b.ID = p.Brand_ID
 		LEFT JOIN Brands pb ON pb.ID = b.Parent_ID
 		WHERE ${whereClauses.join(" OR ")}
+		AND p.Accepted = 1
 		ORDER BY score DESC;
   `;
   const { results } = await env.DATABASE.prepare(sql).bind(...params).all();
