@@ -16,7 +16,7 @@ class Product {
 		}));
 	}
 
-	static reportMissing() {
+	static add() {
 		Dialog.ShowCustom(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC,
 			`
 				<chip-form>

@@ -28,7 +28,7 @@ function search() {
 			}));
 
 			lblSearchTerm.textContent = query;
-			btnReportMissing.onclick = () => Product.reportMissing();
+			btnReportMissing.onclick = () => Product.add();
 		}
 	});
 	Product.search(query).then(products => displayResults(products));
@@ -39,11 +39,7 @@ function displayResults(products) {
 
 	txtResultCount.innerHTML = products.length !== 1
 		? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
-		: Localizer.SEARCH_RESULT_TITLE;}
-}
-
-function autoReportMissing(product) {
-	report("MISSING-PRODUCT", "Missing Product Report", `Using the built in feedback feature, a user has reported the following product as missing:\n>${product}`);
+		: Localizer.SEARCH_RESULT_TITLE;
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localizer.FEEDBACK_DESC,
