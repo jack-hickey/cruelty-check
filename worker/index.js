@@ -17,6 +17,24 @@ async function onRequest(context) {
 }
 __name(onRequest, "onRequest");
 
+// brands.js
+async function onRequestBrands(context) {
+  const { request, env } = context;
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response("Invalid JSON", { status: 400 });
+  }
+
+	const { results }= await env.DATABASE.prepare("SELECT * FROM Brands WHERE INSTR(LOWER(Name), ?) > 0 ORDER BY Name")
+		.bind(body.query.toLowerCase()).all();
+
+	return Response.json(results);
+}
+
+__name(onRequestBrands, "onRequestPost");
+
 // search.js
 async function onRequestPost(context) {
   const { request, env } = context;
@@ -141,6 +159,13 @@ var routes = [
     middlewares: [],
     modules: [onRequestPost]
   },
+	{
+		routePath: "/brands",
+		mountPath: "/",
+		method: "POST",
+		middlewares: [],
+		modules: [onRequestBrands]
+	},
   {
     routePath: "/report",
     mountPath: "/",

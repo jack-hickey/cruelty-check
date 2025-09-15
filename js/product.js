@@ -17,26 +17,43 @@ class Product {
 	}
 
 	static add() {
-		Dialog.ShowCustom(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC,
+		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
 				<chip-form>
 					<chip-input
 						id="txtProductName"
 						required
 						max-length="100"
-						label="Product">
+						label="Product name">
 					</chip-input>
 
-					<chip-input
-						id="txtProductBrand"
-						required
+					<chip-dropdown
+						id="drpBrands"
 						class="mt-form"
-						max-length="100"
-						label="Brand/Company">
-					</chip-input>
+						default="Choose a brand"
+						required
+						searchable
+						label="Brand">
+					</chip-dropdown>
+
+					<chip-checkbox
+						id="cbVegan"
+						class="mt-form"
+						helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
+						label="This product is vegan"
+					</chip-checkbox>
 				</chip-form>
 			`, {
 				Size: "md",
+				OnRefreshEvents: dialog => {
+					dialog.querySelector("#drpBrands").GetSearchedItems = async query => {
+						const brands = await Brand.getAll(query);
+
+						return brands.map(brand => document.createElementWithContents("chip-dropdownitem", brand.Name, {
+							value: brand.ID
+						}));
+					};
+				},
 				OnCheckValid: dialog => {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
