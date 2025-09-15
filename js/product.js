@@ -58,7 +58,18 @@ class Product {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
 				AffirmativeText: "Submit"
-		}).then(() => report("MISSING-PRODUCT", "User Submitted Feedback", `A user has reporting a product as missing:\n**Name**: ${txtProductName.value.trim()}\n**Brand**: ${txtProductBrand.value.trim()}`));
+		}).then(() => Ajax.Post("addbrand", {
+			body: {
+				Name: txtProductName.value.trim(),
+				BrandID: parseInt(drpBrands.value) || 0,
+				Vegan: cbVegan.checked
+			},
+			success: {
+				ok: response => {
+					Dialog.ShowSuccess("Product submitted", "Thank you for submitting a new product to Cruelty Check! Your submission has been sent for review and will be visible on the site once accepted.");
+				}
+			}
+		}));
 	}
 
 	reportIncorrect() {

@@ -17,6 +17,29 @@ async function onRequest(context) {
 }
 __name(onRequest, "onRequest");
 
+// addbrand.js
+async function onRequestAddBrand(context) {
+  const { request, env } = context;
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response("Invalid JSON", { status: 400 });
+	}
+
+	if (!body.Name || !body.BrandID) { return new Response("Invalid JSON", { status: 400 }); }
+
+	const { results } = await env.DATABASE
+		.prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan) VALUES (?, ?, ?)")
+		.bind(body.Name, body.BrandID, body.Vegan ? 1 : 0)
+		.run();
+
+	return new Response("Ok", { status: 200 });
+}
+
+__name(onRequestAddBrand, "onRequestPost");
+
 // brands.js
 async function onRequestBrands(context) {
   const { request, env } = context;
@@ -152,6 +175,13 @@ var routes = [
     middlewares: [],
     modules: [onRequest]
   },
+	{
+		routePath: "/addbrand",
+		mountPath: "/",
+		method: "POST",
+		middlewares: [],
+		modules: [onRequestAddBrand]
+	},
   {
     routePath: "/search",
     mountPath: "/",
