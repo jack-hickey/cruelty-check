@@ -58,7 +58,7 @@ class Product {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
 				AffirmativeText: "Submit"
-		}).then(() => Ajax.Post("addbrand", {
+		}).then(() => Ajax.Post("addproduct", {
 			body: {
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,

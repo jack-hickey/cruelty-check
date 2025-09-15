@@ -17,8 +17,8 @@ async function onRequest(context) {
 }
 __name(onRequest, "onRequest");
 
-// addbrand.js
-async function onRequestAddBrand(context) {
+// addproduct.js
+async function onRequestAddProduct(context) {
   const { request, env } = context;
 
   let body;
@@ -38,7 +38,7 @@ async function onRequestAddBrand(context) {
 	return new Response("Ok", { status: 200 });
 }
 
-__name(onRequestAddBrand, "onRequestPost");
+__name(onRequestAddProduct, "onRequestPost");
 
 // brands.js
 async function onRequestBrands(context) {
@@ -176,11 +176,11 @@ var routes = [
     modules: [onRequest]
   },
 	{
-		routePath: "/addbrand",
+		routePath: "/addproduct",
 		mountPath: "/",
 		method: "POST",
 		middlewares: [],
-		modules: [onRequestAddBrand]
+		modules: [onRequestAddProduct]
 	},
   {
     routePath: "/search",
