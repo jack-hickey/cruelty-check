@@ -41,7 +41,7 @@ async function onRequestAddBrand(context) {
 	];
 
 	await env.DATABASE
-  	.prepare("INSERT INTO Brands (Name, Parent_ID, Cruelty_Free, B_Corp, Fair_Trade, Animal_Testing) VALUES (?, ?, ?, ?, ?, ?)")
+  	.prepare("INSERT OR IGNORE INTO Brands (Name, Parent_ID, Cruelty_Free, B_Corp, Fair_Trade, Animal_Testing) VALUES (?, ?, ?, ?, ?, ?)")
   	.bind(...params)
   	.run();
 
