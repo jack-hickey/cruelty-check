@@ -49,7 +49,7 @@ class Product {
 					<chip-tab>
 						<chip-header class="mb-lg" size="4">Add a new brand</chip-header>
 
-						<chip-form>
+						<chip-form id="frmBrand">
 							<chip-input
 								id="txtBrandName"
 								required
@@ -118,6 +118,33 @@ class Product {
 						document.querySelector(".dialog .card-footer").toggleClass("d-none", tabGroup.selectedIndex === 1);
 					}
 
+					dialog.querySelector("#btnAddBrand").onclick = () => {
+						if (dialog.querySelector("#frmBrand").reportValidity()) {
+							Ajax.Post("addbrand", {
+								body: {
+									Name: txtBrandName.value.trim(),
+									ParentID: parseInt(drpBrandParent.value) || null,
+									CrueltyFree: cbCrueltyFree.checked,
+									BCorp: cbBCorp.checked,
+									FairTrade: cbFairTrade.checked,
+									AnimalTesting: cbAnimalTesting.checked
+								},
+								success: {
+									ok: () => {
+										dialog.querySelector("chip-tab").Select();
+
+										txtBrandName.value = "";
+										drpBrandParent.value = "";
+										cbCrueltyFree.checked = false;
+										cbBCorp.checked = false;
+										cbFairTrade.checked = false;
+										cbAnimalTesting.checked = false;
+									}
+								}
+							});
+						}
+					}
+
 					dialog.querySelectorAll(".brand-selector").forEach(x => x.GetSearchedItems = async query => {
 						let brands = await Brand.getAll(query),
 							items = [];
@@ -138,9 +165,7 @@ class Product {
 						return items;
 					});
 				},
-				OnCheckValid: dialog => {
-					return ![...document.querySelectorAll("chip-form")].filter(x => !x.reportValidity()).length;
-				},
+				OnCheckValid: dialog => dialog.querySelector("chip-form").reportValidity(),
 				AffirmativeText: "Submit"
 		}).then(() => Ajax.Post("addproduct", {
 			body: {
