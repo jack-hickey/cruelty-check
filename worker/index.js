@@ -17,6 +17,47 @@ async function onRequest(context) {
 }
 __name(onRequest, "onRequest");
 
+// addproduct.js
+async function onRequestAddProduct(context) {
+  const { request, env } = context;
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response("Invalid JSON", { status: 400 });
+	}
+
+	if (!body.Name || !body.BrandID) { return new Response("Invalid JSON", { status: 400 }); }
+
+	const { results } = await env.DATABASE
+		.prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan) VALUES (?, ?, ?)")
+		.bind(body.Name, body.BrandID, body.Vegan ? 1 : 0)
+		.run();
+
+	return new Response("Ok", { status: 200 });
+}
+
+__name(onRequestAddProduct, "onRequestPost");
+
+// brands.js
+async function onRequestBrands(context) {
+  const { request, env } = context;
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response("Invalid JSON", { status: 400 });
+  }
+
+	const { results }= await env.DATABASE.prepare("SELECT * FROM Brands WHERE INSTR(LOWER(Name), ?) > 0 ORDER BY Name")
+		.bind(body.query.toLowerCase()).all();
+
+	return Response.json(results);
+}
+
+__name(onRequestBrands, "onRequestPost");
+
 // search.js
 async function onRequestPost(context) {
   const { request, env } = context;
@@ -54,6 +95,7 @@ async function onRequestPost(context) {
 		LEFT JOIN Brands b ON b.ID = p.Brand_ID
 		LEFT JOIN Brands pb ON pb.ID = b.Parent_ID
 		WHERE ${whereClauses.join(" OR ")}
+		AND p.Accepted = 1
 		ORDER BY score DESC;
   `;
   const { results } = await env.DATABASE.prepare(sql).bind(...params).all();
@@ -134,6 +176,13 @@ var routes = [
     middlewares: [],
     modules: [onRequest]
   },
+	{
+		routePath: "/addproduct",
+		mountPath: "/",
+		method: "POST",
+		middlewares: [],
+		modules: [onRequestAddProduct]
+	},
   {
     routePath: "/search",
     mountPath: "/",
@@ -141,6 +190,13 @@ var routes = [
     middlewares: [],
     modules: [onRequestPost]
   },
+	{
+		routePath: "/brands",
+		mountPath: "/",
+		method: "POST",
+		middlewares: [],
+		modules: [onRequestBrands]
+	},
   {
     routePath: "/report",
     mountPath: "/",

@@ -16,32 +16,60 @@ class Product {
 		}));
 	}
 
-	static reportMissing() {
-		Dialog.ShowCustom(Localizer.MISSING_PRODUCT_TITLE, Localizer.MISSING_PRODUCT_DESC,
+	static add() {
+		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
 				<chip-form>
 					<chip-input
 						id="txtProductName"
 						required
 						max-length="100"
-						label="Product">
+						label="Product name">
 					</chip-input>
 
-					<chip-input
-						id="txtProductBrand"
-						required
+					<chip-dropdown
+						id="drpBrands"
 						class="mt-form"
-						max-length="100"
-						label="Brand/Company">
-					</chip-input>
+						default="Choose a brand"
+						required
+						searchable
+						label="Brand">
+					</chip-dropdown>
+
+					<chip-checkbox
+						id="cbVegan"
+						class="mt-form"
+						helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
+						label="This product is vegan"
+					</chip-checkbox>
 				</chip-form>
 			`, {
 				Size: "md",
+				OnRefreshEvents: dialog => {
+					dialog.querySelector("#drpBrands").GetSearchedItems = async query => {
+						const brands = await Brand.getAll(query);
+
+						return brands.map(brand => document.createElementWithContents("chip-dropdownitem", brand.Name, {
+							value: brand.ID
+						}));
+					};
+				},
 				OnCheckValid: dialog => {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
 				AffirmativeText: "Submit"
-		}).then(() => report("MISSING-PRODUCT", "User Submitted Feedback", `A user has reporting a product as missing:\n**Name**: ${txtProductName.value.trim()}\n**Brand**: ${txtProductBrand.value.trim()}`));
+		}).then(() => Ajax.Post("addproduct", {
+			body: {
+				Name: txtProductName.value.trim(),
+				BrandID: parseInt(drpBrands.value) || 0,
+				Vegan: cbVegan.checked
+			},
+			success: {
+				ok: response => {
+					Dialog.ShowSuccess("Product submitted", "Thank you for submitting a new product to Cruelty Check! Your submission has been sent for review and will be visible on the site once accepted.");
+				}
+			}
+		}));
 	}
 
 	reportIncorrect() {
