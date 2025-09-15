@@ -1,24 +1,21 @@
 PRAGMA defer_foreign_keys=TRUE;
-CREATE TABLE IF NOT EXISTS "Products"(
-  "ID" INTEGER NOT NULL,
-  "Name" TEXT NOT NULL,
-  "Brand_ID" INTEGER NOT NULL,
-  "Is_Vegan" INTEGER NOT NULL,
-  "Image" TEXT,
-  PRIMARY KEY ("ID")
+CREATE TABLE Products (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT DEFAULT '',
+    Image TEXT DEFAULT '',
+    Brand_ID INTEGER DEFAULT 0,
+    Is_Vegan INTEGER DEFAULT 0,
+    Accepted INTEGER DEFAULT 0,
+    FOREIGN KEY (Brand_ID) REFERENCES Brands(ID)
 );
-INSERT INTO Products VALUES(1,'Intensive Repair Shampoo',2,1,'38757213.png.avif');
-INSERT INTO Products VALUES(2,'Filtered Fresh Semi Skimmed Milk',4,0,'ee6600e1-ee2e-4ffb-9ad7-9b1dc2bd6974_476587947.avif');
-CREATE TABLE IF NOT EXISTS "Brands"(
-  "ID" INTEGER NOT NULL,
-  "Name" TEXT NOT NULL,
-  "Parent_ID" INTEGER NOT NULL,
-  "Cruelty_Free" INTEGER NOT NULL,
-  "B_Corp" INTEGER NOT NULL,
-  "Fair_Trade" INTEGER NOT NULL, "Animal_Testing" INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY ("ID")
+CREATE TABLE Brands (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL DEFAULT '',
+    Parent_ID INTEGER DEFAULT 0,
+    Cruelty_Free INTEGER NOT NULL DEFAULT 0,
+    B_Corp INTEGER NOT NULL DEFAULT 0,
+    Fair_Trade INTEGER NOT NULL DEFAULT 0,
+    Animal_Testing INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (Parent_ID) REFERENCES Brands(ID)
 );
-INSERT INTO Brands VALUES(1,'Unilever',0,0,0,0,1);
-INSERT INTO Brands VALUES(2,'Dove',1,1,0,0,0);
-INSERT INTO Brands VALUES(3,'Arla Foods',0,0,0,0,1);
-INSERT INTO Brands VALUES(4,'Cravendale',3,0,0,0,0);
+DELETE FROM sqlite_sequence;

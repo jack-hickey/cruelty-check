@@ -18,6 +18,10 @@
 	--header-border-width: 0;
 }
 
+#tgAddProduct .tab-group__tabs {
+	display: none;
+}
+
 .box--main {
 	display: flex;
 	align-items: center;
