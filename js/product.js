@@ -19,7 +19,7 @@ class Product {
 	static add() {
 		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
-				<chip-tabgroup>
+				<chip-tabgroup id="tgAddProduct">
 					<chip-tab>
 						<chip-form>
 							<chip-input
@@ -31,7 +31,7 @@ class Product {
 
 							<chip-dropdown
 								id="drpBrands"
-								class="mt-form"
+								class="mt-form brand-selector"
 								default="Choose a brand"
 								required
 								searchable
@@ -46,17 +46,97 @@ class Product {
 							</chip-checkbox>
 						</chip-form>
 					</chip-tab>
+					<chip-tab>
+						<chip-header class="mb-lg" size="4">Add a new brand</chip-header>
+
+						<chip-form>
+							<chip-input
+								id="txtBrandName"
+								required
+								label="Brand name">
+							</chip-input>
+
+							<chip-dropdown
+								id="drpBrandParent"
+								searchable
+								helper-text="If this brand is owned by a parent company, please specify the parent here."
+								class="mt-form brand-selector"
+								secondary-label="(optional)"
+								label="Parent company">
+							</chip-dropdown>
+
+							<chip-header size="5" class="mt-form">This brand:</chip-header>
+
+							<chip-list class="mt-sm" gap="sm">
+								<chip-listitem>
+									<chip-checkbox
+										id="cbCrueltyFree"
+										label="Is certified cruelty-free">
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbBCorp"
+										label="Is a B Corporation">
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbFairTrade"
+										label="Is Fair Trade certified">
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbAnimalTesting"
+										label="Engages in animal testing">
+									</chip-checkbox>
+								</chip-listitem>
+							</chip-list>
+
+							<div class="h-align ms-auto w-fit gap-sm mt-card">
+								<chip-button
+									step-direction="previous"
+									variation="info-tertiary"
+									icon="fas fa-chevron-left">
+									Back
+								</chip-button>
+								<chip-button
+									id="btnAddBrand">
+									Add brand
+								</chip-button>
+							</div>
+						</chip-form>
+					</chip-tab>
 				</chip-tabgroup>
 			`, {
 				Size: "md",
 				OnRefreshEvents: dialog => {
-					dialog.querySelector("#drpBrands").GetSearchedItems = async query => {
-						const brands = await Brand.getAll(query);
+					const tabGroup = dialog.querySelector("chip-tabgroup");
 
-						return brands.map(brand => document.createElementWithContents("chip-dropdownitem", brand.Name, {
+					tabGroup.onchange = () => {
+						document.querySelector(".dialog .card-footer").toggleClass("d-none", tabGroup.selectedIndex === 1);
+					}
+
+					dialog.querySelectorAll(".brand-selector").forEach(x => x.GetSearchedItems = async query => {
+						let brands = await Brand.getAll(query),
+							items = [];
+
+						items = brands.map(brand => document.createElementWithContents("chip-dropdownitem", brand.Name, {
 							value: brand.ID
 						}));
-					};
+
+						if (x.id !== "drpBrandParent") {
+							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
+								onclick: () => {
+									dialog.querySelector("chip-tab + chip-tab").Select();
+								},
+								icon: "fas fa-plus"
+							}));
+						}
+
+						return items;
+					});
 				},
 				OnCheckValid: dialog => {
 					return ![...document.querySelectorAll("chip-form")].filter(x => !x.reportValidity()).length;
