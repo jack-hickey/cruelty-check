@@ -85,6 +85,7 @@ class Product {
 							<chip-dropdown
 								id="drpBrandParent"
 								searchable
+								default="Choose a brand"
 								helper-text="If this brand is owned by a parent company, please specify the parent here."
 								class="mt-form brand-selector"
 								secondary-label="(optional)"
@@ -175,8 +176,12 @@ class Product {
 										dialog.querySelector("chip-tab").Select();
 
 										txtBrandName.value = "";
+
+										// Don't ask
 										drpBrandParent.value = "";
 										drpBrandParent.text = "";
+										drpBrandParent.text = "Choose a company";
+
 										cbCrueltyFree.checked = false;
 										cbBCorp.checked = false;
 										cbFairTrade.checked = false;
