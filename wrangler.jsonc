@@ -1,29 +1,54 @@
 {
-	"name": "cruelty-check",
-	"compatibility_date": "2025-09-11",
-	"main": "worker/index.js",
-	"assets": {
-		"not_found_handling": "single-page-application",
-		"directory": "."
-	},
-	"observability": {
+  "name": "cruelty-check",
+  "compatibility_date": "2025-09-11",
+  "main": "worker/index.js",
+
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "directory": "."
+  },
+
+  "env": {
+    "production": {
+      "routes": ["crueltycheck.com/*"],
+      "workers_dev": false,
+      "d1_databases": [
+        {
+          "binding": "DATABASE",
+          "database_name": "cruelty_check",
+          "database_id": "4019788c-c882-45bf-b6e4-8ab9d60243fa"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "R2_BUCKET",
+          "bucket_name": "products"
+        }
+      ]
+    },
+    "staging": {
+      "workers_dev": true,
+      "d1_databases": [
+        {
+          "binding": "DATABASE",
+          "database_name": "cruelty_check_staging",
+          "database_id": "5c8a1e32-1d60-440d-ae14-faa9dc597b85"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "R2_BUCKET",
+          "bucket_name": "products"
+        }
+      ]
+    }
+  },
+
+  "observability": {
     "enabled": true,
     "logs": {
       "invocation_logs": true,
       "head_sampling_rate": 1
     }
-  },
- 	"d1_databases": [
-    {
-      "binding": "DATABASE",
-      "database_name": "cruelty_check",
-      "database_id": "4019788c-c882-45bf-b6e4-8ab9d60243fa"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "R2_BUCKET",
-      "bucket_name": "products"
-    }
-  ]
+  }
 }
