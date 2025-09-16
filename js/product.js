@@ -19,7 +19,7 @@ class Product {
 	static add() {
 		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
-				<chip-tabgroup id="tgAddProduct">
+				<chip-tabgroup id="tgAddProduct" skip-validation>
 					<chip-tab>
 						<chip-form>
 							<chip-input
