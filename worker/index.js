@@ -23,6 +23,7 @@ async function onRequestAddBrand(context) {
   const { request, env } = context;
 
   let body;
+
   try {
     body = await request.json();
   } catch {
@@ -55,17 +56,21 @@ async function onRequestAddProduct(context) {
   const { request, env } = context;
 
   let body;
+
   try {
-    body = await request.json();
+    body = await request.formData();
   } catch {
-    return new Response("Invalid JSON", { status: 400 });
+    return new Response("Invalid body", { status: 400 });
 	}
 
-	if (!body.Name || !body.BrandID) { return new Response("Invalid JSON", { status: 400 }); }
+	const name = body.get("Name"),
+		brandID = body.get("BrandID");
+
+	if (!name || !brandID) { return new Response("Invalid body", { status: 400 }); }
 
 	await env.DATABASE
 		.prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan) VALUES (?, ?, ?)")
-		.bind(body.Name, body.BrandID, body.Vegan ? 1 : 0)
+		.bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0)
 		.run();
 
 	return new Response("Ok", { status: 200 });

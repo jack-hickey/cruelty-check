@@ -155,13 +155,15 @@ class Product {
 
 						if (x.id !== "drpBrandParent") {
 							x.onselectionchange = () => {
-								if (!x.value) {
+								if (x.value === "0") {
 									dialog.querySelector("chip-tab + chip-tab").Select();
+									x.value = "";
 								}
 							};
 
 							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
-								icon: "fas fa-plus"
+								icon: "fas fa-plus",
+								value: 0
 							}));
 						}
 
@@ -171,11 +173,11 @@ class Product {
 				OnCheckValid: dialog => dialog.querySelector("chip-form").reportValidity(),
 				AffirmativeText: "Submit"
 		}).then(() => Ajax.Post("addproduct", {
-			body: {
+			body: Browser.ToFormData({
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,
 				Vegan: cbVegan.checked
-			},
+			}),
 			success: {
 				ok: response => {
 					Dialog.ShowSuccess("Product submitted", "Thank you for submitting a new product to Cruelty Check! Your submission has been sent for review and will be visible on the site once accepted.");
