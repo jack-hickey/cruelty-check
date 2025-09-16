@@ -68,3 +68,9 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 .cd--product {
 	border-color: var(--outline-colour);
 }
+
+#imgProduct {
+	object-fit: contain;
+	max-height: 100px;
+	max-width: 100px;
+}

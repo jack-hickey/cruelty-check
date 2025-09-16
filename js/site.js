@@ -31,7 +31,6 @@ function search() {
 			btnReportMissing.onclick = () => Product.add();
 		}
 	});
-	Product.search(query).then(products => displayResults(products));
 }
 
 function displayResults(products) {

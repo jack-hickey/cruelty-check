@@ -17,9 +17,11 @@ class Product {
 	}
 
 	static add() {
+		let productImage = null;
+
 		Dialog.ShowCustom(Localizer.ADD_PRODUCT_TITLE, Localizer.ADD_PRODUCT_DESC,
 			`
-				<chip-tabgroup id="tgAddProduct">
+				<chip-tabgroup id="tgAddProduct" skip-validation>
 					<chip-tab>
 						<chip-form>
 							<chip-input
@@ -44,6 +46,27 @@ class Product {
 								helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
 								label="This product is vegan"
 							</chip-checkbox>
+
+							<chip-header
+								class="mt-form--lg mb-xs"
+								size="4">
+								Upload an image
+							</chip-header>
+							<chip-text>
+								Please upload an official product image, not personal photos. That means no selfies!
+							</chip-text>
+							<div class="d-flex flex-column gap-sm mt-form">
+								<img id="imgProduct" loading="lazy" />
+								<chip-button
+									id="btnProductImage"
+									class="w-fit"
+									variation="info">
+									Upload
+								</chip-button>
+								<chip-text class="d-none" variation="danger" size="sm" id="ctImageValidation">
+									Please upload an image
+								</chip-text>
+							</div>
 						</chip-form>
 					</chip-tab>
 					<chip-tab>
@@ -112,6 +135,21 @@ class Product {
 			`, {
 				Size: "md",
 				OnRefreshEvents: dialog => {
+					FileUploader.Initialize({
+						Buttons: [dialog.querySelector("#btnProductImage")],
+						AllowedExtensions: ["ico", "png", "svg", "jpg", "jpeg", "webp", "avif"],
+						MaximumSize: 1048576,
+						OnComplete: files => {
+							productImage = files.at(0);
+
+							if (productImage) {
+								imgProduct.src = productImage.getImageSrc();
+							}
+
+							ctImageValidation.toggleClass("d-none", !!productImage);
+						}
+					});
+
 					const tabGroup = dialog.querySelector("chip-tabgroup");
 
 					tabGroup.onchange = () => {
@@ -154,25 +192,41 @@ class Product {
 						}));
 
 						if (x.id !== "drpBrandParent") {
-							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
-								onclick: () => {
+							x.onselectionchange = () => {
+								if (x.value === "0") {
 									dialog.querySelector("chip-tab + chip-tab").Select();
-								},
-								icon: "fas fa-plus"
+									x.value = "";
+								}
+							};
+
+							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
+								icon: "fas fa-plus",
+								value: 0
 							}));
 						}
 
 						return items;
 					});
 				},
-				OnCheckValid: dialog => dialog.querySelector("chip-form").reportValidity(),
+				OnCheckValid: dialog => {
+					let valid = dialog.querySelector("chip-form").reportValidity();
+
+					if (!productImage) {
+						valid = false;
+					}
+
+					dialog.querySelector("#ctImageValidation").toggleClass("d-none", valid);
+				
+					return valid;
+				},
 				AffirmativeText: "Submit"
 		}).then(() => Ajax.Post("addproduct", {
-			body: {
+			body: Browser.ToFormData({
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,
-				Vegan: cbVegan.checked
-			},
+				Vegan: cbVegan.checked,
+				Image: productImage
+			}),
 			success: {
 				ok: response => {
 					Dialog.ShowSuccess("Product submitted", "Thank you for submitting a new product to Cruelty Check! Your submission has been sent for review and will be visible on the site once accepted.");
