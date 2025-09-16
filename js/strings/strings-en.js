@@ -6,7 +6,7 @@ Localizer.ADD_PRODUCT_TITLE = "New product";
 Localizer.ADD_PRODUCT_DESC = "Thank you for keeping Cruelty Check's product listings up to date! Please provide the product information below.";
 
 Localizer.FEEDBACK_TITLE = "Feedback";
-Localizer.FEEDBACK_DESC = "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site!";
+Localizer.FEEDBACK_DESC = "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site.";
 
 Localizer.FEEDBACK_TYPE_LABEL = "Feedback type";
 Localizer.FEEDBACK_TYPE_PLACEHOLDER = "Choose an option";
@@ -44,7 +44,6 @@ Localizer.SEARCH_RESULT_TITLE = '<span class="fw-bold">1</span> product found';
 Localizer.SEARCH_RESULTS_TITLE = "{count} products found";
 
 Localizer.FEEDBACK_BUTTON_LABEL = "FEEDBACK";
-Localizer.SUPPORT_BUTTON_LABEL = "Support me on Ko-Fi!!!";
 
 Localizer.OWNED_BY_LABEL = "Owned by {brand}";
 Localizer.SUPPORTS_NON_CRUELTYFREE = "supports non-cruelty-free brands and/or products";
