@@ -16,6 +16,7 @@ function search() {
 	Product.search(query).then(products => {
 		resultsContainer.innerHTML = "";
 		txtResultCount.innerHTML = "";
+		txtResultCaption.innerHTML = "";
 
 		if (products.length) {
 			displayResults(products);
@@ -28,8 +29,9 @@ function search() {
 			}));
 
 			lblSearchTerm.textContent = query;
-			btnReportMissing.onclick = () => Product.add();
 		}
+
+		document.querySelectorAll(".btn--add-product").forEach(button => button.onclick = () => Product.add());
 	});
 }
 
@@ -39,6 +41,8 @@ function displayResults(products) {
 	txtResultCount.innerHTML = products.length !== 1
 		? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
 		: Localizer.SEARCH_RESULT_TITLE;
+
+	txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 }
 
 btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localizer.FEEDBACK_DESC,
