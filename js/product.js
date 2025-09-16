@@ -154,10 +154,13 @@ class Product {
 						}));
 
 						if (x.id !== "drpBrandParent") {
-							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
-								onclick: () => {
+							x.onselectionchange = () => {
+								if (!x.value) {
 									dialog.querySelector("chip-tab + chip-tab").Select();
-								},
+								}
+							};
+
+							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
 								icon: "fas fa-plus"
 							}));
 						}
