@@ -16,7 +16,7 @@
       "name": "cruelty-check-staging",
       "workers_dev": true
     }
-  }
+  },
 	"observability": {
     "enabled": true,
     "logs": {
