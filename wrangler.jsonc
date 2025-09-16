@@ -32,7 +32,7 @@
         {
           "binding": "DATABASE",
           "database_name": "cruelty_check_staging",
-          "database_id": "PUT-YOUR-STAGING-DB-ID-HERE"
+          "database_id": "5c8a1e32-1d60-440d-ae14-faa9dc597b85"
         }
       ],
       "r2_buckets": [
