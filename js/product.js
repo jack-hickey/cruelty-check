@@ -57,7 +57,7 @@ class Product {
 								Please upload an official product image, not personal photos. That means no selfies!
 							</chip-text>
 							<div class="d-flex flex-column gap-sm mt-form">
-								<img id="imgProduct" loading="lazy" />
+								<img role="presentation" id="imgProduct" loading="lazy" />
 								<chip-button
 									id="btnProductImage"
 									class="w-fit"
@@ -86,7 +86,7 @@ class Product {
 								id="drpBrandParent"
 								searchable
 								default="Choose a brand"
-								helper-text="If this brand is owned by a parent company, please specify the parent here."
+								helper-text="Please review whether or not this brand is owned by a parent company."
 								class="mt-form brand-selector"
 								secondary-label="(optional)"
 								label="Parent company">
@@ -177,8 +177,9 @@ class Product {
 
 										txtBrandName.value = "";
 
-										// Don't ask
 										drpBrandParent.value = "";
+
+										// Don't ask
 										drpBrandParent.text = "";
 										drpBrandParent.text = "Choose a company";
 
