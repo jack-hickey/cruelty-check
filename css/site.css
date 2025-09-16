@@ -70,3 +70,9 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 	max-height: 100px;
 	max-width: 100px;
 }
+
+#accAbout .btn-accordion-toggle {
+	--btn-font-size: var(--heading-size-3);
+	--btn-colour: var(--theme-colour);
+	margin-bottom: var(--block-size-sm);
+}
