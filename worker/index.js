@@ -64,13 +64,23 @@ async function onRequestAddProduct(context) {
 	}
 
 	const name = body.get("Name"),
-		brandID = body.get("BrandID");
+		brandID = body.get("BrandID"),
+		image = body.get("Image");
 
-	if (!name || !brandID) { return new Response("Invalid body", { status: 400 }); }
+	if (!name || !brandID || !image) { return new Response("Invalid body", { status: 400 }); }
+
+	const fileExtension = image.name.split(".").pop(),
+		fileName = `${crypto.randomUUID()}.${fileExtension}`;
+
+	await env.R2_BUCKET.put(fileName, image.stream(), {
+		httpMetadata: {
+			contentType: image.type || "application/octet-stream"
+		}
+	});
 
 	await env.DATABASE
-		.prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan) VALUES (?, ?, ?)")
-		.bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0)
+		.prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image) VALUES (?, ?, ?, ?)")
+		.bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName)
 		.run();
 
 	return new Response("Ok", { status: 200 });
