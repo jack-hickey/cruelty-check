@@ -78,13 +78,14 @@ btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localize
 		AffirmativeText: "Submit"
 	}).then(() => report(drpType.value, "User Submitted Feedback", txtDetails.value));
 
-txtSearch.onsuffixclick = () => search();
-
-txtSearch.onkeyup = ev => {
-	if (ev.key === "Enter") {
-		search();
+Object.assign(window.txtSearch ?? {}, {
+	onsuffixclick: () => search(),
+	onkeyup: ev => {
+		if (ev.key === "Enter") {
+			search();
+		}
 	}
-}
+})
 
 function report(type, title, description, suppressMessage) { 
 	Ajax.Post("report", {

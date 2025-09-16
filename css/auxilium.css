@@ -5950,6 +5950,7 @@ chip-beacon {
 
 dialog {
 	color: rgba(0, 0, 0, 0);
+	border: none;
 	overflow: initial;
 	--dialog-theme: var(--theme-colour);
 	--dialog-title-size: 1.375rem;
