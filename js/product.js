@@ -149,12 +149,19 @@ class Product {
 						MaximumSize: 1048576,
 						OnComplete: files => {
 							productImage = files.at(0);
+							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;
 
 							if (productImage) {
+								ctImageValidation.toggleClass("d-none", !previouslyTooLarge);
 								imgProduct.src = productImage.getImageSrc();
+							} else if (!previouslyTooLarge) {
+								ctImageValidation.textContent = Localizer.IMAGE_MISSING;
+								ctImageValidation.classList.add("d-none");							
 							}
-
-							ctImageValidation.toggleClass("d-none", !!productImage);
+						},
+						OnFileTooLarge: () => {
+							ctImageValidation.textContent = Localizer.IMAGE_TOO_LARGE;
+							ctImageValidation.classList.remove("d-none");
 						}
 					});
 
@@ -226,6 +233,7 @@ class Product {
 					let valid = dialog.querySelector("chip-form").reportValidity();
 
 					if (!productImage) {
+						ctImageValidation.textContent = Localizer.IMAGE_MISSING;
 						valid = false;
 					}
 
