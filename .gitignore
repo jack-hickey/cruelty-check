@@ -4,6 +4,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 .vs/
+.DS_Store
 .localhistory/
 [Bb]in/
 [Oo]bj/
