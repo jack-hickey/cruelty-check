@@ -6,21 +6,10 @@ A simple web app that helps users quickly determine if a product is **vegan** an
 
 ## Features
 
-- Allows products to be fuzzy searched
-- Reports back the vegan status as well as any relevant cruelty-free status
-- Takes into account data about any parent companies
+- Submit your own products that are missing, and flag existing ones for review
+- Clear vegan status reporting
+- Checks information on the brands of products, including any parent companies 
 - Ad free, baby!
-
-## Boring Stuff
-
-To import data locally using the seed file:
-```
-wrangler d1 execute cruelty_check --local --file seed.sqlite
-```
-And to run the local development server:
-```
-wrangler dev --port 5001
-```
 
 ## Support Me ☕
 

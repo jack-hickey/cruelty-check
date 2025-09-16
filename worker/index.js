@@ -21,12 +21,6 @@ __name(onRequest, "onRequest");
 async function onRequestProductCount(context) {
 	const { env } = context;
 
-	const ua = request.headers.get("User-Agent") || "";
-
-  if (!ua.toLowerCase().includes("shields.io")) {
-    return new Response("Forbidden", { status: 403 });
-  }
-
 	const { results } = await env.DATABASE
 		.prepare("SELECT COUNT(*) AS Count FROM Products WHERE Accepted=0")
 		.all();
