@@ -58,7 +58,7 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 }
 
 .img--kofi {
-	height: 36px;
+	height: var(--block-size-xl);
 }
 
 .cd--product {
