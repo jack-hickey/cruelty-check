@@ -27,6 +27,9 @@
 
 #txtSearch {
 	width: min(var(--form-width), 90%);
+}
+
+chip-input, chip-textarea {
 	--input-font-size: 16px;
 }
 
