@@ -1,4 +1,4 @@
-![Pending Products](https://img.shields.io/endpoint?url=https://cruelty-check.com/productcount)
+![Pending Products](https://img.shields.io/endpoint?url=https://crueltycheck.com/productcount)
 
 # Cruelty Check - A vegan & cruelty-free product checker
 
