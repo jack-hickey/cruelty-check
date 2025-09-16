@@ -176,6 +176,7 @@ class Product {
 
 										txtBrandName.value = "";
 										drpBrandParent.value = "";
+										drpBrandParent.text = "";
 										cbCrueltyFree.checked = false;
 										cbBCorp.checked = false;
 										cbFairTrade.checked = false;
