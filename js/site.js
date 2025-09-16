@@ -25,6 +25,7 @@ function search() {
 			{
 				heading: Localizer.EMPTY_SEARCH_TITLE,
 				icon: "fal fa-store-slash",
+				id: "epResults",
 				className: "mt-form--lg"
 			}));
 

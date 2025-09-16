@@ -76,3 +76,7 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 	--btn-colour: var(--theme-colour);
 	margin-bottom: var(--block-size-sm);
 }
+
+#epResults {
+	min-width: 325px;
+}
