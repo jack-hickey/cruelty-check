@@ -69,6 +69,10 @@ class Product {
 								</chip-text>
 							</div>
 						</chip-form>
+
+						<chip-callout class="mt-form">
+							By submitting, you confirm this information is accurate to the best of your knowledge.
+						</chip-callout>
 					</chip-tab>
 					<chip-tab>
 						<chip-header class="mb-lg" size="4">Add a new brand</chip-header>
