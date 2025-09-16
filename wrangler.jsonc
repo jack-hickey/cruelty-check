@@ -6,6 +6,17 @@
 		"not_found_handling": "single-page-application",
 		"directory": "."
 	},
+	"env": {
+    "production": {
+      "name": "cruelty-check-prod",
+      "routes": ["crueltycheck.com/*"],
+      "workers_dev": false
+    },
+    "staging": {
+      "name": "cruelty-check-staging",
+      "workers_dev": true
+    }
+  }
 	"observability": {
     "enabled": true,
     "logs": {
