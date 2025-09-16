@@ -43,7 +43,7 @@ Localizer.INCORRECT_INFORMATION_DESC = "Please explain below the information you
 Localizer.SEARCH_RESULT_TITLE = '<span class="fw-bold">1</span> product found';
 Localizer.SEARCH_RESULTS_TITLE = "{count} products found";
 
-Localizer.FEEDBACK_BUTTON_LABEL = "GIVE FEEDBACK";
+Localizer.FEEDBACK_BUTTON_LABEL = "FEEDBACK";
 Localizer.SUPPORT_BUTTON_LABEL = "Support me on Ko-Fi!!!";
 
 Localizer.OWNED_BY_LABEL = "Owned by {brand}";
