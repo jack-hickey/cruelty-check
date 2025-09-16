@@ -18,6 +18,29 @@ async function onRequest(context) {
 
 __name(onRequest, "onRequest");
 
+async function onRequestProductCount(context) {
+	const { env } = context;
+
+	const { results } = await env.DATABASE
+		.prepare("SELECT COUNT(*) AS Count FROM Products WHERE Accepted=0")
+		.all();
+
+	const count = results[0].Count;
+
+  const badgeData = {
+    schemaVersion: 1,
+    label: "pending products",
+    message: count.toString(),
+    color: count > 0 ? "orange" : "brightgreen",
+  };
+
+  return new Response(JSON.stringify(badgeData), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+__name(onRequestProductCount, "onRequest");
+
 // addbrand.js
 async function onRequestAddBrand(context) {
   const { request, env } = context;
@@ -224,6 +247,13 @@ var routes = [
     middlewares: [],
     modules: [onRequest]
   },
+	{
+		routePath: "/productcount",
+		mountPath: "/",
+		method: "",
+		middlewares: [],
+		modules: [onRequestProductCount]
+	},
 	{
 		routePath: "/addbrand",
 		mountPath: "/",

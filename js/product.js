@@ -27,6 +27,7 @@ class Product {
 							<chip-input
 								id="txtProductName"
 								required
+								min-length="2"
 								max-length="100"
 								label="Product name">
 							</chip-input>
@@ -75,6 +76,8 @@ class Product {
 						<chip-form id="frmBrand">
 							<chip-input
 								id="txtBrandName"
+								min-length="2"
+								max-length="50"
 								required
 								label="Brand name">
 							</chip-input>

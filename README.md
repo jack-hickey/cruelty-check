@@ -1,3 +1,5 @@
+![Pending Products](https://img.shields.io/endpoint?url=https://cruelty-check.6rw4rw2jw6.workers.dev/productcount)
+
 # Vegan & Cruelty-Free Product Checker
 
 A simple web app that helps users quickly determine if a product is **vegan** and/or **cruelty-free**. Just search for a product, and get instant information on its ethical status!  
