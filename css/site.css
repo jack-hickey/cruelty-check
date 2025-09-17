@@ -39,6 +39,7 @@ chip-frameheader header {
 
 #ctResults > ul > li > chip-card { 
 	min-height: 100%;
+	background-color: #FFFFFF;
 }
 
 #ctResults > ul > li > chip-card > * > .card-header {
