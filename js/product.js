@@ -145,7 +145,7 @@ class Product {
 				OnRefreshEvents: dialog => {
 					FileUploader.Initialize({
 						Buttons: [dialog.querySelector("#btnProductImage")],
-						AllowedExtensions: ["ico", "png", "svg", "jpg", "jpeg", "webp", "avif"],
+						AllowedExtensions: ["png", "jpg", "jpeg", "webp", "avif"],
 						OnComplete: files => {
 							productImage = files.at(0);
 							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;
