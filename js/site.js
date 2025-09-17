@@ -134,20 +134,20 @@ function buildResult(product) {
 				<chip-listitem>
 					${
 						product.Vegan
-							? `<chip-text icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.VEGAN_LABEL}</chip-text>`
-							: `<chip-text icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
+							? `<chip-text class="product-label" icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.VEGAN_LABEL}</chip-text>`
+							: `<chip-text class="product-label" icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
 					}
 				</chip-listitem>
 
 				${
 					product.Brand.CrueltyFree
-						? `<chip-listitem><chip-text icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						? `<chip-listitem><chip-text class="product-label" icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
 						: ""
 				}
 
 				${
 					product.Brand.AnimalTesting
-						? `<chip-listitem><chip-text icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand.Name)}</chip-text></chip-listitem>`
+						? `<chip-listitem><chip-text class="product-label" icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand.Name)}</chip-text></chip-listitem>`
 						: ""
 				}
 
@@ -157,7 +157,7 @@ function buildResult(product) {
 							`
 								<chip-listitem>
 									<div class="h-align gap-sm">
-										<chip-text icon-colour="warning" icon="fas fa-fw fa-exclamation-triangle">
+										<chip-text class="product-label" icon-colour="warning" icon="fas fa-fw fa-exclamation-triangle">
 											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Brand.ParentCompany.Name)}
 										</chip-text>
 
