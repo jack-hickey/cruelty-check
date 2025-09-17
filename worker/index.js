@@ -224,19 +224,6 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    const blocked = [
-			"/wordpress",
-			"/wp-login.php",
-			"/xmlrpc.php",
-			"/wp-admin",
-			"/wp-content",
-			"/wp-includes"
-		];
-
-    if (blocked.some(path => url.pathname.startsWith(path))) {
-      return text("Blocked", 403);
-    }
-
     for (const route of routes) {
       if (route.method && route.method !== request.method) continue;
       const match = url.pathname.match(route.path);
