@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://crueltycheck.com/sitemap.xml
