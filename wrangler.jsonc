@@ -22,7 +22,7 @@
 	],
   "env": {
     "production": {
-      "routes": ["crueltycheck.com/*"],
+      "routes": ["https://crueltycheck.com/*"],
 			"name": "cruelty-check",
       "workers_dev": false,
       "d1_databases": [
