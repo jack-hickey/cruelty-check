@@ -24,6 +24,7 @@
     "production": {
 			"name": "cruelty-check",
       "workers_dev": false,
+			"routes": ["https://crueltycheck.com/*"],
       "d1_databases": [
         {
           "binding": "DATABASE",
