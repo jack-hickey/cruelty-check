@@ -49,7 +49,7 @@ chip-frameheader header {
 chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-header:not(:has(img + img)) img {
 	position: initial;
 	translate: none;
-	padding-top: var(--block-size-base);
+	padding: var(--block-size-base);
 }
 
 .ai--view-info .btn-accordion-toggle {
