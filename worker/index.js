@@ -87,7 +87,7 @@ async function addProductHandler({ request, env }) {
 
   if (!name || !brandID || !image || !image.type.startsWith("image/")) return text("Invalid body", 400);
 
-  const fileName = `${crypto.randomUUID()}.${image.name.pop(".")}`;
+  const fileName = `${crypto.randomUUID()}.${image.name.split(".").pop()}`;
 
   await env.R2_BUCKET.put(fileName, image.stream());
 
