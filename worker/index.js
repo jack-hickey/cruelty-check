@@ -87,17 +87,9 @@ async function addProductHandler({ request, env }) {
 
   if (!name || !brandID || !image || !image.type.startsWith("image/")) return text("Invalid body", 400);
 
-	image = await fetch(image.stream(), {
-		cf: {
-			image: {
-				format: "webp"
-			}
-		}
-	});
+  const fileName = `${crypto.randomUUID()}.${image.name.pop(".")}`;
 
-  const fileName = `${crypto.randomUUID()}.webp`;
-
-  await env.R2_BUCKET.put(fileName, await image.arrayBuffer());
+  await env.R2_BUCKET.put(fileName, image.stream());
 
   await env.DATABASE
     .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image) VALUES (?, ?, ?, ?)")
