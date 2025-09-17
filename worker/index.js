@@ -672,12 +672,27 @@ function* executeRequest(request) {
 }
 __name(executeRequest, "executeRequest");
 var pages_template_worker_default = {
-  async fetch(originalRequest, env, workerContext) {
+	async fetch(originalRequest, env, workerContext) {
     let request = originalRequest;
+
+    const url = new URL(request.url);
+    const blockedPaths = [
+      "/wp-login.php",
+      "/xmlrpc.php",
+      "/wp-admin",
+      "/wp-content",
+      "/wp-includes",
+    ];
+
+    if (blockedPaths.some(path => url.pathname.startsWith(path))) {
+      return new Response("Blocked", { status: 403 });
+    }
+
     const handlerIterator = executeRequest(request);
     let data = {};
     let isFailOpen = false;
-    const next = /* @__PURE__ */ __name(async (input, init) => {
+
+    const next = async (input, init) => {
       if (input !== void 0) {
         let url = input;
         if (typeof input === "string") {
@@ -704,9 +719,9 @@ var pages_template_worker_default = {
           },
           env,
           waitUntil: workerContext.waitUntil.bind(workerContext),
-          passThroughOnException: /* @__PURE__ */ __name(() => {
+          passThroughOnException: () => {
             isFailOpen = true;
-          }, "passThroughOnException")
+          }
         };
         const response = await handler(context);
         if (!(response instanceof Response)) {
@@ -720,7 +735,8 @@ var pages_template_worker_default = {
         const response = await fetch(request);
         return cloneResponse(response);
       }
-    }, "next");
+    };
+
     try {
       return await next();
     } catch (error) {
@@ -730,8 +746,7 @@ var pages_template_worker_default = {
       }
       throw error;
     }
-  }
-};
+  }};
 var cloneResponse = /* @__PURE__ */ __name((response) => (
   // https://fetch.spec.whatwg.org/#null-body-status
   new Response(
