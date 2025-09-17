@@ -106,7 +106,8 @@ function report(type, title, description, suppressMessage) {
 
 function buildResult(product) {
 	let avoidanceReasons = [],
-		avoidanceTooltip = "";
+		avoidanceTooltip = "",
+		unsupportedTransformations = ["avif"];
 
 	if (product.Brand.CrueltyFree && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
 	if (product.Brand.ParentCompany.AnimalTesting) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
@@ -172,7 +173,7 @@ function buildResult(product) {
 				}
 			</chip-list>
 		`, {
-			image: `/cdn-cgi/image/width=400,quality=80,format=auto/products/${product.Image}`,
+			image: unsupportedTransformations.some(x => product.Image?.endsWith("."+x)) ? `/products/${product.Image}` : `/cdn-cgi/image/width=400,quality=80,format=auto/products/${product.Image}`,
 			hideBlur: true
 		});
 
