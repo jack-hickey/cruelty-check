@@ -1,6 +1,6 @@
 {
   "name": "cruelty-check",
-  "compatibility_date": "2025-09-11",
+  "compatibility_date": "2025-09-06",
   "main": "worker/index.js",
 
   "assets": {
