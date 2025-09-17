@@ -146,7 +146,6 @@ class Product {
 					FileUploader.Initialize({
 						Buttons: [dialog.querySelector("#btnProductImage")],
 						AllowedExtensions: ["ico", "png", "svg", "jpg", "jpeg", "webp", "avif"],
-						MaximumSize: 1048576,
 						OnComplete: files => {
 							productImage = files.at(0);
 							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;

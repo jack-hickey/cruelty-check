@@ -47,6 +47,7 @@ async function productCountHandler({ env }) {
     .all();
 
   const count = results[0].Count;
+
   return json({
     schemaVersion: 1,
     label: "pending products",
@@ -82,13 +83,21 @@ async function addProductHandler({ request, env }) {
   const body = await parseForm(request);
   const name = body.get("Name");
   const brandID = body.get("BrandID");
-  const image = body.get("Image");
-  if (!name || !brandID || !image) return text("Invalid body");
+  let image = body.get("Image");
 
-  const fileName = `${crypto.randomUUID()}.${image.name.split(".").pop()}`;
-  await env.R2_BUCKET.put(fileName, image.stream(), {
-    httpMetadata: { contentType: image.type || "application/octet-stream" },
-  });
+  if (!name || !brandID || !image || !image.type.startsWith("image/")) return text("Invalid body", 400);
+
+	image = await fetch(image.stream(), {
+		cf: {
+			image: {
+				format: "webp"
+			}
+		}
+	});
+
+  const fileName = `${crypto.randomUUID()}.webp`;
+
+  await env.R2_BUCKET.put(fileName, await image.arrayBuffer());
 
   await env.DATABASE
     .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image) VALUES (?, ?, ?, ?)")

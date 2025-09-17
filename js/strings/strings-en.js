@@ -51,4 +51,4 @@ Localizer.ANIMAL_TESTING_LABEL = "{brand} allows animal testing";
 Localizer.PARENT_ANIMAL_TESTING = "allows animal testing";
 
 Localizer.IMAGE_MISSING = "Please upload an image";
-Localizer.IMAGE_TOO_LARGE = "That image is too large, we only allow a maximum of 1 MB";
+Localizer.IMAGE_TOO_LARGE = "That image is too large, we only allow a maximum of 8 MB";
