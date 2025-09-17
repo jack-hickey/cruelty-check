@@ -1,7 +1,7 @@
 :root {
-	--theme-colour-r: 65;
-	--theme-colour-g: 132;
-	--theme-colour-b: 88;
+	--theme-colour-r: 71;
+	--theme-colour-g: 126;
+	--theme-colour-b: 89;
 
 	--header-height: var(--block-size-xxxxl) !important;
 }
