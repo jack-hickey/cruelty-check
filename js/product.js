@@ -278,7 +278,7 @@ class Product {
 		}
 
 		// Parent isn't cruelty-free but brand is
-		if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
+		if (this.Brand.CrueltyFree && this.Brand.ID && !this.Brand.ParentCompany.CrueltyFree) {
 			texts.push(`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`);
 		}
 

@@ -1,6 +1,6 @@
 class Brand {
 	constructor(source) {
-		this.ID = 0;
+		this.ID = parseInt(source.Brand_ID) || 0;
 		this.Name = source.Brand ?? "";
 		this.CrueltyFree = source.Cruelty_Free === 1;
 		this.AnimalTesting = source.Animal_Testing === 1;
