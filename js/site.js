@@ -59,7 +59,7 @@ function search() {
 			resultsContainer.appendChild(document.createElementWithContents("chip-emptyprompt", Localizer.EMPTY_SEARCH_DESC,
 			{
 				heading: Localizer.EMPTY_SEARCH_TITLE,
-				icon: "fal fa-store-slash",
+				icon: "fal fa-cat",
 				id: "epResults",
 				className: "mt-form--lg"
 			}));
