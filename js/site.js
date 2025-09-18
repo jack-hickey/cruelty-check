@@ -109,15 +109,8 @@ function report(type, title, description, suppressMessage) {
 }
 
 function buildResult(product) {
-	let avoidanceReasons = [],
+	let advisoryText = product.getAdvisories(),
 		avoidanceTooltip = "";
-
-	if (product.Brand.CrueltyFree && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
-	if (product.Brand.ParentCompany.AnimalTesting) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
-
-	if (avoidanceReasons.length) {
-		avoidanceTooltip = `${product.Brand.ParentCompany.Name} ${avoidanceReasons.join(" and ")}.`;
-	}
 
 	const result = document.createElementWithContents("chip-card",
 		`
@@ -172,21 +165,19 @@ function buildResult(product) {
 				}
 
 				${
-					avoidanceTooltip
+					advisoryText.length
 						?
 							`
-								<chip-listitem>
-									<div class="h-align gap-sm">
-										<chip-text class="product-label" icon-colour="warning" icon="fas fa-fw fa-exclamation-triangle">
-											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Brand.ParentCompany.Name)}
-										</chip-text>
+								<chip-text
+									class="mt-form"
+									icon="fas fa-exclamation-triangle"
+									icon-colour="warning">
+									Advisories
+								</chip-text>
 
-										<chip-icon
-											tooltip="${avoidanceTooltip}"
-											icon="far fa-question-circle">
-										</chip-icon>
-									</div>
-								</chip-listitem>
+								<div class="mt-sm">
+									${advisoryText.trim()}
+								</div>
 							`
 						: ""
 				}

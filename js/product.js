@@ -256,6 +256,26 @@ class Product {
 		}));
 	}
 
+	getAdvisories() {
+		let texts = [];
+
+		if (this.Brand.AnimalTesting) {
+			texts.push(`${this.Brand.Name} allows or engages with animal testing. This could be that they only do so when required by law, or they actively participate in/fund the practice.`);
+		}
+
+		if (this.Brand.ParentCompany.AnimalTesting) {
+			texts.push(`${this.Brand.PluralisedName} parent company, ${this.Brand.ParentCompany.Name}, allows for the practice of animal testing. For a parent company, this could mean that they participate in/fund the practice itself, or they own brands that do.`);
+
+			if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
+				texts.push(`Additionally, while ${this.Brand.Name} is a cruelty-free brand, ${this.Brand.ParentCompany.Name} is not, and may also own brands that are not cruelty-free certified.`);
+			}
+		} else if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
+			texts.push(`While ${this.Brand.Name} is be a cruelty-free brand, their parent company, ${this.Brand.ParentCompany.Name} is not, and may also own brands that are not cruelty-free certified.`);
+		}
+
+		return texts.join("<br/><br/>");
+	}
+
 	reportIncorrect() {
 		Dialog.ShowTextBox(Localizer.INCORRECT_INFORMATION_TITLE, Localizer.INCORRECT_INFORMATION_DESC, {
 			Rows: 12,
