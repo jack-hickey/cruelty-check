@@ -133,7 +133,7 @@ function buildResult(product) {
 				</div>
 				<chip-text class="mt-xs" variation="secondary">${product.Brand.Name}</chip-text>
 
-				<div class="responsive-row gap-sm mt-md">
+				<div class="responsive-row mb-card gap-sm mt-md">
 					${
 						product.Vegan
 							? `<chip-badge tooltip="Completely free of animal-derived ingredients" variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
@@ -164,7 +164,6 @@ function buildResult(product) {
 						?
 							`
 								<chip-text
-									class="mt-form"
 									weight="medium"
 									icon="fas fa-exclamation-triangle"
 									icon-colour="warning">
