@@ -179,7 +179,6 @@ class Product {
 									ParentID: parseInt(drpBrandParent.value) || null,
 									CrueltyFree: cbCrueltyFree.checked,
 									BCorp: cbBCorp.checked,
-									FairTrade: cbFairTrade.checked,
 									AnimalTesting: cbAnimalTesting.checked
 								},
 								success: {
@@ -196,7 +195,6 @@ class Product {
 
 										cbCrueltyFree.checked = false;
 										cbBCorp.checked = false;
-										cbFairTrade.checked = false;
 										cbAnimalTesting.checked = false;
 									}
 								}
