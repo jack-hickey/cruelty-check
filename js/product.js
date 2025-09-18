@@ -125,7 +125,7 @@ class Product {
 								<chip-listitem>
 									<chip-checkbox
 										id="cbAnimalTesting"
-										label="Engages in animal testing">
+										label="Permits animal testing">
 									</chip-checkbox>
 								</chip-listitem>
 							</chip-list>
