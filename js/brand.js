@@ -7,6 +7,7 @@ class Brand {
 
 		this.ParentCompany = {
 			Name: source.Parent_Brand ?? "",
+			ID: parseInt(source.Parent_ID) || 0,
 			PluralisedName: source.Parent_Brand + "'",
 			CrueltyFree: source.Parent_Cruelty_Free === 1,
 			AnimalTesting: source.Parent_Animal_Testing === 1
