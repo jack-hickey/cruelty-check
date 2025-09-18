@@ -92,7 +92,7 @@ async function addProductHandler({ request, env }) {
 
   await env.DATABASE
     .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade) VALUES (?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade" === "true" ? 1 : 0))
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0)
     .run();
 
   return text("Ok", 200);
