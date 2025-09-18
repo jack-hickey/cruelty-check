@@ -179,7 +179,15 @@ function buildResult(product) {
 									${advisoryText.trim()}
 								</div>
 							`
-						: ""
+						:
+							`
+								<chip-emptyprompt
+									size="sm"
+									icon="fas fa-paw"
+									heading="Looks good!">
+									Based on brand information, it doesn't look like there's anything to worry about, nice!
+								</chip-emptyprompt>
+							`
 				}
 			</chip-list>
 		`, {
