@@ -114,75 +114,75 @@ function buildResult(product) {
 
 	const result = document.createElementWithContents("chip-card",
 		`
-			<div class="d-flex flex-column">
-			<div class="pc--name gap-md">
-				<chip-text
-					weight="medium"
-					size="h4">
-					${product.Name}
-				</chip-text>
-				<chip-button
-					flush
-					class="btn--report-product ms-auto"
-					button-style="icon"
-					tooltip="${Localizer.REPORT_INCORRECT_BUTTON}"
-					icon="far fa-flag"
-					variation="body">
-				</chip-button>
-			</div>
-			<chip-text class="mt-xs" variation="secondary">${product.Brand.Name}</chip-text>
+			<div class="d-flex flex-column h-100">
+				<div class="pc--name gap-md">
+					<chip-text
+						weight="medium"
+						size="h4">
+						${product.Name}
+					</chip-text>
+					<chip-button
+						flush
+						class="btn--report-product ms-auto"
+						button-style="icon"
+						tooltip="${Localizer.REPORT_INCORRECT_BUTTON}"
+						icon="far fa-flag"
+						variation="body">
+					</chip-button>
+				</div>
+				<chip-text class="mt-xs" variation="secondary">${product.Brand.Name}</chip-text>
 
-			<div class="responsive-row gap-sm mt-md">
+				<div class="responsive-row gap-sm mt-md">
+					${
+						product.Vegan
+							? `<chip-badge variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
+							: `<chip-badge variation="danger-secondary" badge-style="pill">${Localizer.NOT_VEGAN_LABEL}</chip-badge>`
+					}
+
+					${
+						product.Brand.CrueltyFree
+							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.CRUELTYFREE_LABEL}</chip-badge>`
+							: ""
+					}
+
+					${
+						product.Brand.FairTrade
+							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
+							: ""
+					}
+
+					${
+						product.Brand.BCorp
+							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
+							: ""
+					}
+				</div>
+
 				${
-					product.Vegan
-						? `<chip-badge variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
-						: `<chip-badge variation="danger-secondary" badge-style="pill">${Localizer.NOT_VEGAN_LABEL}</chip-badge>`
-				}
+					advisoryText.length
+						?
+							`
+								<chip-text
+									class="mt-form"
+									icon="fas fa-exclamation-triangle"
+									icon-colour="warning">
+									Advisories
+								</chip-text>
 
-				${
-					product.Brand.CrueltyFree
-						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.CRUELTYFREE_LABEL}</chip-badge>`
-						: ""
-				}
-
-				${
-					product.Brand.FairTrade
-						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
-						: ""
-				}
-
-				${
-					product.Brand.BCorp
-						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
-						: ""
-				}
-			</div>
-
-			${
-				advisoryText.length
-					?
-						`
-							<chip-text
-								class="mt-form"
-								icon="fas fa-exclamation-triangle"
-								icon-colour="warning">
-								Advisories
-							</chip-text>
-
-							<div class="mt-sm">
-								${advisoryText.trim()}
-							</div>
-						`
-					:
-						`
-							<chip-emptyprompt
-								size="sm"
-								class="m-auto"
-								icon="fas fa-paw"
-								heading="Looks good!">
-								Based on brand information, it doesn't look like there's anything to worry about, nice!
-							</chip-emptyprompt>
-						`
+								<div class="mt-sm">
+									${advisoryText.trim()}
+								</div>
+							`
+						:
+							`
+								<chip-emptyprompt
+									size="sm"
+									class="m-auto"
+									icon="fas fa-paw"
+									heading="Looks good!">
+									Based on brand information, it doesn't look like there's anything to worry about, nice!
+								</chip-emptyprompt>
+							`
 				}
 			</div>
 		`, {
