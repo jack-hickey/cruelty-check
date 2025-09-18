@@ -40,13 +40,24 @@ class Product {
 								searchable
 								label="Brand">
 							</chip-dropdown>
+							
+							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
 
-							<chip-checkbox
-								id="cbVegan"
-								class="mt-form"
-								helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
-								label="This product is vegan"
-							</chip-checkbox>
+							<chip-list class="mt-form" gap="md">
+								<chip-listitem>
+									<chip-checkbox
+										id="cbVegan"
+										helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
+										label="Is vegan"
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbFairtrade"
+										label="Is Fairtrade certified">
+									</chip-checkbox>
+								</chip-listitem>
+							</chip-list>
 
 							<chip-header
 								class="mt-form--lg mb-xs"
@@ -109,12 +120,6 @@ class Product {
 									<chip-checkbox
 										id="cbBCorp"
 										label="Is a B Corporation">
-									</chip-checkbox>
-								</chip-listitem>
-								<chip-listitem>
-									<chip-checkbox
-										id="cbFairTrade"
-										label="Is Fairtrade certified">
 									</chip-checkbox>
 								</chip-listitem>
 								<chip-listitem>
@@ -246,6 +251,7 @@ class Product {
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,
 				Vegan: cbVegan.checked,
+				Fairtrade: cbFairtrade.checked,
 				Image: productImage
 			}),
 			success: {
