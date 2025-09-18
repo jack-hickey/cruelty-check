@@ -49,7 +49,7 @@ class Product {
 							<chip-text>
 								Please upload an official product image, not personal photos. That means no selfies!
 							</chip-text>
-							<div class="d-flex flex-column gap-sm mt-form">
+							<div class="d-flex flex-column gap-sm mt-md">
 								<img role="presentation" id="imgProduct" loading="lazy" />
 								<chip-button
 									id="btnProductImage"
@@ -234,14 +234,17 @@ class Product {
 					});
 				},
 				OnCheckValid: dialog => {
-					let valid = dialog.querySelector("chip-form").reportValidity();
+					let valid = dialog.querySelector("chip-form").reportValidity(),
+						imageContainer = dialog.querySelector("#ctImageValidation");
 
 					if (!productImage) {
 						ctImageValidation.textContent = Localizer.IMAGE_MISSING;
 						valid = false;
-					}
 
-					dialog.querySelector("#ctImageValidation").toggleClass("d-none", valid);
+						imageContainer.classList.remove("d-none");
+					} else {
+						imageContainer.classList.add("d-none");
+					}
 				
 					return valid;
 				},
