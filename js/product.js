@@ -259,18 +259,19 @@ class Product {
 	getAdvisories() {
 		let texts = [];
 
+		// Brand permits animal testing
 		if (this.Brand.AnimalTesting) {
-			texts.push(`${this.Brand.Name} allows or engages with animal testing. This could be that they only do so when required by law, or they actively participate in/fund the practice.`);
+			texts.push(`${this.Brand.Name} engages in animal testing, either when required by law or by actively funding/participating in it.`);
 		}
 
+		// Parent permits animal testing
 		if (this.Brand.ParentCompany.AnimalTesting) {
-			texts.push(`${this.Brand.PluralisedName} parent company, ${this.Brand.ParentCompany.Name}, allows for the practice of animal testing. For a parent company, this could mean that they participate in/fund the practice itself, or they own brands that do.`);
+			texts.push(`${this.Brand.ParentCompany.Name}, parent company of ${this.Brand.Name}, permits animal testing; this may be directly or through its owned brands.`);
+		}
 
-			if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
-				texts.push(`Additionally, while ${this.Brand.Name} is a cruelty-free brand, ${this.Brand.ParentCompany.Name} is not, and may also own brands that are not cruelty-free certified.`);
-			}
-		} else if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
-			texts.push(`While ${this.Brand.Name} is be a cruelty-free brand, their parent company, ${this.Brand.ParentCompany.Name} is not, and may also own brands that are not cruelty-free certified.`);
+		// Parent isn't cruelty-free but brand is
+		if (this.Brand.CrueltyFree && !this.Brand.ParentCompany.CrueltyFree) {
+			texts.push(`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`);
 		}
 
 		return texts.join("<br/><br/>");
