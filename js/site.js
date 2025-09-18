@@ -164,6 +164,7 @@ function buildResult(product) {
 							`
 								<chip-text
 									class="mt-form"
+									weight="medium"
 									icon="fas fa-exclamation-triangle"
 									icon-colour="warning">
 									Advisories
