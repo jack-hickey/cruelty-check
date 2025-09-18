@@ -176,7 +176,7 @@ function buildResult(product) {
 				}
 			</chip-list>
 		`, {
-			image: `/cdn-cgi/image/width=400,quality=80,format=auto/products/${product.Image}`,
+			image: `/cdn-cgi/image/width=200,quality=80,format=auto/products/${product.Image}`,
 			hideBlur: true
 		});
 
