@@ -135,25 +135,25 @@ function buildResult(product) {
 				<div class="responsive-row gap-sm mt-md">
 					${
 						product.Vegan
-							? `<chip-badge variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
-							: `<chip-badge variation="danger-secondary" badge-style="pill">${Localizer.NOT_VEGAN_LABEL}</chip-badge>`
+							? `<chip-badge tooltip="Completely free of animal-derived ingredients" variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
+							: `<chip-badge tooltip="May contain animal-derived or ambiguous ingredients" variation="danger-secondary" badge-style="pill">${Localizer.NOT_VEGAN_LABEL}</chip-badge>`
 					}
 
 					${
 						product.Brand.CrueltyFree
-							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.CRUELTYFREE_LABEL}</chip-badge>`
+							? `<chip-badge tooltip="${product.Brand.Name} is a cruelty-free brand" badge-style="pill" variation="theme-secondary">${Localizer.CRUELTYFREE_LABEL}</chip-badge>`
 							: ""
 					}
 
 					${
-						product.Brand.FairTrade
-							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
+						product.FairTrade
+							? `<chip-badge tooltip="This product is Fairtrade certified" badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
 							: ""
 					}
 
 					${
 						product.Brand.BCorp
-							? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
+							? `<chip-badge tooltip="${product.Brand.Name} is a B Corporation" badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
 							: ""
 					}
 				</div>

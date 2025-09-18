@@ -63,15 +63,14 @@ async function addBrandHandler({ request, env }) {
   await env.DATABASE
     .prepare(`
       INSERT OR IGNORE INTO Brands 
-      (Name, Parent_ID, Cruelty_Free, B_Corp, Fair_Trade, Animal_Testing)
-      VALUES (?, ?, ?, ?, ?, ?)
+      (Name, Parent_ID, Cruelty_Free, B_Corp, Animal_Testing)
+      VALUES (?, ?, ?, ?, ?)
     `)
     .bind(
       body.Name,
       body.ParentID ?? null,
       body.CrueltyFree ? 1 : 0,
       body.BCorp ? 1 : 0,
-      body.FairTrade ? 1 : 0,
       body.AnimalTesting ? 1 : 0
     )
     .run();

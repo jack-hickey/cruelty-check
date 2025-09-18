@@ -114,7 +114,7 @@ class Product {
 								<chip-listitem>
 									<chip-checkbox
 										id="cbFairTrade"
-										label="Is Fair Trade certified">
+										label="Is Fairtrade certified">
 									</chip-checkbox>
 								</chip-listitem>
 								<chip-listitem>
