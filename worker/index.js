@@ -134,7 +134,7 @@ async function searchHandler({ request, env }) {
   const sql = `
     SELECT 
       p.ID, p.Name, p.Image, p.Is_Vegan,
-      b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing,
+      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing,
       pb.Name AS Parent_Brand, pb.Cruelty_Free AS Parent_Cruelty_Free, pb.Animal_Testing AS Parent_Animal_Testing,
       (${scoreClauses.join(" + ")}) AS score
     FROM Products p
