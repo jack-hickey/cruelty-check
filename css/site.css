@@ -34,11 +34,12 @@ chip-frameheader header {
 }
 
 #ctResults > ul > li > chip-card { 
-	min-height: 100%;
+	height: 100%;
 }
 
 #ctResults > ul > li > chip-card > * > .card-header {
-	height: 200px;
+	min-height: 200px;
+	max-height: 200px;
 	background-color: #FFFFFF;
 }
 
@@ -48,6 +49,7 @@ chip-frameheader header {
 
 #ctResults > ul > li > chip-card > * > .card-body {
 	padding-top: var(--card-spacing);
+	height: 100%;
 }
 
 chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-header:not(:has(img + img)) img {
