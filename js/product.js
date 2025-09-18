@@ -41,24 +41,6 @@ class Product {
 								label="Brand">
 							</chip-dropdown>
 							
-							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
-
-							<chip-list class="mt-form" gap="md">
-								<chip-listitem>
-									<chip-checkbox
-										id="cbVegan"
-										helper-text="Please tick if this product contains no animal ingredients and is suitable for vegans."
-										label="Is vegan"
-									</chip-checkbox>
-								</chip-listitem>
-								<chip-listitem>
-									<chip-checkbox
-										id="cbFairtrade"
-										label="Is Fairtrade certified">
-									</chip-checkbox>
-								</chip-listitem>
-							</chip-list>
-
 							<chip-header
 								class="mt-form--lg mb-xs"
 								size="4">
@@ -79,11 +61,25 @@ class Product {
 									Please upload an image
 								</chip-text>
 							</div>
-						</chip-form>
 
-						<chip-callout class="mt-form">
-							By submitting, you confirm this information is accurate to the best of your knowledge.
-						</chip-callout>
+							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
+
+							<chip-list class="mt-form" gap="md">
+								<chip-listitem>
+									<chip-checkbox
+										id="cbVegan"
+										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
+										label="Is vegan"
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbFairtrade"
+										label="Is Fairtrade certified">
+									</chip-checkbox>
+								</chip-listitem>
+							</chip-list>
+						</chip-form>
 					</chip-tab>
 					<chip-tab>
 						<chip-header class="mb-lg" size="4">Add a new brand</chip-header>
@@ -125,7 +121,7 @@ class Product {
 								<chip-listitem>
 									<chip-checkbox
 										id="cbAnimalTesting"
-										label="Engages in animal testing">
+										label="Permits animal testing">
 									</chip-checkbox>
 								</chip-listitem>
 							</chip-list>
@@ -224,7 +220,11 @@ class Product {
 								}
 							};
 
-							items.push(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
+							if (items.length) {
+								items.unshift(document.createElement("chip-dropdowndivider"));
+							}
+
+							items.unshift(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
 								icon: "fas fa-plus",
 								value: 0
 							}));
