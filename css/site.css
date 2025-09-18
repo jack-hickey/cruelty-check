@@ -38,8 +38,16 @@ chip-frameheader header {
 }
 
 #ctResults > ul > li > chip-card > * > .card-header {
-	min-height: 100px;
+	height: 200px;
 	background-color: #FFFFFF;
+}
+
+#ctResults > ul > li > chip-card > * > .card-header > chip-cardheader {
+	display: flex;
+}
+
+#ctResults > ul > li > chip-card > * > .card-body {
+	padding-top: var(--card-spacing);
 }
 
 chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-header:not(:has(img + img)) img {
@@ -94,4 +102,9 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 
 chip-button.btn--feedback {
 	text-transform: uppercase;
+}
+
+.pc--name {
+	display: flex;
+	align-items: baseline;
 }
