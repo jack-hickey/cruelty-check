@@ -1,17 +1,4 @@
 PRAGMA defer_foreign_keys=TRUE;
-CREATE TABLE Products (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name TEXT NOT NULL CHECK(length(Name) <= 100),
-    Image TEXT NOT NULL CHECK(length(Image) <= 50),
-    Brand_ID INTEGER NOT NULL,
-    Is_Vegan INTEGER NOT NULL DEFAULT 0,
-    Accepted INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (Brand_ID) REFERENCES Brands(ID)
-);
-INSERT INTO Products VALUES(1,'Intensive Repair Shampoo','04c0b5d0-9211-43fe-8ca2-065e380c09e4.jpeg',2,1,1);
-INSERT INTO Products VALUES(3,'Daily Moisture Shampoo','baa7bff4-0825-43f7-a415-a2f642649aa2.jpg',2,0,1);
-INSERT INTO Products VALUES(4,'Hobnobs','a628e3b7-e010-4a66-ab17-8e7bcdb2dc40.jpg',5,1,1);
-INSERT INTO Products VALUES(5,'Spring Water','77f3d749-21a7-4648-ba7b-c741cdb6d9cd.webp',7,1,1);
 CREATE TABLE Brands (
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   Name TEXT NOT NULL UNIQUE COLLATE NOCASE CHECK(length(Name) <= 50),
@@ -21,6 +8,15 @@ CREATE TABLE Brands (
   Fair_Trade INTEGER NOT NULL DEFAULT 0,
   Animal_Testing INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (Parent_ID) REFERENCES Brands(ID)
+);
+CREATE TABLE Products (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL CHECK(length(Name) <= 100),
+    Image TEXT NOT NULL CHECK(length(Image) <= 50),
+    Brand_ID INTEGER NOT NULL,
+    Is_Vegan INTEGER NOT NULL DEFAULT 0,
+    Accepted INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (Brand_ID) REFERENCES Brands(ID)
 );
 INSERT INTO Brands VALUES(1,'Unilever',NULL,0,0,0,1);
 INSERT INTO Brands VALUES(2,'Dove',1,1,0,0,0);
@@ -39,6 +35,10 @@ INSERT INTO Brands VALUES(14,'Aldi',NULL,1,0,0,0);
 INSERT INTO Brands VALUES(15,'Lidl',NULL,1,0,0,0);
 INSERT INTO Brands VALUES(16,'Mars, Incorporated',NULL,0,0,0,1);
 INSERT INTO Brands VALUES(17,'Ben''s Original',16,0,0,0,0);
+INSERT INTO Products VALUES(1,'Intensive Repair Shampoo','04c0b5d0-9211-43fe-8ca2-065e380c09e4.jpeg',2,1,1);
+INSERT INTO Products VALUES(3,'Daily Moisture Shampoo','baa7bff4-0825-43f7-a415-a2f642649aa2.jpg',2,0,1);
+INSERT INTO Products VALUES(4,'Hobnobs','a628e3b7-e010-4a66-ab17-8e7bcdb2dc40.jpg',5,1,1);
+INSERT INTO Products VALUES(5,'Spring Water','77f3d749-21a7-4648-ba7b-c741cdb6d9cd.webp',7,1,1);
 DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('Brands',17);
 INSERT INTO sqlite_sequence VALUES('Products',5);
