@@ -42,15 +42,37 @@
 	<body>
 		<chip-frame layout="container">
 			<chip-frameheader>
+				<chip-dropdownbutton
+					flush
+					size="lg"
+					class="d-sm-none me-auto"
+					variation="body"
+					button-style="icon"
+					icon="fas fa-bars">
+					<chip-dropdown>
+						<chip-dropdownitem
+							link="/about">
+							About
+						</chip-dropdownitem>
+
+						<chip-dropdownitem
+							class="btn--feedback">
+							Feedback
+						</chip-dropdownitem>
+
+						<chip-dropdowndivider></chip-dropdowndivider>
+					</chip-dropdown>
+				</chip-dropdownbutton>
 				<chip-button
 					flush
+					class="d-none d-sm-flex"
 					link="about"
 					variation="theme-tertiary">
 					ABOUT
 				</chip-button>
 				<chip-button
-					id="btnFeedback"
 					flush
+					class="btn--feedback d-none d-sm-flex"
 					variation="theme-tertiary">
 					FEEDBACK
 				</chip-button>

@@ -1,4 +1,39 @@
-btnFeedback.textContent = Localizer.FEEDBACK_BUTTON_LABEL;
+document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(button, {
+	textContent: Localizer.FEEDBACK_BUTTON_LABEL,
+	onclick: () => {
+		Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localizer.FEEDBACK_DESC,
+		`
+			<chip-form>
+				<chip-dropdown
+					label="${Localizer.FEEDBACK_TYPE_LABEL}"
+					required
+					id="drpType"
+					text="${Localizer.FEEDBACK_TYPE_PLACEHOLDER}">
+
+					<chip-dropdownitem group="${Localizer.FEEDBACK_BUG_GROUP}" value="BUG">${Localizer.FEEDBACK_BUG_LABEL}</chip-dropdownitem>
+					<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="FEATURE">${Localizer.FEEDBACK_FEATURE_LABEL}</chip-dropdownitem>
+					<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="IMPROVEMENT">${Localizer.FEEDBACK_IMPROVEMENT_LABEL}</chip-dropdownitem>
+					<chip-dropdownitem group="${Localizer.FEEDBACK_CHAT_GROUP}" value="THANKS">${Localizer.FEEDBACK_THANKS_LABEL}</chip-dropdownitem>
+				</chip-dropdown>
+
+				<chip-textarea
+					rows="12"
+					required
+					id="txtDetails"
+					validation-required="${Localizer.FEEDBACK_DETAILS_VALIDATION_REQUIRED}"
+					class="mt-form"
+					label="${Localizer.FEEDBACK_DETAILS_LABEL}">
+				</chip-textarea>
+			</chip-form>
+		`, {
+				Size: "md",
+				OnCheckValid: dialog => {
+					return dialog.querySelector("chip-form").reportValidity();
+				},
+				AffirmativeText: "Submit"
+			}).then(() => report(drpType.value, "User Submitted Feedback", txtDetails.value));
+		}
+}));
 
 const resultsContainer = document.getElementById("ctResults");
 
@@ -46,37 +81,6 @@ function displayResults(products) {
 	txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 }
 
-btnFeedback.onclick = () => Dialog.ShowCustom(Localizer.FEEDBACK_TITLE, Localizer.FEEDBACK_DESC,
-	`
-		<chip-form>
-			<chip-dropdown
-				label="${Localizer.FEEDBACK_TYPE_LABEL}"
-				required
-				id="drpType"
-				text="${Localizer.FEEDBACK_TYPE_PLACEHOLDER}">
-
-				<chip-dropdownitem group="${Localizer.FEEDBACK_BUG_GROUP}" value="BUG">${Localizer.FEEDBACK_BUG_LABEL}</chip-dropdownitem>
-				<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="FEATURE">${Localizer.FEEDBACK_FEATURE_LABEL}</chip-dropdownitem>
-				<chip-dropdownitem group="${Localizer.FEEDBACK_IMPROVEMENT_GROUP}" value="IMPROVEMENT">${Localizer.FEEDBACK_IMPROVEMENT_LABEL}</chip-dropdownitem>
-				<chip-dropdownitem group="${Localizer.FEEDBACK_CHAT_GROUP}" value="THANKS">${Localizer.FEEDBACK_THANKS_LABEL}</chip-dropdownitem>
-			</chip-dropdown>
-
-			<chip-textarea
-				rows="12"
-				required
-				id="txtDetails"
-				validation-required="${Localizer.FEEDBACK_DETAILS_VALIDATION_REQUIRED}"
-				class="mt-form"
-				label="${Localizer.FEEDBACK_DETAILS_LABEL}">
-			</chip-textarea>
-		</chip-form>
-	`, {
-		Size: "md",
-		OnCheckValid: dialog => {
-			return dialog.querySelector("chip-form").reportValidity();
-		},
-		AffirmativeText: "Submit"
-	}).then(() => report(drpType.value, "User Submitted Feedback", txtDetails.value));
 
 Object.assign(window.txtSearch ?? {}, {
 	onsuffixclick: () => search(),
