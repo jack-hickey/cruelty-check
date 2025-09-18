@@ -27,6 +27,7 @@ document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(butt
 			</chip-form>
 		`, {
 				Size: "md",
+				Scrollable: true,
 				OnCheckValid: dialog => {
 					return dialog.querySelector("chip-form").reportValidity();
 				},
