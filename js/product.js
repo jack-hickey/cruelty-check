@@ -143,6 +143,7 @@ class Product {
 				</chip-tabgroup>
 			`, {
 				Size: "md",
+				Scrollable: true,
 				OnRefreshEvents: dialog => {
 					FileUploader.Initialize({
 						Buttons: [dialog.querySelector("#btnProductImage")],
