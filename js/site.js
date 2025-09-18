@@ -109,46 +109,55 @@ function report(type, title, description, suppressMessage) {
 }
 
 function buildResult(product) {
-	let avoidanceReasons = [],
+	let advisoryText = product.getAdvisories(),
 		avoidanceTooltip = "";
-
-	if (product.Brand.CrueltyFree && !product.Brand.ParentCompany.CrueltyFree) { avoidanceReasons.push(Localizer.SUPPORTS_NON_CRUELTYFREE); }
-	if (product.Brand.ParentCompany.AnimalTesting) { avoidanceReasons.push(Localizer.PARENT_ANIMAL_TESTING); }
-
-	if (avoidanceReasons.length) {
-		avoidanceTooltip = `${product.Brand.ParentCompany.Name} ${avoidanceReasons.join(" and ")}.`;
-	}
 
 	const result = document.createElementWithContents("chip-card",
 		`
-			<div class="h-align mt-card mb-xs">
-				<chip-text class="me-auto" variation="secondary">${product.Brand.Name}</chip-text>
+			<div class="pc--name gap-md">
+				<chip-text
+					weight="medium"
+					size="h4">
+					${product.Name}
+				</chip-text>
 				<chip-button
 					flush
-					class="btn--report-product"
+					class="btn--report-product ms-auto"
 					button-style="icon"
 					tooltip="${Localizer.REPORT_INCORRECT_BUTTON}"
-					icon="fas fa-flag"
-					variation="danger-tertiary">
+					icon="far fa-flag"
+					variation="body">
 				</chip-button>
 			</div>
-			<chip-text class="mb-form" weight="medium" size="h4">${product.Name}</chip-text>
+			<chip-text class="mt-xs" variation="secondary">${product.Brand.Name}</chip-text>
 
-			<chip-list gap="sm">
-				<chip-listitem>
-					${
-						product.Vegan
-							? `<chip-text class="product-label" icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.VEGAN_LABEL}</chip-text>`
-							: `<chip-text class="product-label" icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.NOT_VEGAN_LABEL}</chip-text>`
-					}
-				</chip-listitem>
+			<div class="responsive-row gap-sm mt-md">
+				${
+					product.Vegan
+						? `<chip-badge variation="theme-secondary" badge-style="pill">${Localizer.VEGAN_LABEL}</chip-badge>`
+						: `<chip-badge variation="danger-secondary" badge-style="pill">${Localizer.NOT_VEGAN_LABEL}</chip-badge>`
+				}
 
 				${
 					product.Brand.CrueltyFree
-						? `<chip-listitem><chip-text class="product-label" icon-colour="success" icon="fas fa-fw fa-check-circle">${Localizer.CRUELTYFREE_LABEL}</chip-text></chip-listitem>`
+						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.CRUELTYFREE_LABEL}</chip-badge>`
 						: ""
 				}
 
+				${
+					product.Brand.FairTrade
+						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
+						: ""
+				}
+
+				${
+					product.Brand.BCorp
+						? `<chip-badge badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
+						: ""
+				}
+			</div>
+
+			<chip-list gap="sm" class="mt-form">
 				${
 					product.Brand.AnimalTesting
 						? `<chip-listitem><chip-text class="product-label" icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand.Name)}</chip-text></chip-listitem>`
@@ -156,21 +165,19 @@ function buildResult(product) {
 				}
 
 				${
-					avoidanceTooltip
+					advisoryText.length
 						?
 							`
-								<chip-listitem>
-									<div class="h-align gap-sm">
-										<chip-text class="product-label" icon-colour="warning" icon="fas fa-fw fa-exclamation-triangle">
-											${Localizer.OWNED_BY_LABEL.replace("{brand}", product.Brand.ParentCompany.Name)}
-										</chip-text>
+								<chip-text
+									class="mt-form"
+									icon="fas fa-exclamation-triangle"
+									icon-colour="warning">
+									Advisories
+								</chip-text>
 
-										<chip-icon
-											tooltip="${avoidanceTooltip}"
-											icon="far fa-question-circle">
-										</chip-icon>
-									</div>
-								</chip-listitem>
+								<div class="mt-sm">
+									${advisoryText.trim()}
+								</div>
 							`
 						: ""
 				}

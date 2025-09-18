@@ -36,6 +36,8 @@ Localizer.NOT_CRUELTYFREE_LABEL = "Not cruelty-free";
 Localizer.PARENT_CRUELTYFREE_LABEL = "Parent company is cruelty-free";
 Localizer.PARENT_NOT_CRUELTYFREE_LABEL = "Parent company is not cruelty-free";
 Localizer.VIEW_INFO_LABEL = "View info";
+Localizer.FAIRTRADE_LABEL = "Fair Trade";
+Localizer.BCORP_LABEL = "B Corp";
 
 Localizer.INCORRECT_INFORMATION_TITLE = "Incorrect product information";
 Localizer.INCORRECT_INFORMATION_DESC = "Please explain below the information you believe to be incorrect, and if possible, the correct information.";
