@@ -114,6 +114,7 @@ function buildResult(product) {
 
 	const result = document.createElementWithContents("chip-card",
 		`
+			<div class="d-flex flex-column">
 			<div class="pc--name gap-md">
 				<chip-text
 					weight="medium"
@@ -157,39 +158,33 @@ function buildResult(product) {
 				}
 			</div>
 
-			<chip-list gap="sm" class="mt-form">
-				${
-					product.Brand.AnimalTesting
-						? `<chip-listitem><chip-text class="product-label" icon-colour="danger" icon="fas fa-fw fa-times-circle">${Localizer.ANIMAL_TESTING_LABEL.replace("{brand}", product.Brand.Name)}</chip-text></chip-listitem>`
-						: ""
-				}
+			${
+				advisoryText.length
+					?
+						`
+							<chip-text
+								class="mt-form"
+								icon="fas fa-exclamation-triangle"
+								icon-colour="warning">
+								Advisories
+							</chip-text>
 
-				${
-					advisoryText.length
-						?
-							`
-								<chip-text
-									class="mt-form"
-									icon="fas fa-exclamation-triangle"
-									icon-colour="warning">
-									Advisories
-								</chip-text>
-
-								<div class="mt-sm">
-									${advisoryText.trim()}
-								</div>
-							`
-						:
-							`
-								<chip-emptyprompt
-									size="sm"
-									icon="fas fa-paw"
-									heading="Looks good!">
-									Based on brand information, it doesn't look like there's anything to worry about, nice!
-								</chip-emptyprompt>
-							`
+							<div class="mt-sm">
+								${advisoryText.trim()}
+							</div>
+						`
+					:
+						`
+							<chip-emptyprompt
+								size="sm"
+								class="m-auto"
+								icon="fas fa-paw"
+								heading="Looks good!">
+								Based on brand information, it doesn't look like there's anything to worry about, nice!
+							</chip-emptyprompt>
+						`
 				}
-			</chip-list>
+			</div>
 		`, {
 			image: `/cdn-cgi/image/width=200,quality=80,format=auto/products/${product.Image}`,
 			hideBlur: true
