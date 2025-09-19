@@ -36,7 +36,7 @@ INSERT INTO Brands VALUES(16,'Mars, Incorporated',NULL,0,0,1,'mars, incorporated
 INSERT INTO Brands VALUES(17,'Ben''s Original',16,0,0,0,'bens original');
 INSERT INTO Brands VALUES(18,'Ferrero',NULL,0,0,1,'ferrero');
 INSERT INTO Brands VALUES(19,'Burton’s Biscuit Company',18,0,0,0,'burtons biscuit company');
-INSERT INTO Brands VALUES(20,'Nestlé',NULL,0,0,1,'nestlé');
+INSERT INTO Brands VALUES(20,'Nestlé',NULL,0,0,1,'nestle');
 INSERT INTO Brands VALUES(21,'Rowntree''s',20,0,0,0,'rowntrees');
 INSERT INTO Brands VALUES(22,'Jealous Sweets',NULL,0,0,0,'jealous sweets');
 INSERT INTO Brands VALUES(23,'PepsiCo',NULL,0,0,1,'pepsico');
@@ -54,8 +54,9 @@ INSERT INTO Products VALUES(9,'Chocolate Mint Thins','064f3c08-4d01-4e31-b55e-4f
 INSERT INTO Products VALUES(10,'Butter Beans In Water','574494fb-096a-46b8-bd63-273e5900c36d.jpg',8,1,1,0,'butter beans in water');
 INSERT INTO Products VALUES(11,'Doritos Chilli Heatwave','e462f6cc-5348-475d-b8b4-eef718fd3d1d.jpg',25,1,1,0,'doritos chilli heatwave');
 INSERT INTO Products VALUES(12,'Diet Lemonade','1f2b52f9-b3b4-4a70-bba0-c713a08a15ad.webp',26,1,1,0,'diet lemonade');
+INSERT INTO Products VALUES(13,'Nesquik Chocolate Milkshake Powder','f22e248d-8eac-4275-8307-425e1dfb70e2.webp',20,0,1,0,'nesquik chocolate milkshake powder');
 DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('Brands',26);
-INSERT INTO sqlite_sequence VALUES('Products',12);
+INSERT INTO sqlite_sequence VALUES('Products',13);
 CREATE INDEX idx_brands_search_name ON Brands(Search_Name);
 CREATE INDEX idx_products_search_name ON Products(Search_Name);
