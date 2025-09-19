@@ -8,14 +8,15 @@ class Product {
 		this.Brand = this.Brands.at(0) ?? new Brand();
 	}
 
-	static search(query) {
-		return new Promise(resolve => Ajax.Post("search", {
-			body: { query },
-			success: {
-				ok: response => resolve(response.body.map(x => new Product(x)))
+	static search = query => new Promise(resolve => Ajax.Post("search", {
+		body: { query },
+		success: {
+			ok: response => resolve(response.body.map(x => new Product(x))),
+			any: response => {
+				if (!response.ok) { resolve([]); }
 			}
-		}));
-	}
+		}
+	}));
 
 	static add() {
 		let productImage = null;
