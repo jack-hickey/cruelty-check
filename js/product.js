@@ -263,26 +263,47 @@ class Product {
 			}
 		}));
 	}
+	
 
 	getAdvisories() {
-		let texts = [];
+		const advisories = [
+			{
+				id: "brand_testing",
+				condition: () => this.Brand.AnimalTesting,
+				message: () =>
+					`${this.Brand.Name} engages in animal testing, either when required by law or by actively funding/participating in it.`,
+				blocks: [],
+			},
+			{
+				id: "parent_testing",
+				condition: () => this.Brand.ParentCompany?.AnimalTesting,
+				message: () =>
+					`${this.Brand.ParentCompany.Name}, parent company of ${this.Brand.Name}, permits animal testing; this may be directly or through its owned brands.`,
+				blocks: ["brand_parent_contrast"],
+			},
+			{
+				id: "brand_parent_contrast",
+				condition: () =>
+					this.Brand.CrueltyFree &&
+					this.Brand.ParentCompany?.ID &&
+					!this.Brand.ParentCompany.CrueltyFree,
+				message: () =>
+					`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`,
+				blocks: [],
+			},
+		];
 
-		// Brand permits animal testing
-		if (this.Brand.AnimalTesting) {
-			texts.push(`${this.Brand.Name} engages in animal testing, either when required by law or by actively funding/participating in it.`);
+		const results = [],
+			blocked = new Set();
+
+		for (const advisory of advisories) {
+			if (!blocked.has(advisory.id) && advisory.condition()) {
+				results.push(advisory.message());
+				advisory.blocks.forEach((id) => blocked.add(id));
+			}
 		}
 
-		// Parent permits animal testing
-		if (this.Brand.ParentCompany.AnimalTesting) {
-			texts.push(`${this.Brand.ParentCompany.Name}, parent company of ${this.Brand.Name}, permits animal testing; this may be directly or through its owned brands.`);
-		}
-
-		// Parent isn't cruelty-free but brand is
-		if (this.Brand.CrueltyFree && this.Brand.ParentCompany.ID && !this.Brand.ParentCompany.CrueltyFree) {
-			texts.push(`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`);
-		}
-
-		return texts.join("<br/><br/>");
+		return results.join("<br/><br/>");
 	}
 
 	reportIncorrect() {
