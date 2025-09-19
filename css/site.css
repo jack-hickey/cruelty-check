@@ -108,7 +108,23 @@ chip-button.btn--feedback span {
 	text-transform: uppercase;
 }
 
-.pc--name {
+.pc--name,
+.brand-hierarchy {
 	display: flex;
 	align-items: baseline;
+}
+
+.ai--brand-name .btn-accordion-toggle {
+	--btn-colour: var(--secondary-colour);
+	--btn-font-weight: var(--font-weight-regualar);
+	flex-direction: row-reverse;
+	min-block-size: 0;
+	padding: 0;
+}
+
+.ai--brand-name .btn-accordion-toggle chip-icon {
+	margin-right: 0;
+	margin-left: var(--block-size-xs);
+	font-size: var(--body-font-size-xxs);
+	font-weight: var(--font-weight-regular);
 }

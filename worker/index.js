@@ -170,7 +170,7 @@ async function searchHandler({ request, env }) {
     )
     SELECT 
       p.ID, p.Name, p.Image, p.Is_Vegan,
-      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing,
+      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
       (
         SELECT json_group_array(
           json_object(

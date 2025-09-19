@@ -6,6 +6,8 @@ class Product {
 		this.BrandID = parseInt(source.Brand_ID) || 0;
 		this.Brands = JSON.parse(source.Brand_Hierarchy).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
 		this.Brand = this.Brands.at(0) ?? new Brand();
+
+		console.log(this.Brands);
 	}
 
 	static search = query => new Promise(resolve => Ajax.Post("search", {
