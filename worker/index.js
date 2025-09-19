@@ -6,10 +6,15 @@ function json(data, status = 200, headers = {}) {
   });
 }
 
-function text(msg, status = 400, headers = {}) {
-  return new Response(msg, { status, headers });
-}
+function getNormalizedText(text) {
+	if (!text) return "";
 
+  return text
+		.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\p{L}\p{N}\s]/gu, "");
+}
 async function parseJSON(request) {
   try {
     return await request.json();
@@ -72,7 +77,7 @@ async function addBrandHandler({ request, env }) {
       body.CrueltyFree ? 1 : 0,
       body.BCorp ? 1 : 0,
       body.AnimalTesting ? 1 : 0,
-    	body.Name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, "") 
+			getNormalizedText(body.Name)
     )
     .run();
 
@@ -93,7 +98,7 @@ async function addProductHandler({ request, env }) {
 
   await env.DATABASE
     .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""))
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, getNormalizedText(name))
     .run();
 
   return text("Ok", 200);
@@ -114,13 +119,10 @@ async function brandsHandler({ request, env }) {
 async function searchHandler({ request, env }) {
   const body = await parseJSON(request);
 
-  const normalize = str =>
-    str.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""); 
-
   const searchWords = (body.query || "")
     .trim()
     .split(/\s+/)
-    .map(normalize)
+    .map(getNormalizedText)
     .filter(Boolean);
 
   if (searchWords.length === 0) return json([]);

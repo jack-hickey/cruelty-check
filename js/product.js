@@ -276,7 +276,7 @@ class Product {
 				id: "brand_testing",
 				condition: () => !!animalTester,
 				message: () =>
-					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", an ancestor of " + this.Brand.Name + "," : ""} engages in animal testing, either when required by law or by actively funding/participating in it.`,
+					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", a predecessor of " + this.Brand.Name + "," : ""} conducts or funds animal testing when required by law or voluntarily.`,
 				blocks: ["brand_parent_contrast"],
 			},
 			{
@@ -285,7 +285,7 @@ class Product {
 					this.Brand.CrueltyFree &&
 					!!nonCrueltyFree,
 				message: () =>
-					`While ${this.Brand.Name} is cruelty-free, ${nonCrueltyFree.Name}, an ancestor of ${this.Brand.Name} is not and may own non-cruelty-free brands.`,
+					`While ${this.Brand.Name} is cruelty-free, ${nonCrueltyFree.Name}, a predecessor of ${this.Brand.Name} is not and may own non-cruelty-free brands.`,
 				blocks: [],
 			},
 		];
