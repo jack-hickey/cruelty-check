@@ -132,16 +132,46 @@ async function searchHandler({ request, env }) {
   }
 
   const sql = `
+    WITH RECURSIVE BrandHierarchy AS (
+      -- Start at the product’s brand
+      SELECT 
+        b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing,
+        0 AS Level, p.ID AS Product_ID
+      FROM Products p
+      JOIN Brands b ON b.ID = p.Brand_ID
+
+      UNION ALL
+
+      -- Walk up parent chain
+      SELECT 
+        pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing,
+        bh.Level + 1, bh.Product_ID
+      FROM Brands pb
+      JOIN BrandHierarchy bh ON pb.ID = bh.Parent_ID
+    )
     SELECT 
       p.ID, p.Name, p.Image, p.Is_Vegan,
-      b.ID AS Brand_ID, b.Parent_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing,
-      pb.Name AS Parent_Brand, pb.Cruelty_Free AS Parent_Cruelty_Free, pb.Animal_Testing AS Parent_Animal_Testing,
+      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing,
+      (
+        SELECT json_group_array(
+          json_object(
+            'ID', ID,
+            'Name', Name,
+            'Cruelty_Free', Cruelty_Free,
+            'Animal_Testing', Animal_Testing,
+            'Parent_ID', Parent_ID,
+            'Level', Level
+          )
+        )
+        FROM BrandHierarchy bh
+        WHERE bh.Product_ID = p.ID
+        ORDER BY Level
+      ) AS Brand_Hierarchy,
       (${scoreClauses.join(" + ")}) AS score
     FROM Products p
-    LEFT JOIN Brands b ON b.ID = p.Brand_ID
-    LEFT JOIN Brands pb ON pb.ID = b.Parent_ID
+    JOIN Brands b ON b.ID = p.Brand_ID
     WHERE ${whereClauses.join(" OR ")}
-    AND p.Accepted = 1
+      AND p.Accepted = 1
     ORDER BY score DESC;
   `;
 

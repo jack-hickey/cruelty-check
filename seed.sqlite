@@ -47,7 +47,7 @@ INSERT INTO Products VALUES(3,'Daily Moisture Shampoo','baa7bff4-0825-43f7-a415-
 INSERT INTO Products VALUES(4,'Hobnobs','a628e3b7-e010-4a66-ab17-8e7bcdb2dc40.jpg',5,1,1,0);
 INSERT INTO Products VALUES(5,'Spring Water','77f3d749-21a7-4648-ba7b-c741cdb6d9cd.webp',7,1,1,0);
 INSERT INTO Products VALUES(6,'Jammie Dodgers Raspberry','a62e58cf-4182-470e-ad11-22b2e9ea87c5.png',19,1,1,0);
-INSERT INTO Products VALUES(7,'Fruit Gums','167e370d-f92b-498d-b691-2213d01c19f1.jpg',20,1,1,0);
+INSERT INTO Products VALUES(7,'Fruit Gums','167e370d-f92b-498d-b691-2213d01c19f1.jpg',21,1,1,0);
 INSERT INTO Products VALUES(8,'Tangy Worms','5fa4b562-af4f-4ebd-b9d4-246b659d229e.webp',22,1,1,0);
 INSERT INTO Products VALUES(9,'Chocolate Mint Thins','064f3c08-4d01-4e31-b55e-4fb5726f0b5f.jpeg',11,1,1,0);
 INSERT INTO Products VALUES(10,'Butter Beans In Water','574494fb-096a-46b8-bd63-273e5900c36d.jpg',8,1,1,0);

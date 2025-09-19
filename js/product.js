@@ -3,8 +3,9 @@ class Product {
 		this.Name = source.Name;
 		this.Vegan = source.Is_Vegan === 1;
 		this.Image = source.Image;
-
-		this.Brand = new Brand(source);
+		this.BrandID = parseInt(source.Brand_ID) || 0;
+		this.Brands = JSON.parse(source.Brand_Hierarchy).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
+		this.Brand = this.Brands.at(0) ?? new Brand();
 	}
 
 	static search(query) {
@@ -266,29 +267,24 @@ class Product {
 	
 
 	getAdvisories() {
+		const animalTester = this.Brands.find(x => x.AnimalTesting),
+			nonCrueltyFree = this.Brands.find(x => !x.CrueltyFree);
+
 		const advisories = [
 			{
 				id: "brand_testing",
-				condition: () => this.Brand.AnimalTesting,
+				condition: () => !!animalTester,
 				message: () =>
-					`${this.Brand.Name} engages in animal testing, either when required by law or by actively funding/participating in it.`,
-				blocks: [],
-			},
-			{
-				id: "parent_testing",
-				condition: () => this.Brand.ParentCompany?.AnimalTesting,
-				message: () =>
-					`${this.Brand.ParentCompany.Name}, parent company of ${this.Brand.Name}, permits animal testing; this may be directly or through its owned brands.`,
+					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", an ancestor of " + this.Brand.Name + "," : ""} engages in animal testing, either when required by law or by actively funding/participating in it.`,
 				blocks: ["brand_parent_contrast"],
 			},
 			{
 				id: "brand_parent_contrast",
 				condition: () =>
 					this.Brand.CrueltyFree &&
-					this.Brand.ParentCompany?.ID &&
-					!this.Brand.ParentCompany.CrueltyFree,
+					!!nonCrueltyFree,
 				message: () =>
-					`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`,
+					`While ${this.Brand.Name} is cruelty-free, ${nonCrueltyFree.Name}, an ancestor of ${this.Brand.Name} is not and may own non-cruelty-free brands.`,
 				blocks: [],
 			},
 		];
