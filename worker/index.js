@@ -15,6 +15,14 @@ function getNormalizedText(text) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\p{L}\p{N}\s]/gu, "");
 }
+
+function text(message, status = 400, headers = {}) {
+  return new Response(message, {
+    status,
+    headers: { "Content-Type": "text/plain", ...headers },
+  });
+}
+
 async function parseJSON(request) {
   try {
     return await request.json();
@@ -118,29 +126,17 @@ async function brandsHandler({ request, env }) {
 
 async function searchHandler({ request, env }) {
   const body = await parseJSON(request);
+  const query = (body.query || "").trim();
+  if (!query) return json([]);
 
-  const searchWords = (body.query || "")
-    .trim()
+  const searchWords = query
     .split(/\s+/)
     .map(getNormalizedText)
     .filter(Boolean);
 
   if (searchWords.length === 0) return json([]);
 
-  const scoreClauses = [];
-  const whereClauses = [];
-  const params = [];
-
-  for (const word of searchWords) {
-    scoreClauses.push("(INSTR(p.Search_Name, ?) > 0)");
-    scoreClauses.push("(INSTR(b.Search_Name, ?) > 0)");
-    whereClauses.push("(INSTR(p.Search_Name, ?) > 0 OR INSTR(b.Search_Name, ?) > 0)");
-    params.push(word, word);
-  }
-
-  for (const word of searchWords) {
-    params.push(word, word);
-  }
+  const ftsQuery = searchWords.map(word => `${word}*`).join(' AND ');
 
   const sql = `
     WITH RECURSIVE BrandHierarchy AS (
@@ -156,7 +152,15 @@ async function searchHandler({ request, env }) {
         pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing,
         bh.Level + 1, bh.Product_ID
       FROM Brands pb
-      JOIN BrandHierarchy bh ON pb.ID = bh.Parent_ID
+      JOIN BrandHierarchy bh ON bh.Parent_ID = pb.ID
+    ),
+    RankedProducts AS (
+      SELECT 
+        Products.rowid AS Product_ID,
+        bm25(ProductsFTS) AS score
+      FROM ProductsFTS
+      JOIN Products ON Products.ID = ProductsFTS.rowid
+      WHERE ProductsFTS MATCH ?
     )
     SELECT 
       p.ID, p.Name, p.Image, p.Is_Vegan,
@@ -176,15 +180,15 @@ async function searchHandler({ request, env }) {
         WHERE bh.Product_ID = p.ID
         ORDER BY Level
       ) AS Brand_Hierarchy,
-      (${scoreClauses.join(" + ")}) AS score
-    FROM Products p
+      rp.score
+    FROM RankedProducts rp
+    JOIN Products p ON p.ID = rp.Product_ID
     JOIN Brands b ON b.ID = p.Brand_ID
-    WHERE ${whereClauses.join(" OR ")}
-      AND p.Accepted = 1
-    ORDER BY score DESC;
+    WHERE p.Accepted = 1
+    ORDER BY rp.score ASC;
   `;
 
-  const { results } = await env.DATABASE.prepare(sql).bind(...params).all();
+  const { results } = await env.DATABASE.prepare(sql).bind(ftsQuery).all();
   return json(results);
 }
 
