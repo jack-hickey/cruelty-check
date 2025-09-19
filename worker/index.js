@@ -63,15 +63,16 @@ async function addBrandHandler({ request, env }) {
   await env.DATABASE
     .prepare(`
       INSERT OR IGNORE INTO Brands 
-      (Name, Parent_ID, Cruelty_Free, B_Corp, Animal_Testing)
-      VALUES (?, ?, ?, ?, ?)
+      (Name, Parent_ID, Cruelty_Free, B_Corp, Animal_Testing, Search_Name)
+      VALUES (?, ?, ?, ?, ?, ?)
     `)
     .bind(
       body.Name,
       body.ParentID ?? null,
       body.CrueltyFree ? 1 : 0,
       body.BCorp ? 1 : 0,
-      body.AnimalTesting ? 1 : 0
+      body.AnimalTesting ? 1 : 0,
+    	body.Name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""); 
     )
     .run();
 
@@ -91,8 +92,8 @@ async function addProductHandler({ request, env }) {
   await env.R2_BUCKET.put(fileName, image.stream());
 
   await env.DATABASE
-    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade) VALUES (?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0)
+    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""));
     .run();
 
   return text("Ok", 200);
@@ -112,8 +113,16 @@ async function brandsHandler({ request, env }) {
 
 async function searchHandler({ request, env }) {
   const body = await parseJSON(request);
-  const term = body.query || "";
-  const searchWords = term.trim().toLowerCase().split(/\s+/).filter(Boolean);
+
+  const normalize = str =>
+    str.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""); 
+
+  const searchWords = (body.query || "")
+    .trim()
+    .split(/\s+/)
+    .map(normalize)
+    .filter(Boolean);
+
   if (searchWords.length === 0) return json([]);
 
   const scoreClauses = [];
@@ -121,9 +130,9 @@ async function searchHandler({ request, env }) {
   const params = [];
 
   for (const word of searchWords) {
-    scoreClauses.push("(INSTR(LOWER(p.Name), ?) > 0)");
-    scoreClauses.push("(INSTR(LOWER(b.Name), ?) > 0)");
-    whereClauses.push("(INSTR(LOWER(p.Name), ?) > 0 OR INSTR(LOWER(b.Name), ?) > 0)");
+    scoreClauses.push("(INSTR(p.Search_Name, ?) > 0)");
+    scoreClauses.push("(INSTR(b.Search_Name, ?) > 0)");
+    whereClauses.push("(INSTR(p.Search_Name, ?) > 0 OR INSTR(b.Search_Name, ?) > 0)");
     params.push(word, word);
   }
 
@@ -133,7 +142,6 @@ async function searchHandler({ request, env }) {
 
   const sql = `
     WITH RECURSIVE BrandHierarchy AS (
-      -- Start at the product’s brand
       SELECT 
         b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing,
         0 AS Level, p.ID AS Product_ID
@@ -142,7 +150,6 @@ async function searchHandler({ request, env }) {
 
       UNION ALL
 
-      -- Walk up parent chain
       SELECT 
         pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing,
         bh.Level + 1, bh.Product_ID
