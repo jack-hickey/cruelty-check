@@ -3,8 +3,9 @@ class Product {
 		this.Name = source.Name;
 		this.Vegan = source.Is_Vegan === 1;
 		this.Image = source.Image;
-
-		this.Brand = new Brand(source);
+		this.BrandID = parseInt(source.Brand_ID) || 0;
+		this.Brands = JSON.parse(source.Brand_Hierarchy).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
+		this.Brand = this.Brands.at(0) ?? new Brand();
 	}
 
 	static search(query) {
@@ -263,26 +264,42 @@ class Product {
 			}
 		}));
 	}
+	
 
 	getAdvisories() {
-		let texts = [];
+		const animalTester = this.Brands.find(x => x.AnimalTesting),
+			nonCrueltyFree = this.Brands.find(x => !x.CrueltyFree);
 
-		// Brand permits animal testing
-		if (this.Brand.AnimalTesting) {
-			texts.push(`${this.Brand.Name} engages in animal testing, either when required by law or by actively funding/participating in it.`);
+		const advisories = [
+			{
+				id: "brand_testing",
+				condition: () => !!animalTester,
+				message: () =>
+					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", an ancestor of " + this.Brand.Name + "," : ""} engages in animal testing, either when required by law or by actively funding/participating in it.`,
+				blocks: ["brand_parent_contrast"],
+			},
+			{
+				id: "brand_parent_contrast",
+				condition: () =>
+					this.Brand.CrueltyFree &&
+					!!nonCrueltyFree,
+				message: () =>
+					`While ${this.Brand.Name} is cruelty-free, ${nonCrueltyFree.Name}, an ancestor of ${this.Brand.Name} is not and may own non-cruelty-free brands.`,
+				blocks: [],
+			},
+		];
+
+		const results = [],
+			blocked = new Set();
+
+		for (const advisory of advisories) {
+			if (!blocked.has(advisory.id) && advisory.condition()) {
+				results.push(advisory.message());
+				advisory.blocks.forEach((id) => blocked.add(id));
+			}
 		}
 
-		// Parent permits animal testing
-		if (this.Brand.ParentCompany.AnimalTesting) {
-			texts.push(`${this.Brand.ParentCompany.Name}, parent company of ${this.Brand.Name}, permits animal testing; this may be directly or through its owned brands.`);
-		}
-
-		// Parent isn't cruelty-free but brand is
-		if (this.Brand.CrueltyFree && this.Brand.ParentCompany.ID && !this.Brand.ParentCompany.CrueltyFree) {
-			texts.push(`While ${this.Brand.Name} is cruelty-free, its parent company ${this.Brand.ParentCompany.Name} is not and may own non-cruelty-free brands.`);
-		}
-
-		return texts.join("<br/><br/>");
+		return results.join("<br/><br/>");
 	}
 
 	reportIncorrect() {

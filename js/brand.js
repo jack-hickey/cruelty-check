@@ -1,17 +1,11 @@
 class Brand {
 	constructor(source) {
-		this.ID = parseInt(source.Brand_ID) || 0;
-		this.Name = source.Brand ?? "";
+		this.ID = parseInt(source.ID) || 0;
+		this.Name = source.Name ?? "";
+		this.Level = parseInt(source.Level) ?? 0;
+		this.ParentID = parseInt(source.Parent_ID) || 0;
 		this.CrueltyFree = source.Cruelty_Free === 1;
 		this.AnimalTesting = source.Animal_Testing === 1;
-
-		this.ParentCompany = {
-			Name: source.Parent_Brand ?? "",
-			ID: parseInt(source.Parent_ID) || 0,
-			PluralisedName: source.Parent_Brand + "'",
-			CrueltyFree: source.Parent_Cruelty_Free === 1,
-			AnimalTesting: source.Parent_Animal_Testing === 1
-		};
 	}
 
 	static getAll(query) {
