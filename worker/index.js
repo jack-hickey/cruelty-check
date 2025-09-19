@@ -72,7 +72,7 @@ async function addBrandHandler({ request, env }) {
       body.CrueltyFree ? 1 : 0,
       body.BCorp ? 1 : 0,
       body.AnimalTesting ? 1 : 0,
-    	body.Name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""); 
+    	body.Name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, "") 
     )
     .run();
 
@@ -93,7 +93,7 @@ async function addProductHandler({ request, env }) {
 
   await env.DATABASE
     .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""));
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, name.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ""))
     .run();
 
   return text("Ok", 200);
