@@ -139,6 +139,23 @@ function buildResult(product) {
 								<chip-accordionitem
 									heading="${product.Brand.Name}"
 									class="ai--brand-name mt-xxs">
+
+									<chip-text
+										class="mt-form"
+										weight="medium"
+										size="h5">
+										Brand Hierarchy
+									</chip-text>
+
+									<div class="brand-hierarchy gap-sm mt-xs flex-wrap mb-xs">
+										${product.Brands.map(x =>
+											`
+												<chip-text>
+													${x.Name}
+												</chip-text>
+											`
+										).join("<chip-icon size='md' icon='far fa-long-arrow-right'></chip-icon>")}
+									</div>
 								</chip-accordionitem>
 							`
 						:

@@ -108,7 +108,8 @@ chip-button.btn--feedback span {
 	text-transform: uppercase;
 }
 
-.pc--name {
+.pc--name,
+.brand-hierarchy {
 	display: flex;
 	align-items: baseline;
 }
