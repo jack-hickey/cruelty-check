@@ -116,15 +116,18 @@ async function brandsHandler({ request, env }) {
   const body = await parseJSON(request);
   if (!body.query) return text("Missing query");
 
+  const query = getNormalizedText(body.query) + "*";
+
   const { results } = await env.DATABASE
     .prepare(`
-      SELECT b.*
-      FROM BrandsFTS f
-      JOIN Brands b ON b.ID = f.rowid
+      SELECT b.*, bm25(BrandsFTS) AS score
+      FROM BrandsFTS
+      JOIN Brands b ON b.ID = BrandsFTS.rowid
       WHERE BrandsFTS MATCH ?
-      ORDER BY rank
+      ORDER BY score ASC
+      LIMIT 50
     `)
-    .bind(getNormalizedText(body.query))
+    .bind(query)
     .all();
 
   return json(results);
