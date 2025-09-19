@@ -131,7 +131,25 @@ function buildResult(product) {
 						variation="body">
 					</chip-button>
 				</div>
-				<chip-text class="mt-xs" variation="secondary">${product.Brand.Name}</chip-text>
+
+				${
+					product.Brands.length > 1
+						?
+							`
+								<chip-accordionitem
+									heading="${product.Brand.Name}"
+									class="ai--brand-name mt-xxs">
+								</chip-accordionitem>
+							`
+						:
+							`
+								<chip-text
+									variation="secondary"
+									class="mt-xs">
+									${product.Brand.Name}
+								</chip-text>
+							`
+				}
 
 				<div class="responsive-row mb-card gap-sm mt-md">
 					${
