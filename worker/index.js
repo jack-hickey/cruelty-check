@@ -117,8 +117,14 @@ async function brandsHandler({ request, env }) {
   if (!body.query) return text("Missing query");
 
   const { results } = await env.DATABASE
-    .prepare("SELECT * FROM Brands WHERE INSTR(LOWER(Name), ?) > 0 ORDER BY Name")
-    .bind(body.query.toLowerCase())
+    .prepare(`
+      SELECT b.*
+      FROM BrandsFTS f
+      JOIN Brands b ON b.ID = f.rowid
+      WHERE BrandsFTS MATCH ?
+      ORDER BY rank
+    `)
+    .bind(getNormalizedText(body.query))
     .all();
 
   return json(results);
