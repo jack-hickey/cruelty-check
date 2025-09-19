@@ -1,6 +1,5 @@
 {
   "name": "Cruelty Check",
-  "short_name": "CrueltyCheck",
   "description": "Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences.",
   "lang": "en-GB",
   "dir": "ltr",
@@ -8,26 +7,6 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-	"theme_color": [
-		{
-			"color": "#477e59",
-			"media": "(prefers-color-scheme: light)"
-		},
-		{
-			"color": "#2d975a",
-			"media": "(prefers-color-scheme: dark)"
-		}
-	],
-	"background_color": [
-		{
-			"color": "#ffffff",
-			"media": "(prefers-color-scheme: light)"
-		},
-		{
-			"color": "#1d1e24",
-			"media": "(prefers-color-scheme: dark)"
-		}
-	],
   "categories": ["shopping", "lifestyle", "reference"],
   "icons": [
     {
