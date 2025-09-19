@@ -67,6 +67,7 @@ DROP TRIGGER IF EXISTS trg_products_update;
 DROP TRIGGER IF EXISTS trg_products_delete;
 DROP TRIGGER IF EXISTS trg_brands_update;
 DROP TRIGGER IF EXISTS trg_brands_delete;
+DROP TRIGGER IF EXISTS trg_brands_insert;
 
 CREATE VIRTUAL TABLE ProductsFTS USING fts5(
     ProductName,
@@ -74,21 +75,21 @@ CREATE VIRTUAL TABLE ProductsFTS USING fts5(
 );
 
 INSERT INTO ProductsFTS (rowid, ProductName, BrandName)
-SELECT p.ID, p.Name, b.Name
+SELECT p.ID, p.Search_Name, b.Search_Name
 FROM Products p
 JOIN Brands b ON p.Brand_ID = b.ID;
 
 CREATE TRIGGER trg_products_insert AFTER INSERT ON Products
 BEGIN
     INSERT INTO ProductsFTS (rowid, ProductName, BrandName)
-    VALUES (NEW.ID, NEW.Name, (SELECT Name FROM Brands WHERE ID = NEW.Brand_ID));
+    VALUES (NEW.ID, NEW.Search_Name, (SELECT Search_Name FROM Brands WHERE ID = NEW.Brand_ID));
 END;
 
 CREATE TRIGGER trg_products_update AFTER UPDATE ON Products
 BEGIN
     UPDATE ProductsFTS
-    SET ProductName = NEW.Name,
-        BrandName = (SELECT Name FROM Brands WHERE ID = NEW.Brand_ID)
+    SET ProductName = NEW.Search_Name,
+        BrandName = (SELECT Search_Name FROM Brands WHERE ID = NEW.Brand_ID)
     WHERE rowid = NEW.ID;
 END;
 
@@ -100,19 +101,19 @@ END;
 CREATE TRIGGER trg_brands_insert AFTER INSERT ON Brands
 BEGIN
     INSERT OR REPLACE INTO ProductsFTS (rowid, ProductName, BrandName)
-    SELECT p.ID, p.Name, NEW.Name
+    SELECT p.ID, p.Search_Name, NEW.Search_Name
     FROM Products p
     WHERE p.Brand_ID = NEW.ID;
 END;
 CREATE TRIGGER trg_brands_update AFTER UPDATE ON Brands
 BEGIN
     UPDATE ProductsFTS
-    SET BrandName = NEW.Name
-    WHERE BrandName = OLD.Name;
+    SET BrandName = NEW.Search_Name
+    WHERE BrandName = OLD.Search_Name;
 END;
 
 CREATE TRIGGER trg_brands_delete AFTER DELETE ON Brands
 BEGIN
     DELETE FROM ProductsFTS
-    WHERE BrandName = OLD.Name;
+    WHERE BrandName = OLD.Search_Name;
 END;
