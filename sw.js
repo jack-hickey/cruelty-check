@@ -1,7 +1,8 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v1.0.3';
 const CACHE_NAME = `cruelty-check-cache-${CACHE_VERSION}`;
 
 const APP_SHELL = [
+	'/',
   '/index.html',
   '/about.html',
   '/js/site.min.js',
@@ -34,6 +35,6 @@ self.addEventListener("fetch", (event) => {
         return cachedResponse;
       }
       return fetch(event.request);
-    }),
+    }).catch(err => caches.match("/index.html") || new Response("You are offline", { status: 503 }))
   );
 });
