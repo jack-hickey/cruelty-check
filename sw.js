@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `cruelty-check-cache-${CACHE_VERSION}`;
 
 const APP_SHELL = [
@@ -23,31 +23,17 @@ const APP_SHELL = [
   '/webfonts/fa-solid-900.woff2'
 ];
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
-  );
-  self.skipWaiting();
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(precacheResources)));
 });
 
-self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(key => {
-        if (!cacheWhitelist.includes(key)) return caches.delete(key);
-      }))
-    )
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request);
+    }),
   );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", event => { 
-  if (event.request.method != "GET") return;
-  event.respondWith(async function() {
-    const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(event.request);
-
-    return cached ? cached : fetch(event.request);
-  })
 });
