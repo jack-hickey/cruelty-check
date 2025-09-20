@@ -3,7 +3,7 @@
   "description": "Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences.",
   "lang": "en-GB",
   "dir": "ltr",
-  "start_url": "/?source=pwa",
+  "start_url": "/index.html?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
