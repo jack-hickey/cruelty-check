@@ -42,15 +42,12 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      caches.match(event.request).then(response => response || caches.match('/index.html'))
-    );
-    return;
-  }
+self.addEventListener("fetch", event => { 
+  if (event.request.method != "GET") return;
+  event.respondWith(async function() {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(event.request);
 
-  event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
-  );
+    return cached ? cached : fetch(event.request);
+  })
 });
