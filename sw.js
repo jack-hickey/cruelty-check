@@ -24,7 +24,7 @@ const APP_SHELL = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(precacheResources)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(precacheResources)));
 });
 
 self.addEventListener("fetch", (event) => {
