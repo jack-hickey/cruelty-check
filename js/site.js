@@ -1,3 +1,7 @@
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.min.js");
+}
+
 document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(button, {
 	textContent: Localizer.FEEDBACK_BUTTON_LABEL,
 	onclick: () => {
