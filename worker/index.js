@@ -179,6 +179,7 @@ async function searchHandler({ request, env }) {
           json_object(
             'ID', ID,
             'Name', Name,
+						'B_Corp', B_Corp,
             'Cruelty_Free', Cruelty_Free,
             'Animal_Testing', Animal_Testing,
             'Parent_ID', Parent_ID,
