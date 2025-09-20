@@ -147,7 +147,7 @@ function buildResult(product) {
 										Brand Hierarchy
 									</chip-text>
 
-									<div class="brand-hierarchy gap-sm mt-sm flex-wrap mb-xs">
+									<div class="brand-hierarchy gx-sm gy-xs mt-sm flex-wrap mb-xs">
 										${product.Brands.map(x =>
 											`
 												<chip-text>
