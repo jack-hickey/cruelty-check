@@ -49,10 +49,18 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener("fetch", event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      caches.match(event.request).then(response => {
+        return response || caches.match("/index.html");
+      })
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
 
