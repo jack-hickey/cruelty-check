@@ -1,7 +1,6 @@
 const CACHE_NAME = 'cruelty-check-cache';
 
 const urlsToCache = [
-  "/",
   "/index.html",
 	"/about.html",
   "/js/site.min.js",
