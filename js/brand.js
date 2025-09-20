@@ -3,6 +3,7 @@ class Brand {
 		this.ID = parseInt(source.ID) || 0;
 		this.Name = source.Name ?? "";
 		this.Level = parseInt(source.Level) ?? 0;
+		this.BCorp = source.B_Corp === 1;
 		this.ParentID = parseInt(source.Parent_ID) || 0;
 		this.CrueltyFree = source.Cruelty_Free === 1;
 		this.AnimalTesting = source.Animal_Testing === 1;
