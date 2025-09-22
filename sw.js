@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1.0.3';
+const CACHE_VERSION = 'v1.0.4';
 const CACHE_NAME = `cruelty-check-cache-${CACHE_VERSION}`;
 
 const APP_SHELL = [
@@ -17,11 +17,22 @@ const APP_SHELL = [
   '/images/logo.svg',
   '/images/kofi.webp',
   '/images/logo-maskable.png',
+	'/images/favicon-16x16',
+	'/images/favicon-32x32.png',
+	'/images/favicon-48x48.png',
+	'/images/favicon-64x64.png',
+	'/images/favicon-96x96.png',
+	'/images/favicon-128x128.png',
   '/images/favicon-192x192.png',
+	'/images/favicon-256x256.png',
   '/images/favicon-512x512.png',
+	'/images/favicon-1024x1024.png',
   '/webfonts/fa-light-300.woff2',
+	'/webfonts/fa-light-300.woff',
   '/webfonts/fa-regular-400.woff2',
-  '/webfonts/fa-solid-900.woff2'
+	'/webfonts/fa-regular-400.woff',
+  '/webfonts/fa-solid-900.woff2',
+	'/webfonts/fa-solid-900.woff'
 ];
 
 self.addEventListener("install", (event) => {
