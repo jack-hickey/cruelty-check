@@ -4,7 +4,7 @@
   "description": "Easily search for any product to quickly explore its vegan and cruelty-free status, powered by community submissions.",
   "lang": "en-GB",
   "dir": "ltr",
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -15,7 +15,7 @@
     { "src": "/images/logo-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Home", "short_name": "Home", "url": "/index.html", "icons": [{ "src": "/images/favicon-96x96.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "Home", "short_name": "Home", "url": "/", "icons": [{ "src": "/images/favicon-96x96.png", "sizes": "96x96", "type": "image/png" }] },
     { "name": "About", "short_name": "About", "url": "/about.html", "icons": [{ "src": "/images/favicon-96x96.png", "sizes": "96x96", "type": "image/png" }] }
   ],
   "prefer_related_applications": false
