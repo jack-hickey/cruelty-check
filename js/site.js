@@ -1,3 +1,11 @@
+if ("serviceWorker" in navigator) {
+	navigator.serviceWorker.getRegistrations().then(registrations => {
+		for (const registration of registrations) {
+			registration.unregister();
+		}
+	});
+}
+
 document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(button, {
 	textContent: Localizer.FEEDBACK_BUTTON_LABEL,
 	onclick: () => {
