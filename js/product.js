@@ -4,7 +4,7 @@ class Product {
 		this.Vegan = source.Is_Vegan === 1;
 		this.Image = source.Image;
 		this.BrandID = parseInt(source.Brand_ID) || 0;
-		this.Brands = JSON.parse(source.Brand_Hierarchy).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
+		this.Brands = (JSON.parse(source.Brand_Hierarchy) ?? []).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
 		this.Brand = this.Brands.at(0) ?? new Brand();
 	}
 
