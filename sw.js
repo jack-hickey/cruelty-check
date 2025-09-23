@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1.0.5';
+const CACHE_VERSION = 'v1.0.6';
 const CACHE_NAME = `cruelty-check-cache-${CACHE_VERSION}`;
 
 const APP_SHELL = [
@@ -17,7 +17,7 @@ const APP_SHELL = [
   '/images/logo.svg',
   '/images/kofi.webp',
   '/images/logo-maskable.png',
-	'/images/favicon-16x16',
+	'/images/favicon-16x16.png',
 	'/images/favicon-32x32.png',
 	'/images/favicon-48x48.png',
 	'/images/favicon-64x64.png',
@@ -47,5 +47,17 @@ self.addEventListener("fetch", (event) => {
       }
       return fetch(event.request);
     }).catch(err => caches.match("/index.html") || new Response("You are offline", { status: 503 }))
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
+      )
+    )
   );
 });
