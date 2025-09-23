@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1.0.6';
+const CACHE_VERSION = 'v1.0.7';
 const CACHE_NAME = `cruelty-check-cache-${CACHE_VERSION}`;
 
 const APP_SHELL = [
@@ -36,28 +36,29 @@ const APP_SHELL = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request);
-    }).catch(err => caches.match("/index.html") || new Response("You are offline", { status: 503 }))
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
   );
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key))
       )
     )
+  );
+
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      return cachedResponse || fetch(event.request);
+    }).catch(() => caches.match("/index.html") || new Response("You are offline", { status: 503 }))
   );
 });
