@@ -6,8 +6,33 @@ function json(data, status = 200, headers = {}) {
   });
 }
 
+const PRODUCT_CACHE = new Map();
+const CACHE_TTL = 60 * 60 * 1000;
+const CACHE_MAX_SIZE = 100;
+
+function setCache(key, value) {
+  const expires = Date.now() + CACHE_TTL;
+  PRODUCT_CACHE.set(key, { value, expires });
+
+  if (PRODUCT_CACHE.size > CACHE_MAX_SIZE) {
+    PRODUCT_CACHE.delete(PRODUCT_CACHE.keys().next().value);
+  }
+}
+
+function getCache(key) {
+  const entry = PRODUCT_CACHE.get(key);
+  if (!entry) { return null };
+
+  if (Date.now() > entry.expires) {
+    PRODUCT_CACHE.delete(key);
+    return null;
+  }
+
+  return entry.value;
+}
+
 function getNormalizedText(text) {
-	if (!text) return "";
+	if (!text) { return "" };
 
   return text
 		.toLowerCase()
@@ -138,64 +163,64 @@ async function searchHandler({ request, env }) {
   const query = (body.query || "").trim();
   if (!query) return json([]);
 
+  const cacheKey = getNormalizedText(query);
+  const cached = getCache(cacheKey);
+
+  if (cached) { return json(cached) };
+
   const searchWords = query
     .split(/\s+/)
     .map(getNormalizedText)
     .filter(Boolean);
 
-  if (searchWords.length === 0) return json([]);
+  if (searchWords.length === 0) { return json([]) };
 
   const ftsQuery = searchWords.map(word => `${word}*`).join(' AND ');
 
   const sql = `
-		WITH RECURSIVE BrandHierarchy AS (
-				SELECT 
-						b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
-						0 AS Level, p.ID AS Product_ID
-				FROM Products p
-				JOIN Brands b ON b.ID = p.Brand_ID
-
-				UNION ALL
-
-				SELECT 
-						pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing, pb.B_Corp,
-						bh.Level + 1, bh.Product_ID
-				FROM Brands pb
-				JOIN BrandHierarchy bh ON bh.Parent_ID = pb.ID
-		),
-		RankedProducts AS (
-				SELECT 
-						Products.rowid AS Product_ID,
-						bm25(ProductsFTS) AS score
-				FROM ProductsFTS
-				JOIN Products ON Products.ID = ProductsFTS.rowid
-				WHERE ProductsFTS MATCH ?
-		)
-		SELECT 
-				p.Name, p.Image, p.Is_Vegan,
-				(
-						SELECT json_group_array(
-								json_object(
-										'ID', ID,
-										'Name', Name,
-										'B_Corp', B_Corp,
-										'Cruelty_Free', Cruelty_Free,
-										'Animal_Testing', Animal_Testing,
-										'Parent_ID', Parent_ID,
-										'Level', Level
-								)
-						)
-						FROM BrandHierarchy bh
-						WHERE bh.Product_ID = p.ID
-						ORDER BY Level
-				) AS Brand_Hierarchy
-		FROM RankedProducts rp
-		JOIN Products p ON p.ID = rp.Product_ID
-		WHERE p.Accepted = 1
-		ORDER BY rp.score ASC;
+    WITH RECURSIVE BrandHierarchy AS (
+      SELECT b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
+             0 AS Level, p.ID AS Product_ID
+      FROM Products p
+      JOIN Brands b ON b.ID = p.Brand_ID
+      UNION ALL
+      SELECT pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing, pb.B_Corp,
+             bh.Level + 1, bh.Product_ID
+      FROM Brands pb
+      JOIN BrandHierarchy bh ON bh.Parent_ID = pb.ID
+    ),
+    RankedProducts AS (
+      SELECT Products.rowid AS Product_ID,
+             bm25(ProductsFTS) AS score
+      FROM ProductsFTS
+      JOIN Products ON Products.ID = ProductsFTS.rowid
+      WHERE ProductsFTS MATCH ?
+    )
+    SELECT p.Name, p.Image, p.Is_Vegan,
+      (SELECT json_group_array(
+         json_object(
+           'ID', ID,
+           'Name', Name,
+           'B_Corp', B_Corp,
+           'Cruelty_Free', Cruelty_Free,
+           'Animal_Testing', Animal_Testing,
+           'Parent_ID', Parent_ID,
+           'Level', Level
+         )
+       )
+       FROM BrandHierarchy bh
+       WHERE bh.Product_ID = p.ID
+       ORDER BY Level
+      ) AS Brand_Hierarchy
+    FROM RankedProducts rp
+    JOIN Products p ON p.ID = rp.Product_ID
+    WHERE p.Accepted = 1
+    ORDER BY rp.score ASC;
   `;
 
   const { results } = await env.DATABASE.prepare(sql).bind(ftsQuery).all();
+
+  setCache(cacheKey, results);
   return json(results);
 }
 
