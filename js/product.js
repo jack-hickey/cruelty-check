@@ -5,8 +5,6 @@ class Product {
 		this.Image = source.Image;
 		this.Brands = (JSON.parse(source.Brand_Hierarchy) ?? []).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
 		this.Brand = this.Brands.at(0) ?? new Brand();
-
-		console.log(source);
 	}
 
 	static search = query => new Promise(resolve => Ajax.Post("search", {
@@ -64,12 +62,6 @@ class Product {
 										id="cbVegan"
 										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
 										label="Is vegan"
-									</chip-checkbox>
-								</chip-listitem>
-								<chip-listitem>
-									<chip-checkbox
-										id="cbFairtrade"
-										label="Is Fairtrade certified">
 									</chip-checkbox>
 								</chip-listitem>
 							</chip-list>
@@ -258,7 +250,6 @@ class Product {
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,
 				Vegan: cbVegan.checked,
-				Fairtrade: cbFairtrade.checked,
 				Image: productImage
 			}),
 			success: {

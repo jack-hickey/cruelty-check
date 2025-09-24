@@ -105,8 +105,8 @@ async function addProductHandler({ request, env }) {
   await env.R2_BUCKET.put(fileName, image.stream());
 
   await env.DATABASE
-    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Fair_Trade, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, body.get("Fairtrade") === "true" ? 1 : 0, getNormalizedText(name))
+    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, getNormalizedText(name))
     .run();
 
   return text("Ok", 200);
