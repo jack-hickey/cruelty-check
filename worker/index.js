@@ -148,54 +148,51 @@ async function searchHandler({ request, env }) {
   const ftsQuery = searchWords.map(word => `${word}*`).join(' AND ');
 
   const sql = `
-    WITH RECURSIVE BrandHierarchy AS (
-      SELECT 
-        b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing,
-        0 AS Level, p.ID AS Product_ID
-      FROM Products p
-      JOIN Brands b ON b.ID = p.Brand_ID
+		WITH RECURSIVE BrandHierarchy AS (
+				SELECT 
+						b.ID, b.Name, b.Parent_ID, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
+						0 AS Level, p.ID AS Product_ID
+				FROM Products p
+				JOIN Brands b ON b.ID = p.Brand_ID
 
-      UNION ALL
+				UNION ALL
 
-      SELECT 
-        pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing,
-        bh.Level + 1, bh.Product_ID
-      FROM Brands pb
-      JOIN BrandHierarchy bh ON bh.Parent_ID = pb.ID
-    ),
-    RankedProducts AS (
-      SELECT 
-        Products.rowid AS Product_ID,
-        bm25(ProductsFTS) AS score
-      FROM ProductsFTS
-      JOIN Products ON Products.ID = ProductsFTS.rowid
-      WHERE ProductsFTS MATCH ?
-    )
-    SELECT 
-      p.ID, p.Name, p.Image, p.Is_Vegan,
-      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
-      (
-        SELECT json_group_array(
-          json_object(
-            'ID', ID,
-            'Name', Name,
-						'B_Corp', B_Corp,
-            'Cruelty_Free', Cruelty_Free,
-            'Animal_Testing', Animal_Testing,
-            'Parent_ID', Parent_ID,
-            'Level', Level
-          )
-        )
-        FROM BrandHierarchy bh
-        WHERE bh.Product_ID = p.ID
-        ORDER BY Level
-      ) AS Brand_Hierarchy,
-      rp.score
-    FROM RankedProducts rp
-    JOIN Products p ON p.ID = rp.Product_ID
-    JOIN Brands b ON b.ID = p.Brand_ID
-    WHERE p.Accepted = 1
-    ORDER BY rp.score ASC;
+				SELECT 
+						pb.ID, pb.Name, pb.Parent_ID, pb.Cruelty_Free, pb.Animal_Testing, pb.B_Corp,
+						bh.Level + 1, bh.Product_ID
+				FROM Brands pb
+				JOIN BrandHierarchy bh ON bh.Parent_ID = pb.ID
+		),
+		RankedProducts AS (
+				SELECT 
+						Products.rowid AS Product_ID,
+						bm25(ProductsFTS) AS score
+				FROM ProductsFTS
+				JOIN Products ON Products.ID = ProductsFTS.rowid
+				WHERE ProductsFTS MATCH ?
+		)
+		SELECT 
+				p.Name, p.Image, p.Is_Vegan,
+				(
+						SELECT json_group_array(
+								json_object(
+										'ID', ID,
+										'Name', Name,
+										'B_Corp', B_Corp,
+										'Cruelty_Free', Cruelty_Free,
+										'Animal_Testing', Animal_Testing,
+										'Parent_ID', Parent_ID,
+										'Level', Level
+								)
+						)
+						FROM BrandHierarchy bh
+						WHERE bh.Product_ID = p.ID
+						ORDER BY Level
+				) AS Brand_Hierarchy
+		FROM RankedProducts rp
+		JOIN Products p ON p.ID = rp.Product_ID
+		WHERE p.Accepted = 1
+		ORDER BY rp.score ASC;
   `;
 
   const { results } = await env.DATABASE.prepare(sql).bind(ftsQuery).all();

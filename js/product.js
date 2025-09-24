@@ -3,9 +3,10 @@ class Product {
 		this.Name = source.Name;
 		this.Vegan = source.Is_Vegan === 1;
 		this.Image = source.Image;
-		this.BrandID = parseInt(source.Brand_ID) || 0;
 		this.Brands = (JSON.parse(source.Brand_Hierarchy) ?? []).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
 		this.Brand = this.Brands.at(0) ?? new Brand();
+
+		console.log(source);
 	}
 
 	static search = query => new Promise(resolve => Ajax.Post("search", {
@@ -19,17 +20,15 @@ class Product {
 	}));
 
 	static #ResetBrandScreen() {
-		txtBrandName.value = "";
-
-		drpBrandParent.value = "";
+		[txtBrandName, drpBrandParent]
+			.forEach(x => x.value = "");
 
 		// Don't ask
 		drpBrandParent.text = "";
 		drpBrandParent.text = "Choose a brand";
 
-		cbCrueltyFree.checked = false;
-		cbBCorp.checked = false;
-		cbAnimalTesting.checked = false;
+		[cbCrueltyFree, cbBCorp, cbAnimalTesting]
+			.forEach(x => x.checked = false);
 	}
 
 	static add() {
