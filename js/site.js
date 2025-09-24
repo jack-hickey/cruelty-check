@@ -182,12 +182,6 @@ function buildResult(product) {
 					}
 
 					${
-						product.FairTrade
-							? `<chip-badge tooltip="This product is Fairtrade certified" badge-style="pill" variation="theme-secondary">${Localizer.FAIRTRADE_LABEL}</chip-badge>`
-							: ""
-					}
-
-					${
 						product.Brand.BCorp
 							? `<chip-badge tooltip="${product.Brand.Name} is a B Corporation" badge-style="pill" variation="theme-secondary">${Localizer.BCORP_LABEL}</chip-badge>`
 							: ""
