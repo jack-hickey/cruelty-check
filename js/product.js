@@ -42,7 +42,25 @@ class Product {
 								searchable
 								label="Brand">
 							</chip-dropdown>
-							
+
+							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
+
+							<chip-list class="mt-md" gap="md">
+								<chip-listitem>
+									<chip-checkbox
+										id="cbVegan"
+										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
+										label="Is vegan"
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbFairtrade"
+										label="Is Fairtrade certified">
+									</chip-checkbox>
+								</chip-listitem>
+							</chip-list>
+
 							<chip-header
 								class="mt-form--lg mb-xs"
 								size="4">
@@ -63,24 +81,6 @@ class Product {
 									Please upload an image
 								</chip-text>
 							</div>
-
-							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
-
-							<chip-list class="mt-form" gap="md">
-								<chip-listitem>
-									<chip-checkbox
-										id="cbVegan"
-										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
-										label="Is vegan"
-									</chip-checkbox>
-								</chip-listitem>
-								<chip-listitem>
-									<chip-checkbox
-										id="cbFairtrade"
-										label="Is Fairtrade certified">
-									</chip-checkbox>
-								</chip-listitem>
-							</chip-list>
 						</chip-form>
 					</chip-tab>
 					<chip-tab>
@@ -107,7 +107,7 @@ class Product {
 
 							<chip-header size="5" class="mt-form">This brand:</chip-header>
 
-							<chip-list class="mt-sm" gap="sm">
+							<chip-list class="mt-md" gap="sm">
 								<chip-listitem>
 									<chip-checkbox
 										id="cbCrueltyFree"
