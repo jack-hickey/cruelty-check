@@ -18,6 +18,20 @@ class Product {
 		}
 	}));
 
+	static #ResetBrandScreen() {
+		txtBrandName.value = "";
+
+		drpBrandParent.value = "";
+
+		// Don't ask
+		drpBrandParent.text = "";
+		drpBrandParent.text = "Choose a brand";
+
+		cbCrueltyFree.checked = false;
+		cbBCorp.checked = false;
+		cbAnimalTesting.checked = false;
+	}
+
 	static add() {
 		let productImage = null;
 
@@ -188,17 +202,7 @@ class Product {
 									ok: () => {
 										dialog.querySelector("chip-tab").Select();
 
-										txtBrandName.value = "";
-
-										drpBrandParent.value = "";
-
-										// Don't ask
-										drpBrandParent.text = "";
-										drpBrandParent.text = "Choose a company";
-
-										cbCrueltyFree.checked = false;
-										cbBCorp.checked = false;
-										cbAnimalTesting.checked = false;
+										this.#ResetBrandScreen();
 									}
 								}
 							});
@@ -213,23 +217,23 @@ class Product {
 							value: brand.ID
 						}));
 
-						if (x.id !== "drpBrandParent") {
-							x.onselectionchange = () => {
-								if (x.value === "0") {
-									dialog.querySelector("chip-tab + chip-tab").Select();
-									x.value = "";
-								}
-							};
-
-							if (items.length) {
-								items.unshift(document.createElement("chip-dropdowndivider"));
+						x.onselectionchange = () => {
+							if (x.value === "0") {
+								dialog.querySelector("chip-tab + chip-tab").Select();
+								
+								this.#ResetBrandScreen();
+								x.value = "";
 							}
+						};
 
-							items.unshift(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
-								icon: "fas fa-plus",
-								value: 0
-							}));
+						if (items.length) {
+							items.unshift(document.createElement("chip-dropdowndivider"));
 						}
+
+						items.unshift(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
+							icon: "fas fa-plus",
+							value: 0
+						}));
 
 						return items;
 					});
