@@ -19,17 +19,15 @@ class Product {
 	}));
 
 	static #ResetBrandScreen() {
-		txtBrandName.value = "";
-
-		drpBrandParent.value = "";
+		[txtBrandName, drpBrandParent]
+			.forEach(x => x.value = "");
 
 		// Don't ask
 		drpBrandParent.text = "";
 		drpBrandParent.text = "Choose a brand";
 
-		cbCrueltyFree.checked = false;
-		cbBCorp.checked = false;
-		cbAnimalTesting.checked = false;
+		[cbCrueltyFree, cbBCorp, cbAnimalTesting]
+			.forEach(x => x.checked = false);
 	}
 
 	static add() {
