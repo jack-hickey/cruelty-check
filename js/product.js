@@ -279,7 +279,7 @@ class Product {
 				id: "brand_testing",
 				condition: () => !!animalTester,
 				message: () =>
-					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", a predecessor of " + this.Brand.Name + "," : ""} conducts or funds animal testing when required by law or voluntarily.`,
+					`${animalTester.Name}${animalTester.ID !== this.Brand.ID ? ", a predecessor of " + this.Brand.Name + "," : ""} conducts, funds or otherwise permits animal testing.`,
 				blocks: ["brand_parent_contrast"],
 			},
 			{

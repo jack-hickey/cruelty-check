@@ -49,8 +49,6 @@ Localizer.FEEDBACK_BUTTON_LABEL = "Feedback";
 
 Localizer.OWNED_BY_LABEL = "Owned by {brand}";
 Localizer.SUPPORTS_NON_CRUELTYFREE = "supports non-cruelty-free brands and/or products";
-Localizer.ANIMAL_TESTING_LABEL = "{brand} allows animal testing";
-Localizer.PARENT_ANIMAL_TESTING = "allows animal testing";
 
 Localizer.IMAGE_MISSING = "Please upload an image";
 Localizer.IMAGE_TOO_LARGE = "That image is too large, try something smaller than 1 MB";
