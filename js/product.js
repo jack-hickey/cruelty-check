@@ -59,7 +59,7 @@ class Product {
 
 							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
 
-							<chip-list class="mt-md" gap="md">
+							<chip-list class="mt-md" gap="sm">
 								<chip-listitem>
 									<chip-checkbox
 										id="cbVegan"
@@ -121,7 +121,7 @@ class Product {
 
 							<chip-header size="5" class="mt-form">This brand:</chip-header>
 
-							<chip-list class="mt-md" gap="sm">
+							<chip-list class="mt-md" gap="xs">
 								<chip-listitem>
 									<chip-checkbox
 										id="cbCrueltyFree"
