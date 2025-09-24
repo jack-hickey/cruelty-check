@@ -173,7 +173,6 @@ async function searchHandler({ request, env }) {
     )
     SELECT 
       p.ID, p.Name, p.Image, p.Is_Vegan,
-      b.ID AS Brand_ID, b.Name AS Brand, b.Cruelty_Free, b.Animal_Testing, b.B_Corp,
       (
         SELECT json_group_array(
           json_object(
@@ -189,8 +188,7 @@ async function searchHandler({ request, env }) {
         FROM BrandHierarchy bh
         WHERE bh.Product_ID = p.ID
         ORDER BY Level
-      ) AS Brand_Hierarchy,
-      rp.score
+      ) AS Brand_Hierarchy
     FROM RankedProducts rp
     JOIN Products p ON p.ID = rp.Product_ID
     JOIN Brands b ON b.ID = p.Brand_ID
