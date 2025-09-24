@@ -58,8 +58,11 @@ INSERT INTO Products VALUES(13,'Nesquik Chocolate Milkshake Powder','f22e248d-8e
 DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('Brands',26);
 INSERT INTO sqlite_sequence VALUES('Products',13);
-CREATE INDEX idx_brands_search_name ON Brands(Search_Name);
-CREATE INDEX idx_products_search_name ON Products(Search_Name);
+
+CREATE INDEX IF NOT EXISTS idx_brands_search_name ON Brands(Search_Name);
+CREATE INDEX IF NOT EXISTS idx_products_search_name ON Products(Search_Name);
+CREATE INDEX IF NOT EXISTS idx_brands_parent_id ON Brands(Parent_ID);
+CREATE INDEX IF NOT EXISTS idx_brands_id ON Brands(ID);
 
 DROP TABLE IF EXISTS ProductsFTS;
 DROP TABLE IF EXISTS BrandsFTS;
