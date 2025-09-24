@@ -3,7 +3,7 @@ Localizer.EMPTY_SEARCH_DESC = `Nothing could be found matching '<span id="lblSea
 Localizer.SEARCH_RESULT_CAPTION = `Can't find what you're looking for? Feel free to <chip-button variation="info-tertiary" class="btn--add-product" button-style="inline">add a new product</chip-button>.`;
 
 Localizer.ADD_PRODUCT_TITLE = "New product";
-Localizer.ADD_PRODUCT_DESC = "Thank you for keeping Cruelty Check's product listings up to date! Please provide the product information below.";
+Localizer.ADD_PRODUCT_DESC = "Please provide the product information below.";
 
 Localizer.FEEDBACK_TITLE = "Feedback";
 Localizer.FEEDBACK_DESC = "Your feedback is valuable, you can report any issues you've run into or anything you'd like to see on the site.";

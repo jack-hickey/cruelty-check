@@ -18,6 +18,20 @@ class Product {
 		}
 	}));
 
+	static #ResetBrandScreen() {
+		txtBrandName.value = "";
+
+		drpBrandParent.value = "";
+
+		// Don't ask
+		drpBrandParent.text = "";
+		drpBrandParent.text = "Choose a brand";
+
+		cbCrueltyFree.checked = false;
+		cbBCorp.checked = false;
+		cbAnimalTesting.checked = false;
+	}
+
 	static add() {
 		let productImage = null;
 
@@ -42,7 +56,25 @@ class Product {
 								searchable
 								label="Brand">
 							</chip-dropdown>
-							
+
+							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
+
+							<chip-list class="mt-md" gap="sm">
+								<chip-listitem>
+									<chip-checkbox
+										id="cbVegan"
+										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
+										label="Is vegan"
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbFairtrade"
+										label="Is Fairtrade certified">
+									</chip-checkbox>
+								</chip-listitem>
+							</chip-list>
+
 							<chip-header
 								class="mt-form--lg mb-xs"
 								size="4">
@@ -63,24 +95,6 @@ class Product {
 									Please upload an image
 								</chip-text>
 							</div>
-
-							<chip-header size="5" class="mt-form--lg">This product:</chip-header>
-
-							<chip-list class="mt-form" gap="md">
-								<chip-listitem>
-									<chip-checkbox
-										id="cbVegan"
-										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
-										label="Is vegan"
-									</chip-checkbox>
-								</chip-listitem>
-								<chip-listitem>
-									<chip-checkbox
-										id="cbFairtrade"
-										label="Is Fairtrade certified">
-									</chip-checkbox>
-								</chip-listitem>
-							</chip-list>
 						</chip-form>
 					</chip-tab>
 					<chip-tab>
@@ -107,7 +121,7 @@ class Product {
 
 							<chip-header size="5" class="mt-form">This brand:</chip-header>
 
-							<chip-list class="mt-sm" gap="sm">
+							<chip-list class="mt-md" gap="xs">
 								<chip-listitem>
 									<chip-checkbox
 										id="cbCrueltyFree"
@@ -188,17 +202,7 @@ class Product {
 									ok: () => {
 										dialog.querySelector("chip-tab").Select();
 
-										txtBrandName.value = "";
-
-										drpBrandParent.value = "";
-
-										// Don't ask
-										drpBrandParent.text = "";
-										drpBrandParent.text = "Choose a company";
-
-										cbCrueltyFree.checked = false;
-										cbBCorp.checked = false;
-										cbAnimalTesting.checked = false;
+										this.#ResetBrandScreen();
 									}
 								}
 							});
@@ -213,23 +217,23 @@ class Product {
 							value: brand.ID
 						}));
 
-						if (x.id !== "drpBrandParent") {
-							x.onselectionchange = () => {
-								if (x.value === "0") {
-									dialog.querySelector("chip-tab + chip-tab").Select();
-									x.value = "";
-								}
-							};
-
-							if (items.length) {
-								items.unshift(document.createElement("chip-dropdowndivider"));
+						x.onselectionchange = () => {
+							if (x.value === "0") {
+								dialog.querySelector("chip-tab + chip-tab").Select();
+								
+								this.#ResetBrandScreen();
+								x.value = "";
 							}
+						};
 
-							items.unshift(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
-								icon: "fas fa-plus",
-								value: 0
-							}));
+						if (items.length) {
+							items.unshift(document.createElement("chip-dropdowndivider"));
 						}
+
+						items.unshift(document.createElementWithContents("chip-dropdownitem", "Add new brand", {
+							icon: "fas fa-plus",
+							value: 0
+						}));
 
 						return items;
 					});
