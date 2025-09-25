@@ -6,6 +6,8 @@
 	--header-height: var(--block-size-xxxxl) !important;
 	--body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 	--font-weight-medium: 600;
+	--header-background-colour: rgba(0,0,0,0);
+	--header-border-width: 0;
 }
 
 :root[data-theme="dark"] {
@@ -14,6 +16,8 @@
 	--theme-colour-b: 90;
 
 	--header-height: var(--block-size-xxxxl) !important;
+	--header-background-colour: rgba(0,0,0,0);
+	--header-border-width: 0;
 }
 
 #tgAddProduct .tab-group__tabs {
@@ -102,10 +106,6 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 
 .product-label > .h-align {
 	align-items: baseline;
-}
-
-chip-button.btn--feedback span {
-	text-transform: uppercase;
 }
 
 .pc--name,
