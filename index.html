@@ -8,11 +8,11 @@
 
 		<meta
 			name="theme-color"
-			content="#F7F8FC"
+			content="#FFFFFF"
 			media="(prefers-color-scheme: light)" />
 		<meta
 			name="theme-color"
-			content="#131317"
+			content="#1D1E24"
 			media="(prefers-color-scheme: dark)" />
 
 		<meta property="og:title" content="Cruelty Check | A vegan & cruelty-free product checker" />
@@ -52,90 +52,108 @@
 	<body>
 		<chip-frame layout="container">
 			<chip-frameheader>
-				<chip-dropdownbutton
-					flush
-					size="lg"
-					class="d-sm-none me-auto"
-					variation="body"
-					button-style="icon"
-					icon="fas fa-bars">
-					<chip-dropdown>
-						<chip-dropdownitem
-							link="/about">
+				<chip-grid
+					columns-sm="1"
+					columns-md="3"
+					class="w-100">
+					<div class="h-align gap-sm">
+						<chip-dropdownbutton
+							id="btnMobileDropdown"
+							size="lg"
+							flush
+							class="d-sm-none mb-xs me-xs"
+							variation="body"
+							button-style="icon"
+							icon="fas fa-bars">
+							<chip-dropdown>
+								<chip-dropdownitem
+									link="/about">
+									About
+								</chip-dropdownitem>
+
+								<chip-dropdownitem
+									class="btn--feedback">
+									Feedback
+								</chip-dropdownitem>
+
+								<chip-dropdowndivider></chip-dropdowndivider>
+
+								<chip-dropdownitem
+									target="_blank"
+									link="https://ko-fi.com/M4M41KS233">
+									Support me
+								</chip-dropdownitem>
+							</chip-dropdown>
+						</chip-dropdownbutton>
+
+						<img height="32" width="32" loading="lazy" src="images/logo.svg" alt="Cruelty check logo" />
+
+						<chip-header
+							size="4"
+							link="~/"
+							element="h1"
+							class="text-theme">
+							Cruelty Check
+						</chip-header>
+					</div>
+					<div class="h-align gap-lg h-100 w-fit mx-auto">
+						<chip-button
+							flush
+							class="d-none d-sm-flex"
+							link="about"
+							variation="theme-tertiary">
 							About
-						</chip-dropdownitem>
-
-						<chip-dropdownitem
-							class="btn--feedback">
+						</chip-button>
+						<chip-button
+							flush
+							class="btn--feedback d-none d-sm-flex"
+							variation="theme-tertiary">
 							Feedback
-						</chip-dropdownitem>
-					</chip-dropdown>
-				</chip-dropdownbutton>
-				<chip-button
-					flush
-					class="d-none d-sm-flex"
-					link="about"
-					variation="theme-tertiary">
-					ABOUT
-				</chip-button>
-				<chip-button
-					flush
-					class="btn--feedback d-none d-sm-flex"
-					variation="theme-tertiary">
-					FEEDBACK
-				</chip-button>
-				<div class="h-align gap-md">
-					<chip-button
-						id="btnThemeToggle"
-						variation="body"
-						button-style="icon"
-						button-class="dark-mode-toggle">
+						</chip-button>
+						<chip-button
+							flush
+							target="_blank"
+							link="https://ko-fi.com/M4M41KS233"
+							class="d-none d-sm-flex"
+							variation="theme-tertiary">
+							Support me
+						</chip-button>
+					</div>
+					<div class="h-align gap-md w-fit ms-auto">
+						<chip-button
+							id="btnThemeToggle"
+							variation="body"
+							flush
+							button-style="icon"
+							button-class="dark-mode-toggle">
 
-						<svg aria-hidden="true" class="dark-mode-toggle__icon" width="24" height="24" viewBox="0 0 24 24">
-							<defs>
-								<mask id="mask">
-									<rect x="0" y="0" width="100%" height="100%" fill="white" />
-									<circle class="dark-mode-toggle__cut-out" r="6" cx=24 cy="10" fill="black" />
-								</mask>
-							</defs>
-							<circle class="dark-mode-toggle__center-circle" r="6" cx="12" cy="12" fill="currentColor" mask="url(#mask)" />
-							<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-								<line x1="12" x2="12" y1="3" y2="1" />
-								<line x1="21" x2="23" y1="12" y2="12" />
-								<line x1="12" x2="12" y1="21" y2="23" />
-								<line x1="1" x2="3" y1="12" y2="12" />
-							</g>
-							<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round" transform="rotate(45 12 12)">
-								<line x1="12" x2="12" y1="3" y2="1" />
-								<line x1="21" x2="23" y1="12" y2="12" />
-								<line x1="12" x2="12" y1="21" y2="23" />
-								<line x1="1" x2="3" y1="12" y2="12" />
-							</g>
-						</svg>
-					</chip-button>
-
-					<a href='https://ko-fi.com/M4M41KS233' target='_blank'>
-						<img title="Buy Me a Coffee at ko-fi.com" class="img--kofi" src='images/kofi.webp' alt='Buy Me a Coffee at ko-fi.com' />
-						<span class="sr-only">Buy me a Coffee at ko-fi.com (opens in a new window)</span>
-					</a>
-				</div>
+							<svg aria-hidden="true" class="dark-mode-toggle__icon" width="24" height="24" viewBox="0 0 24 24">
+								<defs>
+									<mask id="mask">
+										<rect x="0" y="0" width="100%" height="100%" fill="white" />
+										<circle class="dark-mode-toggle__cut-out" r="6" cx=24 cy="10" fill="black" />
+									</mask>
+								</defs>
+								<circle class="dark-mode-toggle__center-circle" r="6" cx="12" cy="12" fill="currentColor" mask="url(#mask)" />
+								<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+									<line x1="12" x2="12" y1="3" y2="1" />
+									<line x1="21" x2="23" y1="12" y2="12" />
+									<line x1="12" x2="12" y1="21" y2="23" />
+									<line x1="1" x2="3" y1="12" y2="12" />
+								</g>
+								<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round" transform="rotate(45 12 12)">
+									<line x1="12" x2="12" y1="3" y2="1" />
+									<line x1="21" x2="23" y1="12" y2="12" />
+									<line x1="12" x2="12" y1="21" y2="23" />
+									<line x1="1" x2="3" y1="12" y2="12" />
+								</g>
+							</svg>
+						</chip-button>
+					</div>
+				</chip-grid>
 			</chip-frameheader>
 			<chip-framecontent>
 				<div class="box--main">
-					<img height="96" width="96" loading="lazy" src="images/logo.svg" alt="Cruelty check logo" />
-
-					<chip-header
-						size="2"
-						element="h1"
-						class="text-theme">
-						Cruelty Check
-					</chip-header>
-
-					<chip-text
-						class="mt-sm txt--description"
-						variation="secondary">
-						Quickly check any product's vegan and cruelty-free status, based on community insights.</chip-text>
-
 					<chip-input
 						id="txtSearch"
 						focus
