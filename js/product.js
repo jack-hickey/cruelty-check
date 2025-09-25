@@ -3,6 +3,8 @@ class Product {
 		this.Name = source.Name;
 		this.Vegan = source.Is_Vegan === 1;
 		this.Image = source.Image;
+		this.PalmOil = source.Palm_Oil === 1;
+
 		this.Brands = (JSON.parse(source.Brand_Hierarchy) ?? []).map(x => new Brand(x)).sort((a, b) => a.Level - b.Level);
 		this.Brand = this.Brands.at(0) ?? new Brand();
 	}
@@ -62,6 +64,12 @@ class Product {
 										id="cbVegan"
 										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
 										label="Is vegan"
+									</chip-checkbox>
+								</chip-listitem>
+								<chip-listitem>
+									<chip-checkbox
+										id="cbPalmOil"
+										label="Contains unsustainably sourced palm oil"
 									</chip-checkbox>
 								</chip-listitem>
 							</chip-list>
@@ -250,6 +258,7 @@ class Product {
 				Name: txtProductName.value.trim(),
 				BrandID: parseInt(drpBrands.value) || 0,
 				Vegan: cbVegan.checked,
+				PalmOil: cbPalmOil.checked,
 				Image: productImage
 			}),
 			success: {
@@ -266,6 +275,12 @@ class Product {
 			nonCrueltyFree = this.Brands.find(x => !x.CrueltyFree);
 
 		const advisories = [
+			{
+				id: "palm_oil",
+				condition: () => this.PalmOil,
+				message: () => "This product contains unsustainably sourced palm oil",
+				blocks: []
+			},
 			{
 				id: "brand_testing",
 				condition: () => !!animalTester,

@@ -105,8 +105,8 @@ async function addProductHandler({ request, env }) {
   await env.R2_BUCKET.put(fileName, image.stream());
 
   await env.DATABASE
-    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Search_Name) VALUES (?, ?, ?, ?, ?, ?)")
-    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, getNormalizedText(name))
+    .prepare("INSERT INTO Products (Name, Brand_ID, Is_Vegan, Image, Search_Name, Palm_Oil) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    .bind(name, brandID, body.get("Vegan") === "true" ? 1 : 0, fileName, getNormalizedText(name), body.get("PalmOil") === "true" ? 1 : 0)
     .run();
 
   return text("Ok", 200);
@@ -172,7 +172,7 @@ async function searchHandler({ request, env }) {
 				WHERE ProductsFTS MATCH ?
 		)
 		SELECT 
-				p.Name, p.Image, p.Is_Vegan,
+				p.Name, p.Image, p.Is_Vegan, p.Palm_Oil,
 				(
 						SELECT json_group_array(
 								json_object(

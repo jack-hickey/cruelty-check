@@ -15,6 +15,7 @@ CREATE TABLE Products (
     Brand_ID INTEGER NOT NULL,
     Is_Vegan INTEGER NOT NULL DEFAULT 0,
     Accepted INTEGER NOT NULL DEFAULT 0, Fair_Trade INTEGER NOT NULL DEFAULT 0, Search_Name TEXT,
+		Palm_Oil INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (Brand_ID) REFERENCES Brands(ID)
 );
 INSERT INTO Brands VALUES(1,'Unilever',NULL,0,0,1,'unilever');
@@ -43,18 +44,18 @@ INSERT INTO Brands VALUES(23,'PepsiCo',NULL,0,0,1,'pepsico');
 INSERT INTO Brands VALUES(24,'Frito-Lay',23,0,0,0,'fritolay');
 INSERT INTO Brands VALUES(25,'Doritos',24,0,0,0,'doritos');
 INSERT INTO Brands VALUES(26,'Freeway',15,0,0,0,'freeway');
-INSERT INTO Products VALUES(1,'Intensive Repair Shampoo','04c0b5d0-9211-43fe-8ca2-065e380c09e4.jpeg',2,1,1,0,'intensive repair shampoo');
-INSERT INTO Products VALUES(3,'Daily Moisture Shampoo','baa7bff4-0825-43f7-a415-a2f642649aa2.jpg',2,0,1,0,'daily moisture shampoo');
-INSERT INTO Products VALUES(4,'Hobnobs','a628e3b7-e010-4a66-ab17-8e7bcdb2dc40.jpg',5,1,1,0,'hobnobs');
-INSERT INTO Products VALUES(5,'Spring Water','77f3d749-21a7-4648-ba7b-c741cdb6d9cd.webp',7,1,1,0,'spring water');
-INSERT INTO Products VALUES(6,'Jammie Dodgers Raspberry','a62e58cf-4182-470e-ad11-22b2e9ea87c5.png',19,1,1,0,'jammie dodgers raspberry');
-INSERT INTO Products VALUES(7,'Fruit Gums','167e370d-f92b-498d-b691-2213d01c19f1.jpg',21,1,1,0,'fruit gums');
-INSERT INTO Products VALUES(8,'Tangy Worms','5fa4b562-af4f-4ebd-b9d4-246b659d229e.webp',22,1,1,0,'tangy worms');
-INSERT INTO Products VALUES(9,'Chocolate Mint Thins','064f3c08-4d01-4e31-b55e-4fb5726f0b5f.jpeg',11,1,1,0,'chocolate mint thins');
-INSERT INTO Products VALUES(10,'Butter Beans In Water','574494fb-096a-46b8-bd63-273e5900c36d.jpg',8,1,1,0,'butter beans in water');
-INSERT INTO Products VALUES(11,'Doritos Chilli Heatwave','e462f6cc-5348-475d-b8b4-eef718fd3d1d.jpg',25,1,1,0,'doritos chilli heatwave');
-INSERT INTO Products VALUES(12,'Diet Lemonade','1f2b52f9-b3b4-4a70-bba0-c713a08a15ad.webp',26,1,1,0,'diet lemonade');
-INSERT INTO Products VALUES(13,'Nesquik Chocolate Milkshake Powder','f22e248d-8eac-4275-8307-425e1dfb70e2.webp',20,0,1,0,'nesquik chocolate milkshake powder');
+INSERT INTO Products VALUES(1,'Intensive Repair Shampoo','04c0b5d0-9211-43fe-8ca2-065e380c09e4.jpeg',2,1,1,0,'intensive repair shampoo',0);
+INSERT INTO Products VALUES(3,'Daily Moisture Shampoo','baa7bff4-0825-43f7-a415-a2f642649aa2.jpg',2,0,1,0,'daily moisture shampoo',0);
+INSERT INTO Products VALUES(4,'Hobnobs','a628e3b7-e010-4a66-ab17-8e7bcdb2dc40.jpg',5,1,1,0,'hobnobs',0);
+INSERT INTO Products VALUES(5,'Spring Water','77f3d749-21a7-4648-ba7b-c741cdb6d9cd.webp',7,1,1,0,'spring water',0);
+INSERT INTO Products VALUES(6,'Jammie Dodgers Raspberry','a62e58cf-4182-470e-ad11-22b2e9ea87c5.png',19,1,1,0,'jammie dodgers raspberry',0);
+INSERT INTO Products VALUES(7,'Fruit Gums','167e370d-f92b-498d-b691-2213d01c19f1.jpg',21,1,1,0,'fruit gums',0);
+INSERT INTO Products VALUES(8,'Tangy Worms','5fa4b562-af4f-4ebd-b9d4-246b659d229e.webp',22,1,1,0,'tangy worms',0);
+INSERT INTO Products VALUES(9,'Chocolate Mint Thins','064f3c08-4d01-4e31-b55e-4fb5726f0b5f.jpeg',11,1,1,0,'chocolate mint thins',0);
+INSERT INTO Products VALUES(10,'Butter Beans In Water','574494fb-096a-46b8-bd63-273e5900c36d.jpg',8,1,1,0,'butter beans in water',0);
+INSERT INTO Products VALUES(11,'Doritos Chilli Heatwave','e462f6cc-5348-475d-b8b4-eef718fd3d1d.jpg',25,1,1,0,'doritos chilli heatwave',1);
+INSERT INTO Products VALUES(12,'Diet Lemonade','1f2b52f9-b3b4-4a70-bba0-c713a08a15ad.webp',26,1,1,0,'diet lemonade',0);
+INSERT INTO Products VALUES(13,'Nesquik Chocolate Milkshake Powder','f22e248d-8eac-4275-8307-425e1dfb70e2.webp',20,0,1,0,'nesquik chocolate milkshake powder',0);
 DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('Brands',26);
 INSERT INTO sqlite_sequence VALUES('Products',13);
