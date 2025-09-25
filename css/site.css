@@ -6,7 +6,7 @@
 	--header-height: var(--block-size-xxxxl) !important;
 	--body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 	--font-weight-medium: 600;
-	--header-background-colour: rgba(0,0,0,0);
+	--header-background-colour: var(--background-colour);
 	--header-border-width: 0;
 }
 
@@ -16,7 +16,7 @@
 	--theme-colour-b: 90;
 
 	--header-height: var(--block-size-xxxxl) !important;
-	--header-background-colour: rgba(0,0,0,0);
+	--header-background-colour: var(--background-colour);
 	--header-border-width: 0;
 }
 
