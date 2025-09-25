@@ -69,7 +69,7 @@ class Product {
 								<chip-listitem>
 									<chip-checkbox
 										id="cbPalmOil"
-										label="Contains unsustainably sourced palm oil"
+										label="Contains unsustainable palm oil"
 									</chip-checkbox>
 								</chip-listitem>
 							</chip-list>
