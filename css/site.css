@@ -33,6 +33,7 @@
 
 #txtSearch {
 	width: min(var(--form-width), 90%);
+	--input-border-radius: 1000px;
 }
 
 chip-frameheader header {
