@@ -93,9 +93,10 @@ async function addBrandHandler({ request, env }) {
 }
 
 async function addProductHandler({ request, env }) {
-  const body = await parseForm(request);
-  const name = body.get("Name");
-  const brandID = body.get("BrandID");
+  const body = await parseForm(request),
+  	name = body.get("Name"),
+  	brandID = body.get("BrandID");
+
   let image = body.get("Image");
 
   if (!name || !brandID || !image || !image.type.startsWith("image/")) return text("Invalid body", 400);
@@ -134,8 +135,9 @@ async function brandsHandler({ request, env }) {
 }
 
 async function searchHandler({ request, env }) {
-  const body = await parseJSON(request);
-  const query = (body.query || "").trim();
+  const body = await parseJSON(request),
+  	query = (body.query || "").trim();
+
   if (!query) return json([]);
 
   const searchWords = query
