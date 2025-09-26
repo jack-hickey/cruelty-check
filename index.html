@@ -121,28 +121,7 @@
 							flush
 							button-style="icon"
 							button-class="dark-mode-toggle">
-
-							<svg aria-hidden="true" class="dark-mode-toggle__icon" width="24" height="24" viewBox="0 0 24 24">
-								<defs>
-									<mask id="mask">
-										<rect x="0" y="0" width="100%" height="100%" fill="white" />
-										<circle class="dark-mode-toggle__cut-out" r="6" cx=24 cy="10" fill="black" />
-									</mask>
-								</defs>
-								<circle class="dark-mode-toggle__center-circle" r="6" cx="12" cy="12" fill="currentColor" mask="url(#mask)" />
-								<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-									<line x1="12" x2="12" y1="3" y2="1" />
-									<line x1="21" x2="23" y1="12" y2="12" />
-									<line x1="12" x2="12" y1="21" y2="23" />
-									<line x1="1" x2="3" y1="12" y2="12" />
-								</g>
-								<g class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round" transform="rotate(45 12 12)">
-									<line x1="12" x2="12" y1="3" y2="1" />
-									<line x1="21" x2="23" y1="12" y2="12" />
-									<line x1="12" x2="12" y1="21" y2="23" />
-									<line x1="1" x2="3" y1="12" y2="12" />
-								</g>
-							</svg>
+								<svg aria-hidden="true" class="dark-mode-toggle__icon" width="24" height="24" viewBox="0 0 24 24"><defs><mask id="a"><rect width="100%" height="100%" fill="#fff"/><circle class="dark-mode-toggle__cut-out" r="6" cx="24" cy="10"/></mask></defs><circle class="dark-mode-toggle__center-circle" r="6" cx="12" cy="12" fill="currentColor" mask="url(#a)"/><path d="M12 3V1m9 11h2m-11 9v2M1 12h2m15.364-6.364 1.414-1.414m-1.414 14.142 1.414 1.414M5.636 18.364l-1.414 1.414m0-15.556 1.414 1.414" class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
 						</chip-button>
 					</div>
 				</chip-grid>
@@ -162,8 +141,7 @@
 						suffix-button="far fa-search"
 						suffix-tooltip="Search"
 						class="mt-form"
-						description="Search"
-						placeholder="">
+						description="Search">
 					</chip-input>
 				</div>
 
