@@ -278,7 +278,7 @@ class Product {
 			{
 				id: "palm_oil",
 				condition: () => this.PalmOil,
-				message: () => "This product contains unsustainably sourced palm oil",
+				message: () => "This product contains unsustainably sourced palm oil.",
 				blocks: []
 			},
 			{
