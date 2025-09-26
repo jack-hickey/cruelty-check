@@ -24,13 +24,6 @@
 	display: none;
 }
 
-.box--main {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}
-
 #txtSearch {
 	width: min(var(--form-width), 90%);
 	--input-border-radius: 1000px;
