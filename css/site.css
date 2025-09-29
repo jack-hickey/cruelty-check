@@ -122,3 +122,11 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 	font-size: var(--body-font-size-xxs);
 	font-weight: var(--font-weight-regular);
 }
+
+.hero {
+	text-align: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-top: 25%;
+}
