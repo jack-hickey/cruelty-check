@@ -56,7 +56,7 @@ function search(query) {
 		txtResultCount.innerHTML = "";
 		txtResultCaption.innerHTML = "";
 
-		txtResultCount.innerHTML = Localizer.SEARCH_RESULTS_TITLE.replace("{query}", query);
+		txtResultCount.textContent = Localizer.SEARCH_RESULTS_TITLE.replace("{query}", query);
 		txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 
 		if (products.length) {
