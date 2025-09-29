@@ -1,3 +1,5 @@
+const searchBars = [...document.querySelectorAll(".txt--search")];
+
 document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(button, {
 	textContent: Localizer.FEEDBACK_BUTTON_LABEL,
 	onclick: () => {
@@ -38,21 +40,24 @@ document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(butt
 
 const resultsContainer = document.getElementById("ctResults");
 
-function resetMobileView() {
-	txtSearch.blur();
-}
-
-function search() {
-	const query = txtSearch.value.trim();
+function search(query) {
+	query = query.trim();
 	if (!query) { return; }
 
 	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
-	txtSearch.blur();	
+
+	searchBars.forEach(bar => {
+		bar.value = query;
+		bar.blur();
+	});
 
 	Product.search(query).then(products => {
 		resultsContainer.innerHTML = "";
 		txtResultCount.innerHTML = "";
 		txtResultCaption.innerHTML = "";
+
+		txtResultCount.innerHTML = Localizer.SEARCH_RESULTS_TITLE.replace("{query}", query);
+		txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 
 		if (products.length) {
 			displayResults(products);
@@ -62,11 +67,13 @@ function search() {
 				heading: Localizer.EMPTY_SEARCH_TITLE,
 				icon: "far fa-cat",
 				id: "epResults",
-				className: "mt-form--lg"
+				className: "ep--results"
 			}));
 
 			lblSearchTerm.textContent = query;
 		}
+
+		tabResults.Select();
 
 		document.querySelectorAll(".btn--add-product").forEach(button => button.onclick = () => Product.add());
 	});
@@ -75,22 +82,16 @@ function search() {
 function displayResults(products) {
 	resultsContainer.addItems(products.map(product => buildResult(product)));
 
-	txtResultCount.innerHTML = products.length !== 1
-		? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
-		: Localizer.SEARCH_RESULT_TITLE;
-
-	txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 }
 
-
-Object.assign(window.txtSearch ?? {}, {
-	onsuffixclick: () => search(),
-	onkeyup: ev => {
-		if (ev.key === "Enter") {
-			search();
+searchBars.forEach(bar => Object.assign(bar, {
+	onsuffixclick: () => search(bar.value),
+	onkeydown: ev => {
+		if (ev.key === "Enter" && !ev.repeat) {
+			search(bar.value);
 		}
 	}
-})
+}));
 
 function report(type, title, description, suppressMessage) { 
 	Ajax.Post("report", {
@@ -226,3 +227,5 @@ function buildResult(product) {
 
 	return result;
 }
+
+window.btnBack?.addEventListener("click", () => tabHero.Select());

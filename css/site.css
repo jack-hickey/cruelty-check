@@ -20,12 +20,13 @@
 	--header-border-width: 0;
 }
 
-#tgAddProduct .tab-group__tabs {
+#tgAddProduct .tab-group__tabs,
+#tgMain .tab-group__tabs {
 	display: none;
 }
 
-#txtSearch {
-	width: min(var(--form-width), 90%);
+.txt--search {
+	width: min(var(--form-width), 90%) !important;
 	--input-border-radius: 1000px;
 }
 
@@ -121,4 +122,16 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 	margin-left: var(--block-size-xs);
 	font-size: var(--body-font-size-xxs);
 	font-weight: var(--font-weight-regular);
+}
+
+.hero {
+	text-align: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-top: 25%;
+}
+
+.ep--results {
+	margin-top: 25%;
 }

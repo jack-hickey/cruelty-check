@@ -1,1 +1,271 @@
-<!DOCTYPE html><html data-test-mode="false" lang="en"><head><title>Cruelty Check | A vegan & cruelty-free product checker</title><link rel="alternate" href="https://crueltycheck.com/" hreflang="en"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Cruelty Check | A vegan & cruelty-free product checker"><meta property="og:image" content="https://crueltycheck.com/images/favicon-1024x1024.png"><meta property="og:description" content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."><meta property="og:type" content="website"><meta property="og:url" content="https://crueltycheck.com"><meta property="og:image:alt" content="Cruelty Check's logo, in the design of a green plant"><meta property="og:site_name" content="Cruelty Check"><meta property="og:locale" content="en_GB"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Cruelty Check | A vegan & cruelty-free product checker"><meta name="twitter:description" content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."><meta name="twitter:image" content="https://crueltycheck.com/images/favicon-1024x1024.png"><meta name="twitter:image:alt" content="Cruelty Check's logo, in the design of a green plant"><link rel="stylesheet" href="css/auxilium.css"><link rel="stylesheet" href="css/site.min.css"><link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48x48.png"><link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="128x128" href="images/favicon-128x128.png"><link rel="icon" type="image/png" sizes="256x256" href="images/favicon-256x256.png"><link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512x512.png"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://crueltycheck.com"><meta name="description" content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."><meta name="robots" content="index, follow"><script type="text/javascript" src="js/preload-handler.min.js"></script></head><body><chip-frame layout="container"><chip-frameheader><chip-grid columns-sm="1" columns-md="3" class="w-100"><div class="h-align gap-xs"><chip-dropdownbutton id="btnMobileDropdown" size="lg" flush class="d-sm-none mb-xs me-sm" variation="body" button-style="icon" icon="fas fa-bars"><chip-dropdown><chip-dropdownitem link="/about">About</chip-dropdownitem><chip-dropdownitem class="btn--feedback">Feedback</chip-dropdownitem><chip-dropdowndivider></chip-dropdowndivider><chip-dropdownitem target="_blank" link="https://ko-fi.com/M4M41KS233">Support me</chip-dropdownitem></chip-dropdown></chip-dropdownbutton><img height="32" width="32" loading="lazy" src="images/logo.svg" alt="Cruelty check logo"><chip-header size="4" link="~/" element="h1" class="text-theme">Cruelty Check</chip-header></div><div class="h-align gap-lg h-100 w-fit mx-auto"><chip-button flush class="d-none d-sm-flex" link="about" variation="theme-tertiary">About</chip-button><chip-button flush class="btn--feedback d-none d-sm-flex" variation="theme-tertiary">Feedback</chip-button><chip-button flush target="_blank" link="https://ko-fi.com/M4M41KS233" class="d-none d-sm-flex" variation="theme-tertiary">Support me</chip-button></div><div class="h-align gap-md w-fit ms-auto"><chip-button id="btnThemeToggle" variation="body" flush button-style="icon" button-class="dark-mode-toggle"><svg aria-hidden="true" class="dark-mode-toggle__icon" width="24" height="24" viewBox="0 0 24 24"><defs><mask id="a"><rect width="100%" height="100%" fill="#fff"/><circle class="dark-mode-toggle__cut-out" r="6" cx="24" cy="10"/></mask></defs><circle class="dark-mode-toggle__center-circle" r="6" cx="12" cy="12" fill="currentColor" mask="url(#a)"/><path d="M12 3V1m9 11h2m-11 9v2M1 12h2m15.364-6.364 1.414-1.414m-1.414 14.142 1.414 1.414M5.636 18.364l-1.414 1.414m0-15.556 1.414 1.414" class="dark-mode-toggle__rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></chip-button></div></chip-grid></chip-frameheader><chip-framecontent><div class="box--main"><chip-header class="fw-semibold" size="1">Discover Product & Brand Ethics</chip-header><chip-input id="txtSearch" focus size="lg" suffix-button="far fa-search" suffix-tooltip="Search" class="mt-form" description="Search"></chip-input></div><chip-text size="h3" weight="medium" class="mt-form--lg mb-xs"><span id="txtResultCount"></span></chip-text><chip-text class="mb-form"><span id="txtResultCaption"></span></chip-text><chip-grid columns-sm="1" columns-md="2" columns-lg="3" id="ctResults" gap="base"></chip-grid></chip-framecontent></chip-frame><script type="text/javascript" src="js/auxilium.min.js"></script><script type="text/javascript" src="js/strings/strings-en.min.js"></script><script type="text/javascript" src="js/brand.min.js"></script><script type="text/javascript" src="js/product.min.js"></script><script type="text/javascript" src="js/site.min.js"></script></body></html>
+<!DOCTYPE html>
+<html data-test-mode="false" lang="en">
+  <head>
+    <title>Cruelty Check | A vegan & cruelty-free product checker</title>
+    <link rel="alternate" href="https://crueltycheck.com/" hreflang="en" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta
+      property="og:title"
+      content="Cruelty Check | A vegan & cruelty-free product checker"
+    />
+    <meta
+      property="og:image"
+      content="https://crueltycheck.com/images/favicon-1024x1024.png"
+    />
+    <meta
+      property="og:description"
+      content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://crueltycheck.com" />
+    <meta
+      property="og:image:alt"
+      content="Cruelty Check's logo, in the design of a green plant"
+    />
+    <meta property="og:site_name" content="Cruelty Check" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Cruelty Check | A vegan & cruelty-free product checker"
+    />
+    <meta
+      name="twitter:description"
+      content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."
+    />
+    <meta
+      name="twitter:image"
+      content="https://crueltycheck.com/images/favicon-1024x1024.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Cruelty Check's logo, in the design of a green plant"
+    />
+    <link rel="stylesheet" href="css/auxilium.css" />
+    <link rel="stylesheet" href="css/site.min.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="images/favicon-48x48.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="images/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="128x128"
+      href="images/favicon-128x128.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="256x256"
+      href="images/favicon-256x256.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/favicon-512x512.png"
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="canonical" href="https://crueltycheck.com" />
+    <meta
+      name="description"
+      content="Easily search for any product to quickly explore its vegan and cruelty-free status, with information powered by community submissions and shared experiences."
+    />
+    <meta name="robots" content="index, follow" />
+    <script type="text/javascript" src="js/preload-handler.min.js"></script>
+  </head>
+  <body>
+    <chip-frame layout="container">
+      <chip-frameheader>
+        <chip-grid columns-sm="1" columns-md="3" class="w-100">
+          <div class="h-align gap-xs">
+            <chip-dropdownbutton
+              id="btnMobileDropdown"
+              size="lg"
+              flush
+              class="d-sm-none mb-xs me-sm"
+              variation="body"
+              button-style="icon"
+              icon="fas fa-bars"
+            >
+              <chip-dropdown>
+                <chip-dropdownitem link="/about">About</chip-dropdownitem>
+                <chip-dropdownitem class="btn--feedback">
+                  Feedback
+                </chip-dropdownitem>
+                <chip-dropdowndivider></chip-dropdowndivider>
+                <chip-dropdownitem
+                  target="_blank"
+                  link="https://ko-fi.com/M4M41KS233"
+                >
+                  Support me
+                </chip-dropdownitem>
+              </chip-dropdown>
+            </chip-dropdownbutton>
+            <img
+              height="32"
+              width="32"
+              loading="lazy"
+              src="images/logo.svg"
+              alt="Cruelty check logo"
+            />
+            <chip-header size="4" link="~/" element="h1" class="text-theme">
+              Cruelty Check
+            </chip-header>
+          </div>
+          <div class="h-align gap-lg h-100 w-fit mx-auto">
+            <chip-button
+              flush
+              class="d-none d-sm-flex"
+              link="about"
+              variation="theme-tertiary"
+            >
+              About
+            </chip-button>
+            <chip-button
+              flush
+              class="btn--feedback d-none d-sm-flex"
+              variation="theme-tertiary"
+            >
+              Feedback
+            </chip-button>
+            <chip-button
+              flush
+              target="_blank"
+              link="https://ko-fi.com/M4M41KS233"
+              class="d-none d-sm-flex"
+              variation="theme-tertiary"
+            >
+              Support me
+            </chip-button>
+          </div>
+          <div class="h-align gap-md w-fit ms-auto">
+            <chip-button
+              id="btnThemeToggle"
+              variation="body"
+              flush
+              button-style="icon"
+              button-class="dark-mode-toggle"
+            >
+              <svg
+                aria-hidden="true"
+                class="dark-mode-toggle__icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <defs>
+                  <mask id="a">
+                    <rect width="100%" height="100%" fill="#fff" />
+                    <circle
+                      class="dark-mode-toggle__cut-out"
+                      r="6"
+                      cx="24"
+                      cy="10"
+                    />
+                  </mask>
+                </defs>
+                <circle
+                  class="dark-mode-toggle__center-circle"
+                  r="6"
+                  cx="12"
+                  cy="12"
+                  fill="currentColor"
+                  mask="url(#a)"
+                />
+                <path
+                  d="M12 3V1m9 11h2m-11 9v2M1 12h2m15.364-6.364 1.414-1.414m-1.414 14.142 1.414 1.414M5.636 18.364l-1.414 1.414m0-15.556 1.414 1.414"
+                  class="dark-mode-toggle__rays"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </chip-button>
+          </div>
+        </chip-grid>
+      </chip-frameheader>
+      <chip-framecontent>
+        <chip-tabgroup id="tgMain">
+          <chip-tab id="tabHero">
+            <div class="hero">
+              <chip-header size="1">
+                Discover Product & Brand Ethics
+              </chip-header>
+              <chip-text size="h4" class="mt-form">
+                Instantly check the ethical status of your favourite products.
+              </chip-text>
+              <chip-input
+                focus
+                size="lg"
+                suffix-button="far fa-search"
+                suffix-tooltip="Search"
+                class="mt-lg txt--search"
+                placeholder="Make a search..."
+              ></chip-input>
+            </div>
+          </chip-tab>
+          <chip-tab id="tabResults">
+            <div class="h-align gap-form--lg">
+              <chip-button
+                icon="far fa-chevron-left"
+                variation="body"
+                flush
+                id="btnBack"
+              >
+                Back
+              </chip-button>
+              <chip-input
+                focus
+                size="lg"
+                suffix-button="far fa-search"
+                suffix-tooltip="Search"
+                class="txt--search ms-auto"
+                placeholder="Make a search..."
+              ></chip-input>
+            </div>
+            <chip-text size="h3" weight="semibold" class="mt-form--lg mb-sm">
+              <span id="txtResultCount"></span>
+            </chip-text>
+            <chip-text class="mb-lg" size="h5">
+              <span id="txtResultCaption"></span>
+            </chip-text>
+            <chip-grid
+              columns-sm="1"
+              columns-md="2"
+              columns-lg="3"
+              id="ctResults"
+              gap="base"
+            ></chip-grid>
+          </chip-tab>
+        </chip-tabgroup>
+      </chip-framecontent>
+    </chip-frame>
+    <script type="text/javascript" src="js/auxilium.min.js"></script>
+    <script type="text/javascript" src="js/strings/strings-en.min.js"></script>
+    <script type="text/javascript" src="js/brand.min.js"></script>
+    <script type="text/javascript" src="js/product.min.js"></script>
+    <script type="text/javascript" src="js/site.min.js"></script>
+  </body>
+</html>
