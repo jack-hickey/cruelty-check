@@ -56,6 +56,9 @@ function search(query) {
 		txtResultCount.innerHTML = "";
 		txtResultCaption.innerHTML = "";
 
+		txtResultCount.innerHTML = Localizer.SEARCH_RESULTS_TITLE.replace("{query}", query);
+		txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
+
 		if (products.length) {
 			displayResults(products);
 		} else {
@@ -64,7 +67,7 @@ function search(query) {
 				heading: Localizer.EMPTY_SEARCH_TITLE,
 				icon: "far fa-cat",
 				id: "epResults",
-				className: "mt-form--lg"
+				className: "ep--results"
 			}));
 
 			lblSearchTerm.textContent = query;
@@ -79,17 +82,12 @@ function search(query) {
 function displayResults(products) {
 	resultsContainer.addItems(products.map(product => buildResult(product)));
 
-	txtResultCount.innerHTML = products.length !== 1
-		? Localizer.SEARCH_RESULTS_TITLE.replace("{count}", `<span class="fw-bold">${products.length}</span>`)
-		: Localizer.SEARCH_RESULT_TITLE;
-
-	txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 }
 
 searchBars.forEach(bar => Object.assign(bar, {
 	onsuffixclick: () => search(bar.value),
 	onkeydown: ev => {
-		if (ev.key === "Enter") {
+		if (ev.key === "Enter" && !ev.repeat) {
 			search(bar.value);
 		}
 	}

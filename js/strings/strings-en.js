@@ -42,8 +42,7 @@ Localizer.BCORP_LABEL = "B Corp";
 Localizer.INCORRECT_INFORMATION_TITLE = "Incorrect product information";
 Localizer.INCORRECT_INFORMATION_DESC = "Please explain below the information you believe to be incorrect, and if possible, the correct information.";
 
-Localizer.SEARCH_RESULT_TITLE = '<span class="fw-bold">1</span> product found';
-Localizer.SEARCH_RESULTS_TITLE = "{count} products found";
+Localizer.SEARCH_RESULTS_TITLE = "Search results for \"{query}\"";
 
 Localizer.FEEDBACK_BUTTON_LABEL = "Feedback";
 
