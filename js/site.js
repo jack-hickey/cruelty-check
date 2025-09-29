@@ -1,3 +1,5 @@
+const searchBars = [...document.querySelectorAll(".txt--search")];
+
 document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(button, {
 	textContent: Localizer.FEEDBACK_BUTTON_LABEL,
 	onclick: () => {
@@ -38,16 +40,16 @@ document.querySelectorAll(".btn--feedback").forEach(button => Object.assign(butt
 
 const resultsContainer = document.getElementById("ctResults");
 
-function resetMobileView() {
-	txtSearch.blur();
-}
-
-function search() {
-	const query = txtSearch.value.trim();
+function search(query) {
+	query = query.trim();
 	if (!query) { return; }
 
 	resultsContainer.innerHTML = `<chip-loading class="d-flex m-auto mt-form--lg" size="xl"></chip-loading>`;
-	txtSearch.blur();	
+
+	searchBars.forEach(bar => {
+		bar.value = query;
+		bar.blur();
+	});
 
 	Product.search(query).then(products => {
 		resultsContainer.innerHTML = "";
@@ -68,6 +70,8 @@ function search() {
 			lblSearchTerm.textContent = query;
 		}
 
+		tabResults.Select();
+
 		document.querySelectorAll(".btn--add-product").forEach(button => button.onclick = () => Product.add());
 	});
 }
@@ -82,15 +86,14 @@ function displayResults(products) {
 	txtResultCaption.innerHTML = Localizer.SEARCH_RESULT_CAPTION;
 }
 
-
-Object.assign(window.txtSearch ?? {}, {
-	onsuffixclick: () => search(),
-	onkeyup: ev => {
+searchBars.forEach(bar => Object.assign(bar, {
+	onsuffixclick: () => search(bar.value),
+	onkeydown: ev => {
 		if (ev.key === "Enter") {
-			search();
+			search(bar.value);
 		}
 	}
-})
+}));
 
 function report(type, title, description, suppressMessage) { 
 	Ajax.Post("report", {
@@ -226,3 +229,5 @@ function buildResult(product) {
 
 	return result;
 }
+
+window.btnBack?.addEventListener("click", () => tabHero.Select());

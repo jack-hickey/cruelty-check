@@ -207,34 +207,59 @@
         </chip-grid>
       </chip-frameheader>
       <chip-framecontent>
-        <div class="hero">
-          <chip-header size="1">Discover Product & Brand Ethics</chip-header>
-          <chip-text size="h4" class="mt-form">
-            Instantly check the ethical status of your favourite products.
-          </chip-text>
-          <chip-input
-            id="txtSearch"
-            focus
-            size="lg"
-            suffix-button="far fa-search"
-            suffix-tooltip="Search"
-            class="mt-lg"
-            placeholder="Make a search..."
-          ></chip-input>
-        </div>
-        <chip-text size="h3" weight="medium" class="mt-form--lg mb-xs">
-          <span id="txtResultCount"></span>
-        </chip-text>
-        <chip-text class="mb-form">
-          <span id="txtResultCaption"></span>
-        </chip-text>
-        <chip-grid
-          columns-sm="1"
-          columns-md="2"
-          columns-lg="3"
-          id="ctResults"
-          gap="base"
-        ></chip-grid>
+        <chip-tabgroup id="tgMain">
+          <chip-tab id="tabHero">
+            <div class="hero">
+              <chip-header size="1">
+                Discover Product & Brand Ethics
+              </chip-header>
+              <chip-text size="h4" class="mt-form">
+                Instantly check the ethical status of your favourite products.
+              </chip-text>
+              <chip-input
+                focus
+                size="lg"
+                suffix-button="far fa-search"
+                suffix-tooltip="Search"
+                class="mt-lg txt--search"
+                placeholder="Make a search..."
+              ></chip-input>
+            </div>
+          </chip-tab>
+          <chip-tab id="tabResults">
+            <div class="h-align gap-form--lg">
+              <chip-button
+                icon="far fa-chevron-left"
+                variation="body"
+                flush
+                id="btnBack"
+              >
+                Back
+              </chip-button>
+              <chip-input
+                focus
+                size="lg"
+                suffix-button="far fa-search"
+                suffix-tooltip="Search"
+                class="txt--search ms-auto"
+                placeholder="Make a search..."
+              ></chip-input>
+            </div>
+            <chip-text size="h3" weight="medium" class="mt-form--lg mb-xs">
+              <span id="txtResultCount"></span>
+            </chip-text>
+            <chip-text class="mb-form">
+              <span id="txtResultCaption"></span>
+            </chip-text>
+            <chip-grid
+              columns-sm="1"
+              columns-md="2"
+              columns-lg="3"
+              id="ctResults"
+              gap="base"
+            ></chip-grid>
+          </chip-tab>
+        </chip-tabgroup>
       </chip-framecontent>
     </chip-frame>
     <script type="text/javascript" src="js/auxilium.min.js"></script>

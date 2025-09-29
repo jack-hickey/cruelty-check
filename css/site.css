@@ -20,12 +20,13 @@
 	--header-border-width: 0;
 }
 
-#tgAddProduct .tab-group__tabs {
+#tgAddProduct .tab-group__tabs,
+#tgMain .tab-group__tabs {
 	display: none;
 }
 
-#txtSearch {
-	width: min(var(--form-width), 90%);
+.txt--search {
+	width: min(var(--form-width), 90%) !important;
 	--input-border-radius: 1000px;
 }
 
