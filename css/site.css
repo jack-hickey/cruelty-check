@@ -135,3 +135,30 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 .ep--results {
 	margin-top: 25%;
 }
+
+.shimmer {
+	color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    to right,
+    var(--body-colour) 0%,
+    var(--body-colour) 40%,
+    var(--theme-colour) 50%,
+    var(--body-colour) 60%,
+    var(--body-colour) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shimmer 3s linear infinite;
+  background-repeat: no-repeat;
+  background-color: var(--body-colour);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}
