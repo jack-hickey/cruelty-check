@@ -156,9 +156,9 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 
 @keyframes shimmer {
   0% {
-    background-position: 150% 0;
+    background-position: 125% 0;
   }
   100% {
-    background-position: -150% 0;
+    background-position: -100% 0;
   }
 }
