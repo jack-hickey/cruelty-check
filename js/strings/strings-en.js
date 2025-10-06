@@ -6,7 +6,7 @@ Localizer.ADD_PRODUCT_TITLE = "New product";
 Localizer.ADD_PRODUCT_DESC = "Please provide the product information below.";
 
 Localizer.FEEDBACK_TITLE = "Feedback";
-Localizer.FEEDBACK_DESC = "We value your feedback; report any issues or suggestions for the site.";
+Localizer.FEEDBACK_DESC = "Report any issues or suggestions for the site.";
 
 Localizer.FEEDBACK_TYPE_LABEL = "Feedback type";
 Localizer.FEEDBACK_TYPE_PLACEHOLDER = "Choose an option";
