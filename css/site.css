@@ -18,6 +18,8 @@
 	--header-height: var(--block-size-xxxxl) !important;
 	--header-background-colour: var(--background-colour);
 	--header-border-width: 0;
+
+	--background-colour: linear-gradient(135deg, #1d1e24, #2a2b33);
 }
 
 #tgAddProduct .tab-group__tabs,
@@ -125,11 +127,17 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 }
 
 .hero {
+	max-width: min(800px, 90%);
 	text-align: center;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	width: fit-content;
 	margin-top: 25%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: var(--block-size-xxl);
+	border-radius: var(--strong-border-radius);
 }
 
 .ep--results {
