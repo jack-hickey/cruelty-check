@@ -6,7 +6,7 @@ Localizer.ADD_PRODUCT_TITLE = "New product";
 Localizer.ADD_PRODUCT_DESC = "Please provide the product information below.";
 
 Localizer.FEEDBACK_TITLE = "Feedback";
-Localizer.FEEDBACK_DESC = "We value your feedback; report any issues or suggestions for the site.";
+Localizer.FEEDBACK_DESC = "Report any issues or suggestions for the site.";
 
 Localizer.FEEDBACK_TYPE_LABEL = "Feedback type";
 Localizer.FEEDBACK_TYPE_PLACEHOLDER = "Choose an option";
@@ -29,7 +29,7 @@ Localizer.FEEDBACK_SUCCESS_TITLE = "Feedback sent";
 Localizer.FEEDBACK_SUCCESS_DESC = "Thank you for your feedback! Your contribution is hugely appreciated and will go toward improving Cruelty Check.";
 
 Localizer.REPORT_INCORRECT_BUTTON = "Report incorrect info";
-Localizer.VEGAN_LABEL = "Vegan";
+Localizer.VEGAN_LABEL = "Vegan-friendly";
 Localizer.NOT_VEGAN_LABEL = "Not vegan";
 Localizer.CRUELTYFREE_LABEL = "Cruelty-free";
 Localizer.NOT_CRUELTYFREE_LABEL = "Not cruelty-free";
