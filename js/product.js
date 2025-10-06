@@ -163,11 +163,14 @@ class Product {
 					FileUploader.Initialize({
 						Buttons: [dialog.querySelector("#btnProductImage")],
 						AllowedExtensions: ["png", "jpg", "jpeg", "webp", "svg"],
-						OnComplete: files => {
+						OnComplete: async files => {
 							productImage = files.at(0);
+
 							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;
 
 							if (productImage) {
+								productImage = await productImage.compress();
+
 								ctImageValidation.toggleClass("d-none", !previouslyTooLarge);
 								imgProduct.src = productImage.getImageSrc();
 							} else if (!previouslyTooLarge) {
