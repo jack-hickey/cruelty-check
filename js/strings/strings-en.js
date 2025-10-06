@@ -29,7 +29,7 @@ Localizer.FEEDBACK_SUCCESS_TITLE = "Feedback sent";
 Localizer.FEEDBACK_SUCCESS_DESC = "Thank you for your feedback! Your contribution is hugely appreciated and will go toward improving Cruelty Check.";
 
 Localizer.REPORT_INCORRECT_BUTTON = "Report incorrect info";
-Localizer.VEGAN_LABEL = "Vegan";
+Localizer.VEGAN_LABEL = "Vegan-friendly";
 Localizer.NOT_VEGAN_LABEL = "Not vegan";
 Localizer.CRUELTYFREE_LABEL = "Cruelty-free";
 Localizer.NOT_CRUELTYFREE_LABEL = "Not cruelty-free";

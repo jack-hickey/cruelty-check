@@ -63,7 +63,7 @@ class Product {
 									<chip-checkbox
 										id="cbVegan"
 										helper-text="Tick if there are no animal-derived or ambiguous ingredients."
-										label="Is vegan"
+										label="Is vegan-friendly"
 									</chip-checkbox>
 								</chip-listitem>
 								<chip-listitem>
