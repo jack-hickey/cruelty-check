@@ -218,7 +218,7 @@ function buildResult(product) {
 				}
 			</div>
 		`, {
-			image: `/cdn-cgi/image/width=200,quality=80,format=auto/products/${product.Image}`,
+			image: `/cdn-cgi/image/width=200,format=auto/products/${product.Image}`,
 			hideBlur: true
 		});
 
