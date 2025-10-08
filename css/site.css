@@ -18,8 +18,6 @@
 	--header-height: var(--block-size-xxxxl) !important;
 	--header-background-colour: var(--background-colour);
 	--header-border-width: 0;
-
-	--background-colour: linear-gradient(135deg, #1d1e24, #2a2b33);
 }
 
 #tgAddProduct .tab-group__tabs,
