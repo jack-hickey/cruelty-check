@@ -169,8 +169,6 @@ class Product {
 							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;
 
 							if (productImage) {
-								productImage = await productImage.compress();
-
 								ctImageValidation.toggleClass("d-none", !previouslyTooLarge);
 								imgProduct.src = productImage.getImageSrc();
 							} else if (!previouslyTooLarge) {
