@@ -164,7 +164,7 @@ class Product {
 						Buttons: [dialog.querySelector("#btnProductImage")],
 						AllowedExtensions: ["png", "jpg", "jpeg", "webp", "svg"],
 						OnComplete: async files => {
-							productImage = files.at(0);
+							productImage = await files.at(0)?.compress();
 
 							const previouslyTooLarge = ctImageValidation.textContent === Localizer.IMAGE_TOO_LARGE;
 
