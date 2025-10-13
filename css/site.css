@@ -134,7 +134,6 @@ chip-card[image] > * > .card-header img + img, chip-card[image] > * > .card-head
 	margin-top: 25%;
 	margin-left: auto;
 	margin-right: auto;
-	padding: var(--block-size-xxl);
 	border-radius: var(--strong-border-radius);
 }
 
