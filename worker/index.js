@@ -99,8 +99,6 @@ async function addProductHandler({ request, env }) {
 
   let image = body.get("Image");
 
-	console.log(image.type);
-
   if (!name || !brandID || !image || !image.type.startsWith("image/")) return text("Invalid body", 400);
 
   const fileName = `${crypto.randomUUID()}.${image.name.split(".").pop()}`;
