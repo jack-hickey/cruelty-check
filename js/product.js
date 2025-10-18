@@ -149,6 +149,7 @@ class Product {
 									Back
 								</chip-button>
 								<chip-button
+									variation="theme"
 									id="btnAddBrand">
 									Add brand
 								</chip-button>
